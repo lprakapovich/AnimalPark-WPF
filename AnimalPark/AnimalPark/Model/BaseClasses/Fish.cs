@@ -8,5 +8,6 @@ namespace AnimalPark.Model.BaseClasses
 {
     public abstract class Fish : Animal
     {
+        private bool _isSaltwater;
     }
 }

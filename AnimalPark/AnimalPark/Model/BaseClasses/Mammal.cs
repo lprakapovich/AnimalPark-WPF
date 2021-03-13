@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace AnimalPark.Model.BaseClasses
 {
     public abstract class Mammal : Animal
-    {
+    { 
+        private bool _isDomesticated;
     }
 }

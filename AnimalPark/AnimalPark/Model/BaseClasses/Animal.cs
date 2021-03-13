@@ -8,11 +8,11 @@ namespace AnimalPark.Model.BaseClasses
 {
     public abstract class Animal
     {
-        protected string _id;
-        protected string _name;
-        protected int _age;
-        protected Gender _gender;
-        protected double _waterNeed;
+        private string _id;
+        private string _name;
+        private int _age;
+        private Gender _gender;
+        private bool _isAdopted;
 
         protected Animal () {}
     }

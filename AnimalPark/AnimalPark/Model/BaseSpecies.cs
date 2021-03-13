@@ -5,10 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using AnimalPark.Model.BaseClasses;
 
-namespace AnimalPark.Utils
+namespace AnimalPark.Model
 {
-    public interface IAnimalFactory
+    public enum BaseSpecies
     {
-        Animal CreateAnimal();
+        Mammal,
+        Bird,
+        Insect,
+        Fish
     }
 }

@@ -9,5 +9,13 @@ namespace AnimalPark.Model.Concretes
 {
     public class JellyFish : Fish
     {
+        private JellyFishTYpe _type; 
+        enum JellyFishTYpe
+        {
+            Crystal,
+            Cauliflower,
+            BlackSeaNettle,
+            BloodyBelly 
+        }
     }
 }

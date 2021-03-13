@@ -7,7 +7,8 @@ using AnimalPark.Model.BaseClasses;
 
 namespace AnimalPark.Model.Concretes
 {
-    public class BlueTang : Fish
+    public class Prawn : Fish
     {
+        private bool _canBeEaten;
     }
 }
