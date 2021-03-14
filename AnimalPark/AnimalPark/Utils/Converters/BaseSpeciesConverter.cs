@@ -10,7 +10,7 @@ namespace AnimalPark.Utils.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is BaseSpecies baseSpecies)
+            if (value is Category baseSpecies)
             {
                 return baseSpecies.ToString();
             }
@@ -22,7 +22,7 @@ namespace AnimalPark.Utils.Converters
         {
             if (value is string species)
             {
-                return Enum.Parse(typeof(BaseSpecies), species);
+                return Enum.Parse(typeof(Category), species);
             }
 
             return null;
@@ -34,7 +34,7 @@ namespace AnimalPark.Utils.Converters
         {
             List<string> baseSpecies = new List<string>();
 
-            foreach (var species in Enum.GetValues(typeof(BaseSpecies))) 
+            foreach (var species in Enum.GetValues(typeof(Category))) 
             {
                 baseSpecies.Add(species.ToString());
             }

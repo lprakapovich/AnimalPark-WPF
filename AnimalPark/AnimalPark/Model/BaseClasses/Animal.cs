@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace AnimalPark.Model.BaseClasses
 {
     public abstract class Animal
@@ -12,8 +7,12 @@ namespace AnimalPark.Model.BaseClasses
         private string _name;
         private int _age;
         private Gender _gender;
-        private bool _isAdopted;
 
-        protected Animal () {}
+        protected Animal(string name, int age, Gender gender)
+        {
+            _name = name;
+            _age = age;
+            _gender = gender;
+        }
     }
 }

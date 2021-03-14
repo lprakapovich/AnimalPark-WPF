@@ -9,5 +9,10 @@ namespace AnimalPark.Model.BaseClasses
     public abstract class Fish : Animal
     {
         private bool _isSaltwater;
+
+        protected Fish(string name, int age, Gender gender, bool isSaltWater) : base(name, age, gender)
+        {
+            _isSaltwater = isSaltWater;
+        }
     }
 }

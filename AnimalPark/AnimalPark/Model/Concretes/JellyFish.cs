@@ -9,13 +9,17 @@ namespace AnimalPark.Model.Concretes
 {
     public class JellyFish : Fish
     {
-        private JellyFishTYpe _type; 
-        enum JellyFishTYpe
+        private JellyFishTYpe _type;
+
+        public JellyFish(string name, int age, Gender gender, bool isSaltwater, JellyFishTYpe type) : base(name, age, gender, isSaltwater)
         {
-            Crystal,
-            Cauliflower,
-            BlackSeaNettle,
-            BloodyBelly 
+            Type = type;
+        }
+
+        public JellyFishTYpe Type
+        {
+            get => _type;
+            set => _type = value;
         }
     }
 }

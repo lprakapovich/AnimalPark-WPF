@@ -7,11 +7,9 @@ using AnimalPark.Model.BaseClasses;
 
 namespace AnimalPark.Model
 {
-    public enum BaseSpecies
+    public enum Category
     {
         Mammal,
-        Bird,
-        Insect,
         Fish
     }
 }

@@ -10,8 +10,9 @@ namespace AnimalPark.Model.BaseClasses
     public abstract class Bird : Animal
     {
         private double _flightSpeed; 
-        protected Bird() : base()
+        protected Bird(string name, int age, Gender gender, double flightSpeed) : base(name, age, gender)
         {
+            _flightSpeed = flightSpeed;
         }
     }
 }

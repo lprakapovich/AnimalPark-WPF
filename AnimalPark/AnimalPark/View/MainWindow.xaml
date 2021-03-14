@@ -23,6 +23,8 @@
         </Style>
         <c:BaseSpeciesConverter x:Key="BaseSpeciesConverter"/>
         <c:GenderConverter x:Key="GenderConverter"/>
+        <c:SpeciesConverter x:Key="SpeciesConverter"/>
+
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -74,26 +76,27 @@
                 </GroupBox>
 
                 <GroupBox Grid.Row="1" Grid.Column="5" Grid.RowSpan="4" Grid.ColumnSpan="2" Header="Species Type">
-                    <ListBox>
+                    <ListBox ItemsSource="{Binding SpeciesTypes, UpdateSourceTrigger=PropertyChanged}"
+                             SelectedIndex="{Binding SelectedSpeciesTypeIndex, UpdateSourceTrigger=PropertyChanged}">
                     </ListBox>
                 </GroupBox>
 
-                <GroupBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Header="Category Specifications">
-
+                <GroupBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Header="Category Specifications"> 
+                    <ContentControl Content="{Binding CategoryControl, UpdateSourceTrigger=PropertyChanged}"/>
                 </GroupBox>
 
                 <GroupBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" Header="Species Specifications">
-
+                    <ContentControl Content="{Binding SpeciesControl, UpdateSourceTrigger=PropertyChanged}"/>
                 </GroupBox>
 
                 <CheckBox Grid.Row="5" Grid.Column="4" Content="List all the animals"/>
-                <Button Grid.Column="4" Grid.Row="6" Content="Add"/>
+                <Button Grid.Column="4" Grid.Row="6" Content="Add" Command="{Binding CreateAnimalCommand}"/>
 
             </Grid>
         </GroupBox>
 
         <GroupBox Grid.Row="2" Header="Animal Details">
-            <Label Content="Animal description"/>
+            
         </GroupBox>
     </Grid>
 </Window>

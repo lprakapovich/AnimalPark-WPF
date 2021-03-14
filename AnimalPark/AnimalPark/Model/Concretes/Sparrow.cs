@@ -7,7 +7,7 @@ using AnimalPark.Model.BaseClasses;
 
 namespace AnimalPark.Model.Concretes
 {
-    public class Sparrow : Bird
+    public class Sparrow 
     {
     }
 }

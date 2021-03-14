@@ -23,6 +23,8 @@ namespace AnimalPark.Common
             _canExecute = canExecute;
         }
 
+        public RelayCommand(Action<object> execute) : this(execute, null) { }
+
         public bool CanExecute(object parameter)
         {
             return _canExecute == null ? true : _canExecute(parameter);

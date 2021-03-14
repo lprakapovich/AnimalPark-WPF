@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AnimalPark.Common;
 using AnimalPark.Model.BaseClasses;
- 
+using AnimalPark.ViewModel;
+
 namespace AnimalPark.Utils.Factories
 {
     public interface IAnimalFactory
     {
-        Animal CreateAnimal();
+        Animal CreateAnimal(BindableBase mainContext, ICategory baseContext, ISpecies speciesContext);
     }
 }
  

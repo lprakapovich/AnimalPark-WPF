@@ -57,12 +57,37 @@
     </ApplicationDefinition>
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\RelayCommand.cs" />
-    <Compile Include="Model\BaseSpecies.cs" />
+    <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\Concretes\JellyFishType.cs" />
+    <Compile Include="Model\Concretes\RaccoonType.cs" />
     <Compile Include="Model\Species.cs" />
     <Compile Include="Utils\Converters\BaseSpeciesConverter.cs" />
     <Compile Include="Utils\Converters\GenderConverter.cs" />
-    <Compile Include="Utils\Factories\AnimalFactory.cs" />
+    <Compile Include="Utils\Converters\JellyFishTypeConverter.cs" />
+    <Compile Include="Utils\Converters\RaccoonTypeConverter.cs" />
+    <Compile Include="Utils\Converters\SpeciesConverter.cs" />
+    <Compile Include="Utils\Factories\FactoryBuilder.cs" />
+    <Compile Include="Utils\Factories\FishFactory.cs" />
     <Compile Include="Utils\Factories\IAnimalFactory.cs" />
+    <Compile Include="Utils\Factories\MammalFactory.cs" />
+    <Compile Include="ViewModel\SpeciesViewModels\RaccoonViewModel.cs" />
+    <Compile Include="View\SpeciesControls\JellyFishControl.xaml.cs">
+      <DependentUpon>JellyFishControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SpeciesControls\PrawnControl.xaml.cs">
+      <DependentUpon>PrawnControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SpeciesControls\RaccoonControl.xaml.cs">
+      <DependentUpon>RaccoonControl.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\CategoriesControls\FishControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CategoriesControls\MammalControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -71,11 +96,35 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\ICategory.cs" />
+    <Compile Include="ViewModel\BaseSpeciesViewModels\FishViewModel.cs" />
+    <Compile Include="ViewModel\ISpecies.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\BaseSpeciesViewModels\MammalViewModel.cs" />
+    <Compile Include="ViewModel\SpeciesViewModels\JellyFishViewModel.cs" />
+    <Compile Include="ViewModel\SpeciesViewModels\PrawnViewModel.cs" />
+    <Compile Include="View\CategoriesControls\FishControl.xaml.cs">
+      <DependentUpon>FishControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CategoriesControls\MammalControl.xaml.cs">
+      <DependentUpon>MammalControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\SpeciesControls\JellyFishControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SpeciesControls\PrawnControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SpeciesControls\RaccoonControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\BaseClasses\Animal.cs" />

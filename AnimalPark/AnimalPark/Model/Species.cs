@@ -11,12 +11,12 @@ namespace AnimalPark.Model
         Panda,
         Donkey,
         Raccoon,
-        BlueTang, 
         JellyFish,
+        Prawn,
         Crow, 
         Dove,
         Sparrow,
         Dragonfly,
-        Grasshopper 
+        Grasshopper
     }
 }
