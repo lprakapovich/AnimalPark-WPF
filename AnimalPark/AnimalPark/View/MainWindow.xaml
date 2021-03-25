@@ -71,13 +71,13 @@
 
                 <GroupBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="4" Grid.ColumnSpan="2" Header="Category">
                     <ListBox ItemsSource="{Binding Source={StaticResource BaseSpeciesConverter}, Path=BaseSpeciesStrings}"
-                             SelectedItem="{Binding Category, Converter={StaticResource BaseSpeciesConverter}}">
+                             SelectedItem="{Binding Category, Converter={StaticResource BaseSpeciesConverter}, Mode=TwoWay}">
                     </ListBox>
                 </GroupBox>
 
                 <GroupBox Grid.Row="1" Grid.Column="5" Grid.RowSpan="4" Grid.ColumnSpan="2" Header="Species Type">
                     <ListBox ItemsSource="{Binding SpeciesTypes, UpdateSourceTrigger=PropertyChanged}"
-                             SelectedIndex="{Binding SelectedSpeciesTypeIndex, UpdateSourceTrigger=PropertyChanged}">
+                             SelectedIndex="{Binding SelectedSpeciesTypeIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     </ListBox>
                 </GroupBox>
 

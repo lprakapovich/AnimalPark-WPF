@@ -60,6 +60,7 @@
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Concretes\JellyFishType.cs" />
     <Compile Include="Model\Concretes\RaccoonType.cs" />
+    <Compile Include="Model\EnumHelper.cs" />
     <Compile Include="Model\Species.cs" />
     <Compile Include="Utils\Converters\BaseSpeciesConverter.cs" />
     <Compile Include="Utils\Converters\GenderConverter.cs" />

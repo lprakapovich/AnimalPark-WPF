@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using AnimalPark.Common;
 using AnimalPark.Model;
 using AnimalPark.Model.BaseClasses;
-using AnimalPark.Utils.Converters;
 using AnimalPark.Utils.Factories;
 using AnimalPark.ViewModel.BaseSpeciesViewModels;
 using AnimalPark.ViewModel.SpeciesViewModels;
@@ -18,15 +15,14 @@ namespace AnimalPark.ViewModel
         private string _name; 
         private int _age;
         private Gender _gender;
-        private Species _speciesType;
         private Category _category;
 
         private Animal _animal;
 
-        private Dictionary<Category, List<Species>> _associatedSpecies;
-
         private ICategory _categoryControl;
-        private ISpecies _speciesControl; 
+        private ISpecies _speciesControl;
+
+        private int _selectedSpeciesTypeIndex;
 
         #endregion
 
@@ -34,20 +30,11 @@ namespace AnimalPark.ViewModel
 
         public MainViewModel()
         {
-            CategoryControl = new MammalViewModel();
-
-            _associatedSpecies = new Dictionary<Category, List<Species>>()
-            {
-                {
-                    Model.Category.Mammal, new List<Species> {Species.Raccoon}
-                },
-                {
-                    Model.Category.Fish, new List<Species>() {Species.JellyFish, Species.Prawn}
-                }
-            };
+            Category = Category.Mammal;
         }
 
         #endregion
+
 
         public Category Category 
         {
@@ -55,9 +42,6 @@ namespace AnimalPark.ViewModel
             set
             {
                 _category = value;
-
-                SelectedSpeciesTypeIndex = 0;
-
                 UpdateCategoryControl();
                 OnPropertyChanged(nameof(Category));
                 OnPropertyChanged(nameof(SpeciesTypes)); 
@@ -78,8 +62,6 @@ namespace AnimalPark.ViewModel
                     CategoryControl = new MammalViewModel();
                     break;
             }
-
-            SpeciesControl = null;
         }
 
         private void UpdateSpeciesControl()
@@ -99,6 +81,8 @@ namespace AnimalPark.ViewModel
                     SpeciesControl = new JellyFishViewModel();
                     break;
             }
+
+            Category = EnumHelper.FindCorrespondingCategory(SpeciesType);
         }
 
         private void CreateAnimal()
@@ -108,28 +92,21 @@ namespace AnimalPark.ViewModel
 
         public List<Species> SpeciesTypes
         {
-            get => IsCheckedListAllAnimals ? GetAllSpecies() : _associatedSpecies?[Category];
+            get => IsCheckedListAllAnimals ? EnumHelper.GetAllValuesAs<Species>(typeof(Species)) : EnumHelper.GetSpeciesByCategory(Category);
         }
 
         public Species SpeciesType
         {
             get => SpeciesTypes[SelectedSpeciesTypeIndex == -1 ? 0 : SelectedSpeciesTypeIndex];
-            set
-            {
-                _speciesType = value;
-                OnPropertyChanged(nameof(SpeciesType));
-            }
+            set => OnPropertyChanged(nameof(SpeciesType));
         }
 
-
-        private int _selectedSpeciesTypeIndex;
         public int SelectedSpeciesTypeIndex
         {
             get => _selectedSpeciesTypeIndex;
             set
             {
                 _selectedSpeciesTypeIndex = value;
-
                 UpdateSpeciesControl();
                 OnPropertyChanged(nameof(SelectedSpeciesTypeIndex));
                 OnPropertyChanged(nameof(SpeciesType));
@@ -143,6 +120,7 @@ namespace AnimalPark.ViewModel
             set
             {
                 _categoryControl = value;
+                SelectedSpeciesTypeIndex = 0;
                 OnPropertyChanged(nameof(CategoryControl));
             }
         }
@@ -207,17 +185,6 @@ namespace AnimalPark.ViewModel
 
         #region Private Fields
 
-        private List<Species> GetAllSpecies()
-        { 
-            List<Species> _species = new List<Species>();
-
-            foreach (Species value in Enum.GetValues(typeof(Species)))
-            {
-                _species.Add(value);
-            }
-
-            return _species;
-        } 
 
         #endregion
     }
