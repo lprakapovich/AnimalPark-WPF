@@ -17,6 +17,7 @@ namespace AnimalPark.Model
         Dove,
         Sparrow,
         Dragonfly,
-        Grasshopper
+        Grasshopper,
+        Unknown
     }
 }

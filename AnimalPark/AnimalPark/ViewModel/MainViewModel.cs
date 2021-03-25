@@ -1,31 +1,16 @@
-﻿using System.Collections.Generic;
-using AnimalPark.Common;
+﻿using AnimalPark.Common;
 using AnimalPark.Model;
 using AnimalPark.Model.BaseClasses;
+using AnimalPark.Utils;
 using AnimalPark.Utils.Factories;
 using AnimalPark.ViewModel.BaseSpeciesViewModels;
-using AnimalPark.ViewModel.SpeciesViewModels;
+using System.Collections.Generic;
+using static AnimalPark.Model.Species;
 
 namespace AnimalPark.ViewModel
 {
     public class MainViewModel : BindableBase
     {
-        #region Private Fields
-
-        private string _name; 
-        private int _age;
-        private Gender _gender;
-        private Category _category;
-
-        private Animal _animal;
-
-        private ICategory _categoryControl;
-        private ISpecies _speciesControl;
-
-        private int _selectedSpeciesTypeIndex;
-
-        #endregion
-
         #region Setup
 
         public MainViewModel()
@@ -35,8 +20,7 @@ namespace AnimalPark.ViewModel
 
         #endregion
 
-
-        public Category Category 
+        public Category Category
         {
             get => _category;
             set
@@ -44,15 +28,19 @@ namespace AnimalPark.ViewModel
                 _category = value;
                 UpdateCategoryControl();
                 OnPropertyChanged(nameof(Category));
-                OnPropertyChanged(nameof(SpeciesTypes)); 
             }
         }
 
+        /// <summary>
+        /// If ListAllSpecies is checked,
+        /// category control gets informed about
+        /// and updates GUI accordingly
+        /// </summary>
         private void UpdateCategoryControl()
         {
             switch (Category)
             {
-                case Category.Mammal: 
+                case Category.Mammal:
                     CategoryControl = new MammalViewModel();
                     break;
                 case Category.Fish:
@@ -62,78 +50,85 @@ namespace AnimalPark.ViewModel
                     CategoryControl = new MammalViewModel();
                     break;
             }
-        }
 
-        private void UpdateSpeciesControl()
-        {
-            switch (SpeciesType) 
+            if (IsCheckedListAllAnimals)
             {
-                case Species.JellyFish:
-                    SpeciesControl = new JellyFishViewModel();
-                    break;
-                case Species.Prawn:
-                    SpeciesControl = new PrawnViewModel();
-                    break;
-                case Species.Raccoon:
-                    SpeciesControl = new RaccoonViewModel();
-                    break;
-                default: 
-                    SpeciesControl = new JellyFishViewModel();
-                    break;
+                CategoryControl.OnSpeciesSelected(SelectedSpecies);
             }
-
-            Category = EnumHelper.FindCorrespondingCategory(SpeciesType);
-        }
-
-        private void CreateAnimal()
-        {
-            Animal = FactoryBuilder.GetAnimalFactory(Category).CreateAnimal(this, CategoryControl, SpeciesControl);
-        }
-
-        public List<Species> SpeciesTypes
-        {
-            get => IsCheckedListAllAnimals ? EnumHelper.GetAllValuesAs<Species>(typeof(Species)) : EnumHelper.GetSpeciesByCategory(Category);
-        }
-
-        public Species SpeciesType
-        {
-            get => SpeciesTypes[SelectedSpeciesTypeIndex == -1 ? 0 : SelectedSpeciesTypeIndex];
-            set => OnPropertyChanged(nameof(SpeciesType));
-        }
-
-        public int SelectedSpeciesTypeIndex
-        {
-            get => _selectedSpeciesTypeIndex;
-            set
+            else
             {
-                _selectedSpeciesTypeIndex = value;
-                UpdateSpeciesControl();
-                OnPropertyChanged(nameof(SelectedSpeciesTypeIndex));
-                OnPropertyChanged(nameof(SpeciesType));
+                OnPropertyChanged(nameof(SpeciesTypes));
+                SelectedSpecies = Unknown;
             }
         }
 
-
-        public ICategory CategoryControl 
+        public ICategory CategoryControl
         {
             get => _categoryControl;
             set
             {
                 _categoryControl = value;
-                SelectedSpeciesTypeIndex = 0;
                 OnPropertyChanged(nameof(CategoryControl));
             }
         }
 
-        public ISpecies SpeciesControl
+        public List<Species> SpeciesTypes
         {
-            get => _speciesControl;
+            get => IsCheckedListAllAnimals
+                ? EnumHelper.GetAllValuesAs<Species>(typeof(Species))
+                : EnumHelper.GetSpeciesByCategory(Category);
+        }
+
+        public Species SelectedSpecies
+        {
+            get => _selectedSpecies;
             set
             {
-                _speciesControl = value;
-                OnPropertyChanged(nameof(SpeciesControl));
+                _selectedSpecies = value;
+                OnSpeciesSelected();
+                OnPropertyChanged(nameof(SelectedSpecies));
             }
         }
+
+        public bool CategoryListEnabled
+        {
+            get => !IsCheckedListAllAnimals;
+        }
+
+        private void OnSpeciesSelected()
+        {
+            if (IsCheckedListAllAnimals)
+            {
+                Category = EnumHelper.FindCorrespondingCategory(SelectedSpecies);
+            }
+
+            CategoryControl.OnSpeciesSelected(SelectedSpecies);
+        }
+
+        private void CreateAnimal()
+        {
+            Animal = FactoryBuilder.GetAnimalFactory(Category).CreateAnimal(this, CategoryControl);
+        }
+
+
+        //public Species SpeciesType
+        //{
+        //    get => SpeciesTypes[SelectedSpeciesTypeIndex == -1 ? 0 : SelectedSpeciesTypeIndex];
+        //    set => OnPropertyChanged(nameof(SpeciesType));
+        //}
+
+        //public int SelectedSpeciesTypeIndex
+        //{
+        //    get => _selectedSpeciesTypeIndex;
+        //    set
+        //    {
+        //        _selectedSpeciesTypeIndex = value;
+        //        //UpdateSpeciesControl();
+        //        OnPropertyChanged(nameof(SelectedSpeciesTypeIndex));
+        //        OnPropertyChanged(nameof(SpeciesType));
+        //    }
+        //}
+
 
         public string Name
         {
@@ -160,6 +155,7 @@ namespace AnimalPark.ViewModel
         }
 
         private bool _isCheckedListAllAnimals;
+
         public bool IsCheckedListAllAnimals
         {
             get => _isCheckedListAllAnimals;
@@ -167,6 +163,7 @@ namespace AnimalPark.ViewModel
             {
                 _isCheckedListAllAnimals = value;
                 OnPropertyChanged(nameof(IsCheckedListAllAnimals));
+                OnPropertyChanged(nameof(CategoryListEnabled));
                 OnPropertyChanged(nameof(SpeciesTypes));
             }
         }
@@ -177,14 +174,42 @@ namespace AnimalPark.ViewModel
 
         public RelayCommand CreateAnimalCommand
         {
-            get => _createAnimalCommand ?? 
-                   (_createAnimalCommand = new RelayCommand(ex => CreateAnimal()));
+            get => _createAnimalCommand ??
+                   (_createAnimalCommand = new RelayCommand(ex => { CreateAnimal(); }, canEx => AllDataFilled));
         }
+
+        public bool AllDataFilled => AnimalDataFilled && CategoryDataFilled && SpeciesDataFilled;
+
+        private bool SpeciesDataFilled { get; set; }
+
+        private bool CategoryDataFilled { get; set; }
+
+        private bool AnimalDataFilled => !string.IsNullOrEmpty(Name) || Age <= 0;
 
         #endregion
 
         #region Private Fields
 
+        /// <summary>
+        /// Main View model handles input for
+        /// all the common fields from the Animal class
+        /// </summary>
+        private string _name;
+        private int _age;
+        private Gender _gender;
+        private Category _category;
+
+        /// <summary>
+        /// Created animal
+        /// </summary>
+        private Animal _animal;
+
+        /// <summary>
+        /// Selected animal category, e.g. Mammal
+        /// </summary>
+        private ICategory _categoryControl;
+
+        private Species _selectedSpecies;
 
         #endregion
     }

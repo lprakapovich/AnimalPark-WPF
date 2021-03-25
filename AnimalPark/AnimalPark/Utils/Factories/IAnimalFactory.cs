@@ -6,7 +6,7 @@ namespace AnimalPark.Utils.Factories
 {
     public interface IAnimalFactory
     {
-        Animal CreateAnimal(BindableBase mainContext, ICategory baseContext, ISpecies speciesContext);
+        Animal CreateAnimal(BindableBase mainContext, ICategory categoryContext); 
     }
 }
- 
+  

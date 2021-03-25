@@ -10,24 +10,24 @@ namespace AnimalPark.Utils.Factories
 {
     public class FishFactory : IAnimalFactory
     {
-        public Animal CreateAnimal(BindableBase mainContext, ICategory baseContext, ISpecies speciesContext)
+        public Animal CreateAnimal(BindableBase mainContext, ICategory categoryContext)
         {
             MainViewModel context = (MainViewModel) mainContext;
 
             Animal animal = null;
 
-            switch (context.SpeciesType)
+            switch (context.SelectedSpecies)
             {
                 case Species.Prawn:
                     animal = new Prawn(context.Name, context.Age, context.Gender, 
-                        ((FishViewModel) (baseContext)).IsSaltWater,
-                        ((PrawnViewModel) (speciesContext)).CanBeEaten);
+                        ((FishViewModel) (categoryContext)).IsSaltWater,
+                        ((PrawnViewModel) (categoryContext.SelectedSpeciesControl)).CanBeEaten);
                     break;
 
                 case Species.JellyFish:
                     animal = new JellyFish(context.Name, context.Age, context.Gender,
-                        ((FishViewModel) (baseContext)).IsSaltWater,
-                        ((JellyFishViewModel) (speciesContext)).Type);
+                        ((FishViewModel) (categoryContext)).IsSaltWater,
+                        ((JellyFishViewModel) (categoryContext.SelectedSpeciesControl)).Type);
                     break;
             }
 

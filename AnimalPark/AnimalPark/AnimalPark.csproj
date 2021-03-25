@@ -57,11 +57,11 @@
     </ApplicationDefinition>
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\RelayCommand.cs" />
-    <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\Enums\Category.cs" />
     <Compile Include="Model\Concretes\JellyFishType.cs" />
     <Compile Include="Model\Concretes\RaccoonType.cs" />
-    <Compile Include="Model\EnumHelper.cs" />
-    <Compile Include="Model\Species.cs" />
+    <Compile Include="Utils\EnumHelper.cs" />
+    <Compile Include="Model\Enums\Species.cs" />
     <Compile Include="Utils\Converters\BaseSpeciesConverter.cs" />
     <Compile Include="Utils\Converters\GenderConverter.cs" />
     <Compile Include="Utils\Converters\JellyFishTypeConverter.cs" />
@@ -71,6 +71,8 @@
     <Compile Include="Utils\Factories\FishFactory.cs" />
     <Compile Include="Utils\Factories\IAnimalFactory.cs" />
     <Compile Include="Utils\Factories\MammalFactory.cs" />
+    <Compile Include="Model\Interfaces\IFish.cs" />
+    <Compile Include="Model\Interfaces\IMammal.cs" />
     <Compile Include="ViewModel\SpeciesViewModels\RaccoonViewModel.cs" />
     <Compile Include="View\SpeciesControls\JellyFishControl.xaml.cs">
       <DependentUpon>JellyFishControl.xaml</DependentUpon>
@@ -97,9 +99,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\ICategory.cs" />
+    <Compile Include="Model\Interfaces\ICategory.cs" />
     <Compile Include="ViewModel\BaseSpeciesViewModels\FishViewModel.cs" />
-    <Compile Include="ViewModel\ISpecies.cs" />
+    <Compile Include="Model\Interfaces\ISpecies.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\BaseSpeciesViewModels\MammalViewModel.cs" />
     <Compile Include="ViewModel\SpeciesViewModels\JellyFishViewModel.cs" />
@@ -143,7 +145,7 @@
     <Compile Include="Model\Concretes\Raccoon.cs" />
     <Compile Include="Model\Concretes\JellyFish.cs" />
     <Compile Include="Model\Concretes\Sparrow.cs" />
-    <Compile Include="Model\Gender.cs" />
+    <Compile Include="Model\Enums\Gender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AnimalPark.Common;
+﻿using AnimalPark.Common;
+using AnimalPark.Model.Interfaces;
 
 namespace AnimalPark.ViewModel.SpeciesViewModels
 {
-    public class PrawnViewModel : BindableBase, ISpecies
+    public class PrawnViewModel : BindableBase, IFish 
     {
         private bool _canBeEaten;
         public bool CanBeEaten

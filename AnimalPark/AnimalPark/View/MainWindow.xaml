@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AnimalPark"
         xmlns:c="clr-namespace:AnimalPark.Utils.Converters"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="550" Width="800">
 
     <Window.Resources>
         <Style TargetType="Button">
@@ -19,11 +19,11 @@
             <Setter Property="Margin" Value="5 "/>
         </Style>
         <Style TargetType="GroupBox">
-            <Setter Property="Margin" Value="5  0"/>
+            <Setter Property="Margin" Value="5  5"/>
+            <Setter Property="Padding" Value="3 3"/>
         </Style>
         <c:BaseSpeciesConverter x:Key="BaseSpeciesConverter"/>
         <c:GenderConverter x:Key="GenderConverter"/>
-        <c:SpeciesConverter x:Key="SpeciesConverter"/>
 
     </Window.Resources>
     <Grid>
@@ -54,6 +54,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
@@ -70,33 +72,25 @@
                 </GroupBox>
 
                 <GroupBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="4" Grid.ColumnSpan="2" Header="Category">
-                    <ListBox ItemsSource="{Binding Source={StaticResource BaseSpeciesConverter}, Path=BaseSpeciesStrings}"
+                    <ListBox IsEnabled="{Binding CategoryListEnabled}"
+                             ItemsSource="{Binding Source={StaticResource BaseSpeciesConverter}, Path=BaseSpeciesStrings}"
                              SelectedItem="{Binding Category, Converter={StaticResource BaseSpeciesConverter}, Mode=TwoWay}">
                     </ListBox>
                 </GroupBox>
 
                 <GroupBox Grid.Row="1" Grid.Column="5" Grid.RowSpan="4" Grid.ColumnSpan="2" Header="Species Type">
                     <ListBox ItemsSource="{Binding SpeciesTypes, UpdateSourceTrigger=PropertyChanged}"
+                             SelectedItem="{Binding SelectedSpecies, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                              SelectedIndex="{Binding SelectedSpeciesTypeIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     </ListBox>
                 </GroupBox>
 
-                <GroupBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Header="Category Specifications"> 
-                    <ContentControl Content="{Binding CategoryControl, UpdateSourceTrigger=PropertyChanged}"/>
-                </GroupBox>
+                <ContentControl Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Content="{Binding CategoryControl, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <GroupBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" Header="Species Specifications">
-                    <ContentControl Content="{Binding SpeciesControl, UpdateSourceTrigger=PropertyChanged}"/>
-                </GroupBox>
-
-                <CheckBox Grid.Row="5" Grid.Column="4" Content="List all the animals"/>
-                <Button Grid.Column="4" Grid.Row="6" Content="Add" Command="{Binding CreateAnimalCommand}"/>
-
+                <Label Grid.Column="4" Grid.Row="6" Content="{Binding SelectedSpecies, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <CheckBox Grid.Row="6" Grid.Column="5" Content="List all animals" IsChecked="{Binding IsCheckedListAllAnimals}"></CheckBox>
+                <Button Grid.Row="7" Grid.Column="5" Width="100" Content="Add animal" Command="{Binding AddAnimalCommand}"/>
             </Grid>
-        </GroupBox>
-
-        <GroupBox Grid.Row="2" Header="Animal Details">
-            
         </GroupBox>
     </Grid>
 </Window>

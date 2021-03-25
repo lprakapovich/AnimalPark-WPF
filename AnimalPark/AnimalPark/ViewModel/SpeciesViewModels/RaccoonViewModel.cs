@@ -1,9 +1,10 @@
 ﻿using AnimalPark.Common;
 using AnimalPark.Model.Concretes;
+using AnimalPark.Model.Interfaces;
 
 namespace AnimalPark.ViewModel.SpeciesViewModels
 {
-    public class RaccoonViewModel : BindableBase, ISpecies
+    public class RaccoonViewModel : BindableBase, IMammal
     {
         private RaccoonType _type;
 

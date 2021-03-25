@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AnimalPark.Common;
- 
+﻿using AnimalPark.Common;
+using AnimalPark.Model;
+using AnimalPark.Model.Interfaces;
+using AnimalPark.ViewModel.SpeciesViewModels;
+
 namespace AnimalPark.ViewModel.BaseSpeciesViewModels 
 {
     public class FishViewModel : BindableBase, ICategory
     {
         private bool _isSaltWater;
+        private IFish _fishSpeciesViewModel;
 
         public bool IsSaltWater
         {
@@ -22,9 +21,32 @@ namespace AnimalPark.ViewModel.BaseSpeciesViewModels
             }
         }
 
-        public static FishViewModel GetContext(ICategory categoryContext)
+        public void OnSpeciesSelected(Species species)
         {
-            return categoryContext as FishViewModel;
+            switch (species)
+            {
+                case Species.JellyFish:
+                    SelectedSpeciesControl = new JellyFishViewModel();
+                    break;
+
+                case Species.Prawn:
+                    SelectedSpeciesControl = new PrawnViewModel();
+                    break;
+
+                default:
+                    SelectedSpeciesControl = null;
+                    break;
+            }
+        }
+
+        public ISpecies SelectedSpeciesControl
+        {
+            get => _fishSpeciesViewModel;
+            set
+            {
+                _fishSpeciesViewModel = (IFish) value;
+                OnPropertyChanged(nameof(SelectedSpeciesControl));
+            }
         }
     }
 }

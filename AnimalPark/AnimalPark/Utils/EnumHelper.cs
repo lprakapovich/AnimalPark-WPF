@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using AnimalPark.Model;
 
-namespace AnimalPark.Model
+namespace AnimalPark.Utils
 {
     public class EnumHelper
     {
