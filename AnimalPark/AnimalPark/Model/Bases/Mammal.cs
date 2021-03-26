@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AnimalPark.Model.Enums;
 
-namespace AnimalPark.Model.BaseClasses
+namespace AnimalPark.Model.Bases 
 {
     public abstract class Mammal : Animal
     { 

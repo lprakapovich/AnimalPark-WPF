@@ -5,8 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnimalPark.View.SpeciesControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="Yellow">
+             d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <CheckBox Content="Can be eaten" IsChecked="{Binding CanBeEaten, UpdateSourceTrigger=PropertyChanged}" />
+        <GroupBox Header="Prawn characteristics">
+            <CheckBox Content="Can be eaten" IsChecked="{Binding CanBeEaten, UpdateSourceTrigger=PropertyChanged}" />
+        </GroupBox>
     </Grid>
 </UserControl>

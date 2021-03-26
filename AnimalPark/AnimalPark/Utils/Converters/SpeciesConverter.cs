@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
-using AnimalPark.Model;
+using AnimalPark.Model.Enums;
 
 namespace AnimalPark.Utils.Converters
 {
@@ -34,9 +34,12 @@ namespace AnimalPark.Utils.Converters
         {
             List<string> species = new List<string>();
 
-            foreach (var speciesType in Enum.GetValues(typeof(Species)))
+            foreach (Species speciesType in Enum.GetValues(typeof(Species)))
             {
-                species.Add(speciesType.ToString());
+                if (speciesType != Species.Unknown)
+                {
+                    species.Add(speciesType.ToString());
+                }
             }
 
             return species.ToArray();

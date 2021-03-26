@@ -1,4 +1,6 @@
 ﻿
+using AnimalPark.Model.Enums;
+
 namespace AnimalPark.Model.Interfaces
 {
     /// <summary>

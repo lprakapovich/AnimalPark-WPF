@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
-using AnimalPark.Model;
+using AnimalPark.Model.Enums;
 
 namespace AnimalPark.Utils.Converters
 {

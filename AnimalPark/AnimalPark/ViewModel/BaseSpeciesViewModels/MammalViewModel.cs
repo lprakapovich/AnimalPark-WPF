@@ -1,5 +1,6 @@
 ﻿using AnimalPark.Common;
 using AnimalPark.Model;
+using AnimalPark.Model.Enums;
 using AnimalPark.Model.Interfaces;
 using AnimalPark.ViewModel.SpeciesViewModels;
 

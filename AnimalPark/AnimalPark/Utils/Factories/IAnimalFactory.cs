@@ -1,6 +1,6 @@
 ﻿using AnimalPark.Common;
-using AnimalPark.Model.BaseClasses;
-using AnimalPark.ViewModel;
+using AnimalPark.Model.Bases;
+using AnimalPark.Model.Interfaces;
 
 namespace AnimalPark.Utils.Factories
 {

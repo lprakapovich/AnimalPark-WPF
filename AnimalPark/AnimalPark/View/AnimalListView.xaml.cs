@@ -10,18 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.TextFormatting;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AnimalPark.ViewModel;
 
-namespace AnimalPark
+namespace AnimalPark.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AnimalListView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AnimalListView : UserControl
     {
-        public MainWindow()
+        public AnimalListView()
         {
             InitializeComponent();
         }

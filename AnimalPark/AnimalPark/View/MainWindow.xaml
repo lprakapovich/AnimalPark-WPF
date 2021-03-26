@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AnimalPark"
         xmlns:c="clr-namespace:AnimalPark.Utils.Converters"
+        xmlns:view="clr-namespace:AnimalPark.View"
+        xmlns:viewModel="clr-namespace:AnimalPark.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="800">
+
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
 
     <Window.Resources>
         <Style TargetType="Button">
@@ -80,8 +86,7 @@
 
                 <GroupBox Grid.Row="1" Grid.Column="5" Grid.RowSpan="4" Grid.ColumnSpan="2" Header="Species Type">
                     <ListBox ItemsSource="{Binding SpeciesTypes, UpdateSourceTrigger=PropertyChanged}"
-                             SelectedItem="{Binding SelectedSpecies, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                             SelectedIndex="{Binding SelectedSpeciesTypeIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                             SelectedItem="{Binding SelectedSpecies, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     </ListBox>
                 </GroupBox>
 
@@ -89,8 +94,10 @@
 
                 <Label Grid.Column="4" Grid.Row="6" Content="{Binding SelectedSpecies, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 <CheckBox Grid.Row="6" Grid.Column="5" Content="List all animals" IsChecked="{Binding IsCheckedListAllAnimals}"></CheckBox>
-                <Button Grid.Row="7" Grid.Column="5" Width="100" Content="Add animal" Command="{Binding AddAnimalCommand}"/>
+                <Button Grid.Row="7" Grid.Column="5" Width="100" Content="Add animal" Command="{Binding CreateAnimalCommand}"/>
             </Grid>
         </GroupBox>
+
+        <ContentControl Grid.Row="2" Content="{Binding AnimalListViewModel}"/>
     </Grid>
 </Window>

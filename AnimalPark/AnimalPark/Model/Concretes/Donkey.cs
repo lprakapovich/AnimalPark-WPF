@@ -1,13 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AnimalPark.Model.BaseClasses;
+﻿using AnimalPark.Model.Bases;
+using AnimalPark.Model.Enums;
 
 namespace AnimalPark.Model.Concretes
 {
-    public class Donkey 
+    public class Donkey : Mammal
     {
+        private int _stubbornness;
+        public Donkey(string name, int age, Gender gender, bool isDomesticated, int stubbornness) : base(name, age, gender, isDomesticated)
+        {
+            Stubbornness = stubbornness;
+        }
+         
+        public int Stubbornness
+        {
+            get => _stubbornness;
+            set => _stubbornness = value;
+        }
     }
 }

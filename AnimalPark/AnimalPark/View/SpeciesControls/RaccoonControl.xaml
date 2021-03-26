@@ -11,8 +11,10 @@
         <converters:RaccoonTypeConverter x:Key="RaccoonConverter"/>
 </UserControl.Resources>
     <Grid>
-       <ComboBox ItemsSource="{Binding Source={StaticResource RaccoonConverter}, Path=RaccoonTypes}"
-                 SelectedIndex="0"
-                 SelectedItem="{Binding Type, Converter={StaticResource RaccoonConverter}}"/>
+        <GroupBox Header="Raccoon Characteristics">
+            <ComboBox ItemsSource="{Binding Source={StaticResource RaccoonConverter}, Path=RaccoonTypes}"
+                      SelectedIndex="0"
+                      SelectedItem="{Binding Type, Converter={StaticResource RaccoonConverter}}"/>
+        </GroupBox>
     </Grid>
 </UserControl>

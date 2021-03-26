@@ -1,4 +1,5 @@
-﻿using AnimalPark.Model.BaseClasses;
+﻿using AnimalPark.Model.Bases;
+using AnimalPark.Model.Enums;
 
 namespace AnimalPark.Model.Concretes
 {

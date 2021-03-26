@@ -1,8 +1,6 @@
-﻿using System;
-using AnimalPark.Common;
+﻿using AnimalPark.Common;
 using AnimalPark.Model.Concretes;
 using AnimalPark.Model.Interfaces;
-using AnimalPark.ViewModel.BaseSpeciesViewModels;
 
 namespace AnimalPark.ViewModel.SpeciesViewModels
 {

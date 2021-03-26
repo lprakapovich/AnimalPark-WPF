@@ -1,4 +1,5 @@
 ﻿using AnimalPark.Model;
+using AnimalPark.Model.Enums;
 
 namespace AnimalPark.Utils.Factories
 {
@@ -15,7 +16,7 @@ namespace AnimalPark.Utils.Factories
                     return new FishFactory();
 
                 default:
-                    return new MammalFactory();
+                    return null;
             }
         }
     }

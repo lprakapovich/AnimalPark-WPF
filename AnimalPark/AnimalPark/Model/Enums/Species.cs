@@ -1,23 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AnimalPark.Model
+﻿
+namespace AnimalPark.Model.Enums
 {
     public enum Species
     {
-        Panda,
         Donkey,
         Raccoon,
         JellyFish,
         Prawn,
-        Crow, 
-        Dove,
-        Sparrow,
-        Dragonfly,
-        Grasshopper,
         Unknown
     }
 }

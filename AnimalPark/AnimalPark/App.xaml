@@ -7,6 +7,7 @@
              xmlns:vm="clr-namespace:AnimalPark.ViewModel"
              xmlns:speciesViewModels="clr-namespace:AnimalPark.ViewModel.SpeciesViewModels"
              xmlns:baseSpeciesViewModels="clr-namespace:AnimalPark.ViewModel.BaseSpeciesViewModels"
+             xmlns:view="clr-namespace:AnimalPark.View"
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
          <DataTemplate DataType="{x:Type baseSpeciesViewModels:FishViewModel}">
@@ -24,5 +25,11 @@
         <DataTemplate DataType="{x:Type speciesViewModels:RaccoonViewModel}">
             <species:RaccoonControl/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AnimalListViewModel}">
+            <view:AnimalListView/>
+        </DataTemplate>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="30"></Setter>
+        </Style>
     </Application.Resources>
 </Application>

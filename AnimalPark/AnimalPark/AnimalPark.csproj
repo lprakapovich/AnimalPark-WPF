@@ -60,6 +60,7 @@
     <Compile Include="Model\Enums\Category.cs" />
     <Compile Include="Model\Concretes\JellyFishType.cs" />
     <Compile Include="Model\Concretes\RaccoonType.cs" />
+    <Compile Include="Utils\AnimalManager.cs" />
     <Compile Include="Utils\EnumHelper.cs" />
     <Compile Include="Model\Enums\Species.cs" />
     <Compile Include="Utils\Converters\BaseSpeciesConverter.cs" />
@@ -73,7 +74,15 @@
     <Compile Include="Utils\Factories\MammalFactory.cs" />
     <Compile Include="Model\Interfaces\IFish.cs" />
     <Compile Include="Model\Interfaces\IMammal.cs" />
+    <Compile Include="ViewModel\AnimalListViewModel.cs" />
+    <Compile Include="ViewModel\SpeciesViewModels\DonkeyVewModel.cs" />
     <Compile Include="ViewModel\SpeciesViewModels\RaccoonViewModel.cs" />
+    <Compile Include="View\AnimalListView.xaml.cs">
+      <DependentUpon>AnimalListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SpeciesControls\DonkeyControl.xaml.cs">
+      <DependentUpon>DonkeyControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SpeciesControls\JellyFishControl.xaml.cs">
       <DependentUpon>JellyFishControl.xaml</DependentUpon>
     </Compile>
@@ -83,6 +92,10 @@
     <Compile Include="View\SpeciesControls\RaccoonControl.xaml.cs">
       <DependentUpon>RaccoonControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\AnimalListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CategoriesControls\FishControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -116,6 +129,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\SpeciesControls\DonkeyControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\SpeciesControls\JellyFishControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -130,21 +147,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\BaseClasses\Animal.cs" />
-    <Compile Include="Model\BaseClasses\Bird.cs" />
-    <Compile Include="Model\Concretes\Dragonfly.cs" />
-    <Compile Include="Model\BaseClasses\Fish.cs" />
-    <Compile Include="Model\BaseClasses\Insect.cs" />
-    <Compile Include="Model\BaseClasses\Mammal.cs" />
+    <Compile Include="Model\Bases\Animal.cs" />
+    <Compile Include="Model\Bases\Fish.cs" />
+    <Compile Include="Model\Bases\Mammal.cs" />
     <Compile Include="Model\Concretes\Prawn.cs" />
-    <Compile Include="Model\Concretes\Crow.cs" />
     <Compile Include="Model\Concretes\Donkey.cs" />
-    <Compile Include="Model\Concretes\Dove.cs" />
-    <Compile Include="Model\Concretes\Grasshopper.cs" />
-    <Compile Include="Model\Concretes\Panda.cs" />
     <Compile Include="Model\Concretes\Raccoon.cs" />
     <Compile Include="Model\Concretes\JellyFish.cs" />
-    <Compile Include="Model\Concretes\Sparrow.cs" />
     <Compile Include="Model\Enums\Gender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

@@ -1,14 +1,18 @@
 ﻿using AnimalPark.Common;
-using AnimalPark.Model;
-using AnimalPark.Model.BaseClasses;
 using AnimalPark.Utils;
 using AnimalPark.Utils.Factories;
 using AnimalPark.ViewModel.BaseSpeciesViewModels;
 using System.Collections.Generic;
-using static AnimalPark.Model.Species;
+using AnimalPark.Model.Bases;
+using AnimalPark.Model.Enums;
+using AnimalPark.Model.Interfaces;
+using static AnimalPark.Model.Enums.Species;
 
 namespace AnimalPark.ViewModel
 {
+    /// <summary>
+    /// Main class handling animal creation
+    /// </summary>
     public class MainViewModel : BindableBase
     {
         #region Setup
@@ -16,6 +20,7 @@ namespace AnimalPark.ViewModel
         public MainViewModel()
         {
             Category = Category.Mammal;
+            AnimalListViewModel = new AnimalListViewModel();
         }
 
         #endregion
@@ -28,37 +33,6 @@ namespace AnimalPark.ViewModel
                 _category = value;
                 UpdateCategoryControl();
                 OnPropertyChanged(nameof(Category));
-            }
-        }
-
-        /// <summary>
-        /// If ListAllSpecies is checked,
-        /// category control gets informed about
-        /// and updates GUI accordingly
-        /// </summary>
-        private void UpdateCategoryControl()
-        {
-            switch (Category)
-            {
-                case Category.Mammal:
-                    CategoryControl = new MammalViewModel();
-                    break;
-                case Category.Fish:
-                    CategoryControl = new FishViewModel();
-                    break;
-                default:
-                    CategoryControl = new MammalViewModel();
-                    break;
-            }
-
-            if (IsCheckedListAllAnimals)
-            {
-                CategoryControl.OnSpeciesSelected(SelectedSpecies);
-            }
-            else
-            {
-                OnPropertyChanged(nameof(SpeciesTypes));
-                SelectedSpecies = Unknown;
             }
         }
 
@@ -90,9 +64,48 @@ namespace AnimalPark.ViewModel
             }
         }
 
+        public AnimalListViewModel AnimalListViewModel
+        {
+            get => _animalListViewModel;
+            set
+            {
+                if (value != null)
+                {
+                    _animalListViewModel = value;
+                    OnPropertyChanged(nameof(AnimalListViewModel));
+                }
+            }
+        }
+
         public bool CategoryListEnabled
         {
             get => !IsCheckedListAllAnimals;
+        }
+
+        private void UpdateCategoryControl()
+        {
+            switch (Category)
+            {
+                case Category.Mammal:
+                    CategoryControl = new MammalViewModel();
+                    break;
+                case Category.Fish:
+                    CategoryControl = new FishViewModel();
+                    break;
+                default:
+                    CategoryControl = new MammalViewModel();
+                    break;
+            }
+
+            if (IsCheckedListAllAnimals)
+            {
+                CategoryControl.OnSpeciesSelected(SelectedSpecies);
+            }
+            else
+            {
+                OnPropertyChanged(nameof(SpeciesTypes));
+                SelectedSpecies = Unknown;
+            }
         }
 
         private void OnSpeciesSelected()
@@ -107,28 +120,9 @@ namespace AnimalPark.ViewModel
 
         private void CreateAnimal()
         {
-            Animal = FactoryBuilder.GetAnimalFactory(Category).CreateAnimal(this, CategoryControl);
+            Animal = FactoryBuilder.GetAnimalFactory(Category)?.CreateAnimal(this, CategoryControl);
+            AnimalListViewModel.AddAnimal(Animal);
         }
-
-
-        //public Species SpeciesType
-        //{
-        //    get => SpeciesTypes[SelectedSpeciesTypeIndex == -1 ? 0 : SelectedSpeciesTypeIndex];
-        //    set => OnPropertyChanged(nameof(SpeciesType));
-        //}
-
-        //public int SelectedSpeciesTypeIndex
-        //{
-        //    get => _selectedSpeciesTypeIndex;
-        //    set
-        //    {
-        //        _selectedSpeciesTypeIndex = value;
-        //        //UpdateSpeciesControl();
-        //        OnPropertyChanged(nameof(SelectedSpeciesTypeIndex));
-        //        OnPropertyChanged(nameof(SpeciesType));
-        //    }
-        //}
-
 
         public string Name
         {
@@ -155,7 +149,6 @@ namespace AnimalPark.ViewModel
         }
 
         private bool _isCheckedListAllAnimals;
-
         public bool IsCheckedListAllAnimals
         {
             get => _isCheckedListAllAnimals;
@@ -178,9 +171,7 @@ namespace AnimalPark.ViewModel
                    (_createAnimalCommand = new RelayCommand(ex => { CreateAnimal(); }, canEx => AllDataFilled));
         }
 
-        public bool AllDataFilled => AnimalDataFilled && CategoryDataFilled && SpeciesDataFilled;
-
-        private bool SpeciesDataFilled { get; set; }
+        public bool AllDataFilled => AnimalDataFilled && CategoryDataFilled;
 
         private bool CategoryDataFilled { get; set; }
 
@@ -190,26 +181,16 @@ namespace AnimalPark.ViewModel
 
         #region Private Fields
 
-        /// <summary>
-        /// Main View model handles input for
-        /// all the common fields from the Animal class
-        /// </summary>
         private string _name;
         private int _age;
         private Gender _gender;
         private Category _category;
 
-        /// <summary>
-        /// Created animal
-        /// </summary>
-        private Animal _animal;
-
-        /// <summary>
-        /// Selected animal category, e.g. Mammal
-        /// </summary>
         private ICategory _categoryControl;
-
         private Species _selectedSpecies;
+
+        private Animal _animal;
+        private AnimalListViewModel _animalListViewModel;
 
         #endregion
     }

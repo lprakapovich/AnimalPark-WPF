@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using AnimalPark.Model;
+using AnimalPark.Model.Enums;
 
 namespace AnimalPark.Utils
 {
@@ -27,8 +27,18 @@ namespace AnimalPark.Utils
         {
             return new Dictionary<Category, List<Species>>()
             {
-                {Category.Mammal, new List<Species>() {Species.Raccoon}},
-                {Category.Fish, new List<Species>() {Species.JellyFish, Species.Prawn}}
+                {
+                    Category.Mammal, new List<Species>()
+                    {
+                        Species.Raccoon, Species.Donkey
+                    }
+                },
+                {
+                    Category.Fish, new List<Species>()
+                    {
+                        Species.JellyFish, Species.Prawn
+                    }
+                }
             };
         }
 

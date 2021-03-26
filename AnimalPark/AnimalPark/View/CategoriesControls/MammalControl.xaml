@@ -6,30 +6,24 @@
              xmlns:local="clr-namespace:AnimalPark.View.CategoriesControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="White">
-
     <UserControl.Resources>
         <Style TargetType="GroupBox">
             <Setter Property="Margin" Value="5  5"/>
             <Setter Property="Padding" Value="5 5"/>
         </Style>
     </UserControl.Resources>
-
     <Grid>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
         <GroupBox Grid.Row="0" Grid.Column="0">
             <CheckBox Content="Is domesticated" IsChecked="{Binding IsDomesticated, UpdateSourceTrigger=PropertyChanged}" />
         </GroupBox>
-
         <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding SelectedSpeciesControl}"></ContentControl>
     </Grid>
 </UserControl>

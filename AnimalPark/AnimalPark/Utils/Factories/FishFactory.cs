@@ -1,7 +1,8 @@
 ﻿using AnimalPark.Common;
-using AnimalPark.Model;
-using AnimalPark.Model.BaseClasses;
+using AnimalPark.Model.Bases;
 using AnimalPark.Model.Concretes;
+using AnimalPark.Model.Enums;
+using AnimalPark.Model.Interfaces;
 using AnimalPark.ViewModel;
 using AnimalPark.ViewModel.BaseSpeciesViewModels;
 using AnimalPark.ViewModel.SpeciesViewModels;

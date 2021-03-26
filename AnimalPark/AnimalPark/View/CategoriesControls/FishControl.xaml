@@ -12,23 +12,19 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
         <GroupBox Grid.Column="0" Grid.Row="0" Header="Fish specifications">
             <DockPanel>
                 <CheckBox Content="Lives in a salt water?" IsChecked="{Binding IsSaltWater, UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel> 
         </GroupBox>
-
         <ContentControl Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Content="{Binding SelectedSpeciesControl, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>
