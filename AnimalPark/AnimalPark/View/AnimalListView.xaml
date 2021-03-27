@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AnimalPark.View"
              xmlns:c="clr-namespace:AnimalPark.Utils.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="800">
@@ -37,9 +36,9 @@
                           HorizontalAlignment="Center">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="120" Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                            <GridViewColumn Width="120" Header="Age" DisplayMemberBinding="{Binding Age}"/>
-                            <GridViewColumn Width="120" Header="Gender" DisplayMemberBinding="{Binding Gender}"/>
+                            <GridViewColumn Width="150" Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Width="150" Header="Age" DisplayMemberBinding="{Binding Age}"/>
+                            <GridViewColumn Width="150" Header="Gender" DisplayMemberBinding="{Binding Gender}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
