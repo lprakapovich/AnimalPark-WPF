@@ -5,8 +5,8 @@ using AnimalPark.Model.Enums;
 namespace AnimalPark.Model.Interfaces
 {
     /// <summary>
-    /// Top-hierarchy
-    /// Interface for view models related to category, e.g. FishViewModel or MammalViewModel
+    /// Top-level interface for view models representing any animal category,
+    /// e.g. FishViewModel or MammalViewModel
     /// </summary>
     public interface ICategory
     {

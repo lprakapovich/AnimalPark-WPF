@@ -35,7 +35,8 @@ namespace AnimalPark.Utils.Validators
 
         private static void ValidatePositiveNumeric(string property, object value, ICollection<string> errors)
         {
-            if (!int.TryParse((string)value, out int parsed))
+
+            if ((string)value == null || !int.TryParse((string)value, out int parsed))
             {
                 errors.Add($"Couldn't parse {value} to int");
             }

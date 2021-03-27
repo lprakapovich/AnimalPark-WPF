@@ -4,6 +4,9 @@ using AnimalPark.Model.Interfaces;
 
 namespace AnimalPark.ViewModel.SpeciesViewModels
 {
+    /// <summary>
+    /// DataContext for the control with data specific for Prawn
+    /// </summary>
     public class PrawnViewModel : BindableBase, IFish 
     {
         private bool _canBeEaten;
@@ -14,8 +17,12 @@ namespace AnimalPark.ViewModel.SpeciesViewModels
             set
             {
                 _canBeEaten = value;
-                OnPropertyChanged(nameof(CanBeEaten));
-            }
+           }
+        }
+
+        public PrawnViewModel()
+        {
+            ChildDataErrorDelegate?.Invoke(true);
         }
 
         public event Action<bool> ChildDataErrorDelegate;

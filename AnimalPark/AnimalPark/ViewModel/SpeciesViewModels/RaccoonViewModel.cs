@@ -5,6 +5,9 @@ using AnimalPark.Model.Interfaces;
 
 namespace AnimalPark.ViewModel.SpeciesViewModels
 {
+    /// <summary>
+    /// DataContext for the control with data specific for Raccoon
+    /// </summary>
     public class RaccoonViewModel : BindableBase, IMammal
     {
         private RaccoonType _type;
@@ -12,7 +15,15 @@ namespace AnimalPark.ViewModel.SpeciesViewModels
         public RaccoonType Type
         {
             get => _type;
-            set => _type = value;
+            set
+            {
+                _type = value;
+            }
+        }
+
+        public RaccoonViewModel()
+        {
+            ChildDataErrorDelegate?.Invoke(true);
         }
 
         public event Action<bool> ChildDataErrorDelegate;

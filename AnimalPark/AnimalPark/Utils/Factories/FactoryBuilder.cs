@@ -3,6 +3,9 @@ using AnimalPark.Model.Enums;
 
 namespace AnimalPark.Utils.Factories
 {
+    /// <summary>
+    /// Factory helping to separate object creation depending on the category
+    /// </summary>
     public static class FactoryBuilder
     {
         public static IAnimalFactory GetAnimalFactory(Category category)

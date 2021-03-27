@@ -16,7 +16,8 @@ using static AnimalPark.Utils.Validators.ValidationService.ValidationType;
 namespace AnimalPark.ViewModel
 {
     /// <summary>
-    /// Main class handling animal creation
+    /// Main class handling animal creation, and dynamic creation of the controls
+    /// containing properties specific for each animal category / species type
     /// </summary>
     public class MainViewModel : BindableBase
     {
@@ -140,17 +141,16 @@ namespace AnimalPark.ViewModel
         {
             if (SelectedSpecies == Unknown)
             {
-                ErrorMessageDelegate?.Invoke("To add an animal, select a species category first.");
+                ErrorMessageDelegate?.Invoke("Select a species type first.");
             }
             else if (!IsViewModelValid)
             {
-                ErrorMessageDelegate?.Invoke("Some fields are invalid!");
+                ErrorMessageDelegate?.Invoke("Some fields are empty or invalid!");
             }
             else
             {
                 Animal = FactoryBuilder.GetAnimalFactory(Category)?.CreateAnimal(this, CategoryControl);
                 AnimalListViewModel.AddAnimal(Animal);
-                ResetInputControls();
             }
         }
 
@@ -259,11 +259,7 @@ namespace AnimalPark.ViewModel
         {
             Category = Category.Mammal;
             SelectedSpecies = Unknown;
-        }
-
-        private void ResetInputControls()
-        {
-            Name = string.Empty;
+            ChildViewModelValid = false;
         }
 
         private bool ChildViewModelValid { get; set; }

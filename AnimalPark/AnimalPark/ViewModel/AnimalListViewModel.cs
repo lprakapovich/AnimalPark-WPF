@@ -6,7 +6,8 @@ using AnimalPark.Model.Bases;
 namespace AnimalPark.ViewModel
 {
     /// <summary>
-    /// Class managing the list of animals
+    /// Class managing the list of animals, used instead of AnimalManager mentioned in the
+    /// instructions to follow WPF naming conventions
     /// </summary>
     public class AnimalListViewModel : BindableBase
     {

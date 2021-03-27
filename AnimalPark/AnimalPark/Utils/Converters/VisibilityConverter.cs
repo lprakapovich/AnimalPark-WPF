@@ -5,6 +5,10 @@ using System.Windows.Data;
 
 namespace AnimalPark.Utils.Converters
 {
+    /// <summary>
+    /// Converter helping to control the visibility of the xaml element,
+    /// depending ob the boolean property it is bound to
+    /// </summary>
     public class VisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

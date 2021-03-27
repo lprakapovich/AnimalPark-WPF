@@ -9,6 +9,9 @@ using static AnimalPark.Utils.Validators.ValidationService.ValidationType;
 
 namespace AnimalPark.ViewModel.SpeciesViewModels
 {
+    /// <summary>
+    /// DataContext for the control with data specific for Donkey
+    /// </summary>
     public class DonkeyViewModel : BindableBase, IMammal
     {
         private string _stubbornness;
