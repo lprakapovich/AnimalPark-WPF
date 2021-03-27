@@ -23,5 +23,7 @@ namespace AnimalPark.Model.Concretes
         {
             return base.ToString() + "\nType: " + _type;
         }
+
+        public override FoodSchedule FoodSchedule { get; set; }
     }
 }

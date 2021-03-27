@@ -1,9 +1,10 @@
 ﻿
 using AnimalPark.Model.Enums;
+using AnimalPark.Model.Interfaces;
 
 namespace AnimalPark.Model.Bases 
 {
-    public abstract class Animal
+    public abstract class Animal : IAnimal
     {
         private string _id;
         private string _name;
@@ -45,5 +46,15 @@ namespace AnimalPark.Model.Bases
         {
             return "Name: " + Name + "\nAge: " + Age + "\nGender: " + Gender;
         }
+
+        public virtual string ExtraInfo
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        public abstract FoodSchedule FoodSchedule { get; set; }
     }
 }

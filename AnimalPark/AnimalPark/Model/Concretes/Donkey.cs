@@ -21,5 +21,7 @@ namespace AnimalPark.Model.Concretes
         {
             return base.ToString() + "\nStubbornness level: " + _stubbornness;
         }
+
+        public override FoodSchedule FoodSchedule { get; set; }
     }
 }

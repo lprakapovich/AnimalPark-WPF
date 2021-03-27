@@ -17,5 +17,7 @@ namespace AnimalPark.Model.Concretes
         {
             return base.ToString() + "\nCan be eaten? " + _canBeEaten;
         }
+
+        public override FoodSchedule FoodSchedule { get; set; }
     }
 }
