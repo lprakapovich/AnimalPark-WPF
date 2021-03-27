@@ -16,5 +16,10 @@ namespace AnimalPark.Model.Concretes
             get => _stubbornness;
             set => _stubbornness = value;
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + "\nStubbornness level: " + _stubbornness;
+        }
     }
 }

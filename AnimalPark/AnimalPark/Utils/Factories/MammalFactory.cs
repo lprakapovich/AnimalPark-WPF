@@ -22,7 +22,7 @@ namespace AnimalPark.Utils.Factories
                 case Species.Raccoon:
                     animal = new Raccoon(
                         context.Name,
-                        context.Age,
+                        int.Parse(context.Age),
                         context.Gender,
                         ((MammalViewModel)(baseContext)).IsDomesticated,
                         ((RaccoonViewModel) (baseContext.SelectedSpeciesControl)).Type);
@@ -31,10 +31,10 @@ namespace AnimalPark.Utils.Factories
                 case Species.Donkey:
                     animal = new Donkey(
                         context.Name,
-                        context.Age,
+                        int.Parse(context.Age),
                         context.Gender,
                         ((MammalViewModel)(baseContext)).IsDomesticated,
-                        ((DonkeyVewModel)(baseContext.SelectedSpeciesControl)).Stubbornness);
+                        int.Parse(((DonkeyViewModel)(baseContext.SelectedSpeciesControl)).Stubbornness));
                     break;
             }
 

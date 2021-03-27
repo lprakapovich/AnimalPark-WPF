@@ -1,4 +1,5 @@
-﻿using AnimalPark.Common;
+﻿using System;
+using AnimalPark.Common;
 using AnimalPark.Model.Interfaces;
 
 namespace AnimalPark.ViewModel.SpeciesViewModels
@@ -16,5 +17,7 @@ namespace AnimalPark.ViewModel.SpeciesViewModels
                 OnPropertyChanged(nameof(CanBeEaten));
             }
         }
+
+        public event Action<bool> ChildDataErrorDelegate;
     }
 }

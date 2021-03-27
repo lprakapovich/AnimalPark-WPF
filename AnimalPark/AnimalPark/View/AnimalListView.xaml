@@ -4,14 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnimalPark.View"
+             xmlns:c="clr-namespace:AnimalPark.Utils.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="250" d:DesignWidth="800">
 
     <UserControl.Resources>
         <Style TargetType="ListView">
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="MinHeight" Value="200"/>
+            <Setter Property="MinHeight" Value="50"/>
         </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="Margin" Value="15 5"/>
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="10 "/>
+        </Style>
+        <c:VisibilityConverter x:Key="VisibilityConverter"/>
     </UserControl.Resources>
     <Grid>
        <GroupBox Header="List of registered animals">
@@ -29,13 +37,17 @@
                           HorizontalAlignment="Center">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="160" Header="ID" DisplayMemberBinding="{Binding Id}"/>
-                            <GridViewColumn Width="160" Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                            <GridViewColumn Width="160" Header="Age" DisplayMemberBinding="{Binding Age}"/>
-                            <GridViewColumn Width="160" Header="Gender" DisplayMemberBinding="{Binding Gender}"/>
+                            <GridViewColumn Width="120" Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Width="120" Header="Age" DisplayMemberBinding="{Binding Age}"/>
+                            <GridViewColumn Width="120" Header="Gender" DisplayMemberBinding="{Binding Gender}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
+
+                <StackPanel Grid.Column="2" Visibility="{Binding IsAnimalSelected, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}">
+                    <Label FontSize="14" Content="Information about the animal"/>
+                    <TextBlock FontSize="12" Text="{Binding SelectedAnimalDescription, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
             </Grid>
        </GroupBox>
     </Grid>

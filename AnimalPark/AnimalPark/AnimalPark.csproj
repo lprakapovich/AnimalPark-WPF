@@ -60,7 +60,7 @@
     <Compile Include="Model\Enums\Category.cs" />
     <Compile Include="Model\Concretes\JellyFishType.cs" />
     <Compile Include="Model\Concretes\RaccoonType.cs" />
-    <Compile Include="Utils\AnimalManager.cs" />
+    <Compile Include="Utils\Converters\VisibilityConverter.cs" />
     <Compile Include="Utils\EnumHelper.cs" />
     <Compile Include="Model\Enums\Species.cs" />
     <Compile Include="Utils\Converters\BaseSpeciesConverter.cs" />
@@ -74,9 +74,13 @@
     <Compile Include="Utils\Factories\MammalFactory.cs" />
     <Compile Include="Model\Interfaces\IFish.cs" />
     <Compile Include="Model\Interfaces\IMammal.cs" />
+    <Compile Include="Utils\Validators\ValidationService.cs" />
     <Compile Include="ViewModel\AnimalListViewModel.cs" />
-    <Compile Include="ViewModel\SpeciesViewModels\DonkeyVewModel.cs" />
+    <Compile Include="ViewModel\SpeciesViewModels\DonkeyViewModel.cs" />
     <Compile Include="ViewModel\SpeciesViewModels\RaccoonViewModel.cs" />
+    <Compile Include="View\AnimalDetailsControl.xaml.cs">
+      <DependentUpon>AnimalDetailsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AnimalListView.xaml.cs">
       <DependentUpon>AnimalListView.xaml</DependentUpon>
     </Compile>
@@ -92,6 +96,10 @@
     <Compile Include="View\SpeciesControls\RaccoonControl.xaml.cs">
       <DependentUpon>RaccoonControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\AnimalDetailsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AnimalListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

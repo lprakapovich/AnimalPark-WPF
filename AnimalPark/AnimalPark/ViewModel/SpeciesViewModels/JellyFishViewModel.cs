@@ -1,4 +1,5 @@
-﻿using AnimalPark.Common;
+﻿using System;
+using AnimalPark.Common;
 using AnimalPark.Model.Concretes;
 using AnimalPark.Model.Interfaces;
 
@@ -13,5 +14,7 @@ namespace AnimalPark.ViewModel.SpeciesViewModels
             get => _type;
             set => _type = value;
         }
+
+        public event Action<bool> ChildDataErrorDelegate; 
     }
 }

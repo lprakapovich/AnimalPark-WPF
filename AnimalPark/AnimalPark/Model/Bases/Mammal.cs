@@ -10,5 +10,10 @@ namespace AnimalPark.Model.Bases
         {
             _isDomesticated = isDomesticated;
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + "\nIs domesticated? " + _isDomesticated;
+        }
     }
 }

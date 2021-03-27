@@ -40,5 +40,10 @@ namespace AnimalPark.Model.Bases
             get => _gender;
             set => _gender = value;
         }
+
+        public override string ToString()
+        {
+            return "Name: " + Name + "\nAge: " + Age + "\nGender: " + Gender;
+        }
     }
 }

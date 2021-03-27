@@ -12,19 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using AnimalPark.ViewModel;
 
-namespace AnimalPark
+namespace AnimalPark.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AnimalDetailsControl.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AnimalDetailsControl : UserControl
     {
-        public MainWindow()
+        public AnimalDetailsControl()
         {
             InitializeComponent();
-            ((MainViewModel) (this.DataContext)).ErrorMessageDelegate += s => MessageBox.Show(s);
         }
     }
 }

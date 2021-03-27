@@ -10,5 +10,10 @@ namespace AnimalPark.Model.Bases
         {
             _isSaltwater = isSaltWater;
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + "\nLives in a salt water? " + _isSaltwater;
+        }
     }
 }

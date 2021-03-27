@@ -17,5 +17,10 @@ namespace AnimalPark.Model.Concretes
             get => _type;
             set => _type = value;
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + "\n Type: " + _type;
+        }
     }
 }

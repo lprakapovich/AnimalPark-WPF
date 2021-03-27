@@ -2,12 +2,13 @@
 using AnimalPark.Model.Enums;
 using AnimalPark.Model.Interfaces;
 using AnimalPark.ViewModel.SpeciesViewModels;
-
-namespace AnimalPark.ViewModel.BaseSpeciesViewModels 
+ 
+namespace AnimalPark.ViewModel.BaseSpeciesViewModels  
 {
     public class FishViewModel : BindableBase, ICategory
     {
         private bool _isSaltWater;
+
         private IFish _fishSpeciesViewModel;
 
         public bool IsSaltWater

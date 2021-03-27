@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace AnimalPark.Common
 {
@@ -25,6 +22,13 @@ namespace AnimalPark.Common
 
         #region Validation
 
+        private readonly Dictionary<string, ICollection<string>> _errors = new Dictionary<string, ICollection<string>>();
+
+        protected void RaiseErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+
         public IEnumerable GetErrors(string propertyName)
         {
             if (string.IsNullOrEmpty(propertyName) || !_errors.ContainsKey(propertyName))
@@ -35,18 +39,12 @@ namespace AnimalPark.Common
             return _errors[propertyName];
         }
 
-        protected void RaiseErrorsChanged(string propertyName)
-        {
-           ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-        }
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         public bool HasErrors => _errors.Any();
 
-        public readonly Dictionary<string, ICollection<string>> _errors = new Dictionary<string, ICollection<string>>();
-
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        public Dictionary<string, ICollection<string>> Errors => _errors;
 
         #endregion
-
     }
 }

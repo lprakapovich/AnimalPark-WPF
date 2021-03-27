@@ -3,12 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AnimalPark"
         xmlns:c="clr-namespace:AnimalPark.Utils.Converters"
-        xmlns:view="clr-namespace:AnimalPark.View"
         xmlns:viewModel="clr-namespace:AnimalPark.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="800">
+        Title="Apu Animal Park" Height="550" Width="1000">
 
     <Window.DataContext>
         <viewModel:MainViewModel/>
@@ -22,15 +20,20 @@
             <Setter Property="Margin" Value="5 "/>
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="Margin" Value="5 "/>
+            <Setter Property="Margin" Value="5 10"/>
         </Style>
         <Style TargetType="GroupBox">
-            <Setter Property="Margin" Value="5  5"/>
-            <Setter Property="Padding" Value="3 3"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="3"/>
+        </Style>
+        <Style TargetType="ListBox">
+            <Setter Property="MinWidth" Value="100"/>
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="Margin" Value="5 0 "/>
         </Style>
         <c:BaseSpeciesConverter x:Key="BaseSpeciesConverter"/>
         <c:GenderConverter x:Key="GenderConverter"/>
-
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -50,6 +53,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="10"/>
                 </Grid.ColumnDefinitions>
@@ -61,15 +65,16 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="2" Grid.Column="1" Content="Name"/>
-                <TextBox Grid.Row="2" Grid.Column="2" Width="100"/>
+                <TextBox Grid.Row="2" Grid.Column="2" Width="170" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                         Validation.ErrorTemplate="{StaticResource ErrorTemplate}"/>
                 <Label Grid.Row="3" Grid.Column="1" Content="Age"/>
-                <TextBox Grid.Row="3" Grid.Column="2" Width="100"/>
+                <TextBox Grid.Row="3" Grid.Column="2" Width="170" Text="{Binding Age, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                         Validation.ErrorTemplate="{StaticResource ErrorTemplate}"/>
 
                 <GroupBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Header="Gender">
                     <ListBox ItemsSource="{Binding Source={StaticResource GenderConverter}, Path=GenderStrings}"
@@ -84,20 +89,18 @@
                     </ListBox>
                 </GroupBox>
 
-                <GroupBox Grid.Row="1" Grid.Column="5" Grid.RowSpan="4" Grid.ColumnSpan="2" Header="Species Type">
-                    <ListBox ItemsSource="{Binding SpeciesTypes, UpdateSourceTrigger=PropertyChanged}"
+                <GroupBox Grid.Row="1" Grid.Column="5" Grid.RowSpan="4" Header="Species Type">
+                    <ListBox ItemsSource="{Binding SpeciesList, UpdateSourceTrigger=PropertyChanged}"
                              SelectedItem="{Binding SelectedSpecies, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     </ListBox>
                 </GroupBox>
 
-                <ContentControl Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Content="{Binding CategoryControl, UpdateSourceTrigger=PropertyChanged}"/>
+                <ContentControl Grid.Row="1" Grid.Column="6" Grid.RowSpan="3" Content="{Binding CategoryControl, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <Label Grid.Column="4" Grid.Row="6" Content="{Binding SelectedSpecies, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 <CheckBox Grid.Row="6" Grid.Column="5" Content="List all animals" IsChecked="{Binding IsCheckedListAllAnimals}"></CheckBox>
                 <Button Grid.Row="7" Grid.Column="5" Width="100" Content="Add animal" Command="{Binding CreateAnimalCommand}"/>
             </Grid>
         </GroupBox>
-
         <ContentControl Grid.Row="2" Content="{Binding AnimalListViewModel}"/>
     </Grid>
 </Window>

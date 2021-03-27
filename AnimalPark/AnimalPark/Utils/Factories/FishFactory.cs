@@ -20,13 +20,13 @@ namespace AnimalPark.Utils.Factories
             switch (context.SelectedSpecies)
             {
                 case Species.Prawn:
-                    animal = new Prawn(context.Name, context.Age, context.Gender, 
+                    animal = new Prawn(context.Name, int.Parse(context.Age), context.Gender, 
                         ((FishViewModel) (categoryContext)).IsSaltWater,
                         ((PrawnViewModel) (categoryContext.SelectedSpeciesControl)).CanBeEaten);
                     break;
 
                 case Species.JellyFish:
-                    animal = new JellyFish(context.Name, context.Age, context.Gender,
+                    animal = new JellyFish(context.Name, int.Parse(context.Age), context.Gender,
                         ((FishViewModel) (categoryContext)).IsSaltWater,
                         ((JellyFishViewModel) (categoryContext.SelectedSpeciesControl)).Type);
                     break;

@@ -21,9 +21,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0" Grid.Column="0">
+        <GroupBox Grid.Row="0" Grid.Column="0" Header="Mammal characteristics">
             <CheckBox Content="Is domesticated" IsChecked="{Binding IsDomesticated, UpdateSourceTrigger=PropertyChanged}" />
         </GroupBox>
-        <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding SelectedSpeciesControl}"></ContentControl>
+        <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding SelectedSpeciesControl}"/>
     </Grid>
 </UserControl>

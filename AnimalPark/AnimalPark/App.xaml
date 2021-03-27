@@ -25,11 +25,27 @@
         <DataTemplate DataType="{x:Type speciesViewModels:RaccoonViewModel}">
             <species:RaccoonControl/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type speciesViewModels:DonkeyViewModel}">
+            <species:DonkeyControl/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:AnimalListViewModel}">
             <view:AnimalListView/>
         </DataTemplate>
         <Style TargetType="GroupBox">
             <Setter Property="Margin" Value="30"></Setter>
         </Style>
+        <ControlTemplate x:Key="ErrorTemplate">
+            <StackPanel>
+                <AdornedElementPlaceholder x:Name="textBox"/>
+                <ItemsControl ItemsSource="{Binding}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red">
+                            </TextBlock>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ControlTemplate>
     </Application.Resources>
 </Application>

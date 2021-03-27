@@ -20,7 +20,8 @@ namespace AnimalPark.ViewModel
         public AnimalListViewModel()
         {
             Animals = new ObservableCollection<Animal>();
-            Animals.CollectionChanged += AnimalsOnCollectionChanged; 
+            Animals.CollectionChanged += AnimalsOnCollectionChanged;
+            SelectedAnimal = null;
         }
 
         #region API
@@ -44,8 +45,14 @@ namespace AnimalPark.ViewModel
             { 
                 _selectedAnimal = value;
                 OnPropertyChanged(nameof(SelectedAnimal));
+                OnPropertyChanged(nameof(IsAnimalSelected));
+                OnPropertyChanged(nameof(SelectedAnimalDescription));
             }
         }
+
+        public string SelectedAnimalDescription => SelectedAnimal?.ToString();
+
+        public bool IsAnimalSelected => SelectedAnimal != null;
 
         public void AddAnimal(Animal animal)
         {

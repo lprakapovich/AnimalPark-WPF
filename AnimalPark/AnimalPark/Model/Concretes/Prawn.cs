@@ -12,5 +12,10 @@ namespace AnimalPark.Model.Concretes
         {
             _canBeEaten = canBeEaten;
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + "\nCan be eaten? " + _canBeEaten;
+        }
     }
 }

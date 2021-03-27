@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AnimalPark.View.SpeciesControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -13,9 +12,11 @@
                        <ColumnDefinition Width="*"/>
                        <ColumnDefinition Width="*"/>
                    </Grid.ColumnDefinitions>
-
-                   <Label Grid.Column="0" Content="Stubbornness"/>
-                   <TextBox Grid.Column="1" Text="{Binding Stubbornness}"></TextBox>
+                <Label Grid.Column="0" Content="Stubbornness"/>
+                   <TextBox Grid.Column="1" 
+                            Width="170" 
+                            Text="{Binding Stubbornness, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                            Validation.ErrorTemplate="{StaticResource ErrorTemplate}"/>
             </Grid>
            </GroupBox> 
     </Grid>

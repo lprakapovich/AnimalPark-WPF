@@ -1,12 +1,17 @@
-﻿using AnimalPark.Common;
+﻿using System;
+using AnimalPark.Common;
 using AnimalPark.Utils;
 using AnimalPark.Utils.Factories;
-using AnimalPark.ViewModel.BaseSpeciesViewModels;
 using System.Collections.Generic;
+using System.Linq;
 using AnimalPark.Model.Bases;
 using AnimalPark.Model.Enums;
 using AnimalPark.Model.Interfaces;
+using AnimalPark.Utils.Validators;
+using AnimalPark.ViewModel.BaseSpeciesViewModels;
 using static AnimalPark.Model.Enums.Species;
+using static AnimalPark.Utils.Validators.ValidationService;
+using static AnimalPark.Utils.Validators.ValidationService.ValidationType;
 
 namespace AnimalPark.ViewModel
 {
@@ -19,7 +24,7 @@ namespace AnimalPark.ViewModel
 
         public MainViewModel()
         {
-            Category = Category.Mammal;
+            ResetSettings(); 
             AnimalListViewModel = new AnimalListViewModel();
         }
 
@@ -46,10 +51,10 @@ namespace AnimalPark.ViewModel
             }
         }
 
-        public List<Species> SpeciesTypes
+        public List<Species> SpeciesList
         {
             get => IsCheckedListAllAnimals
-                ? EnumHelper.GetAllValuesAs<Species>(typeof(Species))
+                ? EnumHelper.GetAllValuesAs<Species>(typeof(Species)).Where(s => s != Unknown).ToList()
                 : EnumHelper.GetSpeciesByCategory(Category);
         }
 
@@ -103,7 +108,7 @@ namespace AnimalPark.ViewModel
             }
             else
             {
-                OnPropertyChanged(nameof(SpeciesTypes));
+                OnPropertyChanged(nameof(SpeciesList));
                 SelectedSpecies = Unknown;
             }
         }
@@ -116,39 +121,85 @@ namespace AnimalPark.ViewModel
             }
 
             CategoryControl.OnSpeciesSelected(SelectedSpecies);
+            RegisterEventHandler();
+        }
+
+        private void RegisterEventHandler()
+        {
+            if (CategoryControl.SelectedSpeciesControl != null)
+            {
+                CategoryControl.SelectedSpeciesControl.ChildDataErrorDelegate += (isChildValid) =>
+                {
+                    ChildViewModelValid = isChildValid;
+                    OnPropertyChanged(nameof(IsViewModelValid));
+                };
+            }
         }
 
         private void CreateAnimal()
         {
-            Animal = FactoryBuilder.GetAnimalFactory(Category)?.CreateAnimal(this, CategoryControl);
-            AnimalListViewModel.AddAnimal(Animal);
+            if (SelectedSpecies == Unknown)
+            {
+                ErrorMessageDelegate?.Invoke("To add an animal, select a species category first.");
+            }
+            else if (!IsViewModelValid)
+            {
+                ErrorMessageDelegate?.Invoke("Some fields are invalid!");
+            }
+            else
+            {
+                Animal = FactoryBuilder.GetAnimalFactory(Category)?.CreateAnimal(this, CategoryControl);
+                AnimalListViewModel.AddAnimal(Animal);
+                ResetInputControls();
+            }
         }
 
         public string Name
         {
             get => _name;
-            set => _name = value;
+            set
+            {
+                _name = value;
+                ValidateProperty(nameof(Name), value, StringValidation);
+                OnPropertyChanged(nameof(Name));
+                OnPropertyChanged(nameof(IsViewModelValid));
+            }
         }
 
-        public int Age
+        public string Age 
         {
             get => _age;
-            set => _age = value;
+            set
+            {
+                _age = value;
+                ValidateProperty(nameof(Age), value, NumberValidation);
+                OnPropertyChanged(nameof(Age));
+                OnPropertyChanged(nameof(IsViewModelValid));
+            }
         }
 
         public Gender Gender
         {
             get => _gender;
-            set => _gender = value;
+            set
+            {
+                _gender = value;
+                OnPropertyChanged(nameof(Gender));
+            }
         }
 
         public Animal Animal
         {
             get => _animal;
-            set => _animal = value;
+            set
+            {
+                _animal = value;
+                OnPropertyChanged(nameof(Animal));
+            }
         }
 
         private bool _isCheckedListAllAnimals;
+
         public bool IsCheckedListAllAnimals
         {
             get => _isCheckedListAllAnimals;
@@ -157,9 +208,15 @@ namespace AnimalPark.ViewModel
                 _isCheckedListAllAnimals = value;
                 OnPropertyChanged(nameof(IsCheckedListAllAnimals));
                 OnPropertyChanged(nameof(CategoryListEnabled));
-                OnPropertyChanged(nameof(SpeciesTypes));
+                OnPropertyChanged(nameof(SpeciesList));
             }
         }
+
+        #region Events
+
+        public Action<string> ErrorMessageDelegate;
+
+        #endregion
 
         #region Commands
 
@@ -168,21 +225,54 @@ namespace AnimalPark.ViewModel
         public RelayCommand CreateAnimalCommand
         {
             get => _createAnimalCommand ??
-                   (_createAnimalCommand = new RelayCommand(ex => { CreateAnimal(); }, canEx => AllDataFilled));
+                   (_createAnimalCommand = new RelayCommand(ex => { CreateAnimal(); }));
         }
 
-        public bool AllDataFilled => AnimalDataFilled && CategoryDataFilled;
+        #endregion
 
-        private bool CategoryDataFilled { get; set; }
+        #region Validation
 
-        private bool AnimalDataFilled => !string.IsNullOrEmpty(Name) || Age <= 0;
+        private void ValidateProperty(string property, object value, ValidationType validationType)
+        {
+            bool isValid = ValidationService.IsValid(validationType, property, value, out ICollection<string> errors);
+             
+            if (!isValid)
+            {
+                Errors[property] = errors;
+                RaiseErrorsChanged(property);
+            } 
+            else if (Errors.ContainsKey(property))
+            {
+                Errors.Remove(property);
+                RaiseErrorsChanged(property);
+            }
 
+            OnPropertyChanged(nameof(IsViewModelValid));
+        }
+
+        private bool IsViewModelValid
+        {
+            get => !HasErrors && SelectedSpecies != Unknown && !string.IsNullOrWhiteSpace(Name) && int.Parse(Age) > 0 && ChildViewModelValid;
+        }
+
+        private void ResetSettings()
+        {
+            Category = Category.Mammal;
+            SelectedSpecies = Unknown;
+        }
+
+        private void ResetInputControls()
+        {
+            Name = string.Empty;
+        }
+
+        private bool ChildViewModelValid { get; set; }
         #endregion
 
         #region Private Fields
 
         private string _name;
-        private int _age;
+        private string _age;
         private Gender _gender;
         private Category _category;
 

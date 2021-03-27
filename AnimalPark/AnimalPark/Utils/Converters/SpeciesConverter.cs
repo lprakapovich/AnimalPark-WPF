@@ -36,7 +36,7 @@ namespace AnimalPark.Utils.Converters
 
             foreach (Species speciesType in Enum.GetValues(typeof(Species)))
             {
-                if (speciesType != Species.Unknown)
+                if (!speciesType.Equals(Species.Unknown))
                 {
                     species.Add(speciesType.ToString());
                 }

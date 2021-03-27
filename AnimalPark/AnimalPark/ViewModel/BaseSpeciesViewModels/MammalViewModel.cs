@@ -1,17 +1,16 @@
 ﻿using AnimalPark.Common;
-using AnimalPark.Model;
 using AnimalPark.Model.Enums;
 using AnimalPark.Model.Interfaces;
 using AnimalPark.ViewModel.SpeciesViewModels;
+using static AnimalPark.Model.Enums.Species;
 
-namespace AnimalPark.ViewModel.BaseSpeciesViewModels 
+namespace AnimalPark.ViewModel.BaseSpeciesViewModels   
 {
     public class MammalViewModel : BindableBase, ICategory
     {
         private bool _isDomesticated;
 
         private IMammal _mammalSpeciesViewModel;
-
 
         public bool IsDomesticated
         {
@@ -27,8 +26,12 @@ namespace AnimalPark.ViewModel.BaseSpeciesViewModels
         {
             switch (species)
             {
-                case Species.Raccoon:
+                case Raccoon:
                     SelectedSpeciesControl = new RaccoonViewModel();
+                    break;
+
+                case Donkey:
+                    SelectedSpeciesControl = new DonkeyViewModel();
                     break;
 
                 default:
