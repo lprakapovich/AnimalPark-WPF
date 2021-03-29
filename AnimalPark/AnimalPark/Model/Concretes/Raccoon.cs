@@ -1,4 +1,5 @@
-﻿using AnimalPark.Model.Bases;
+﻿using System.Collections.Generic;
+using AnimalPark.Model.Bases;
 using AnimalPark.Model.Enums;
 
 namespace AnimalPark.Model.Concretes
@@ -24,6 +25,16 @@ namespace AnimalPark.Model.Concretes
             return base.ToString() + "\nType: " + _type;
         }
 
-        public override FoodSchedule FoodSchedule { get; set; }
+        public override FoodSchedule FoodSchedule
+        {
+            get => new FoodSchedule()
+            {
+                EaterType = EaterType.Omnivorous,
+                EatingHabitsDescription = new List<string>() { "Absolute all-eaters! Crayfish, frogs, snails, clams, insects and many more." }
+            };
+
+        }
+
+        public override string ExtraInfo { get => base.ExtraInfo + "Species: Raccoon" + $"{"Type:", -15} {Type, 10}\n"; }
     }
 }

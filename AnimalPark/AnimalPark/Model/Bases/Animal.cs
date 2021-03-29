@@ -44,17 +44,16 @@ namespace AnimalPark.Model.Bases
 
         public override string ToString()
         {
-            return "Name: " + Name + "\nAge: " + Age + "\nGender: " + Gender;
+            return $"{"Name:", -15} {Name, 10}\n" + $"{"Age:", -15} {Age, 10}\n" + $"{"Gender:", -15} {Gender, 10}\n";
         }
 
         public virtual string ExtraInfo
         {
-            get
-            {
-                return null;
-            }
+            get => $"{"Name:", -15} {Name, 10}\n"
+                   + $"{"Age:", -15} {Age, 10}\n"
+                   + $"{"Gender:", -15} {Gender, 10}\n";
         }
 
-        public abstract FoodSchedule FoodSchedule { get; set; }
+        public abstract FoodSchedule FoodSchedule { get; }
     }
 }

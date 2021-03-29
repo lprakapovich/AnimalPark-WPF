@@ -10,7 +10,7 @@ namespace AnimalPark.Utils.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is JellyFishTYpe type)
+            if (value is JellyFishType type)
             {
                 return value.ToString();
             }
@@ -22,7 +22,7 @@ namespace AnimalPark.Utils.Converters
         {
             if (value is string jellyFishType)
             {
-                return Enum.Parse(typeof(JellyFishTYpe), jellyFishType); 
+                return Enum.Parse(typeof(JellyFishType), jellyFishType); 
             }
 
             return null;
@@ -34,7 +34,7 @@ namespace AnimalPark.Utils.Converters
         {
             List<string> jellyFishTypes = new List<string>();
 
-            foreach (var jellyFish in Enum.GetValues(typeof(JellyFishTYpe)))
+            foreach (var jellyFish in Enum.GetValues(typeof(JellyFishType)))
             {
                 jellyFishTypes.Add(jellyFish.ToString());
             }

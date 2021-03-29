@@ -7,6 +7,7 @@ namespace AnimalPark.Model
     public class FoodSchedule
     {
         private EaterType _eaterType;
+
         private List<string> _eatingHabitsDescription;
 
         public EaterType EaterType

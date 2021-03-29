@@ -1,7 +1,7 @@
 ﻿
 namespace AnimalPark.Model.Concretes
 {
-    public enum JellyFishTYpe
+    public enum JellyFishType
     {
         Crystal,
         Cauliflower,

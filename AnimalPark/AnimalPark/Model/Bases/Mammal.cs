@@ -15,5 +15,10 @@ namespace AnimalPark.Model.Bases
         {
             return base.ToString() + "\nIs domesticated? " + _isDomesticated;
         }
+
+        public override string ExtraInfo
+        {
+            get => base.ExtraInfo + $"{"Category:", -15} {"Mammal", 10}\n" + $"{"Is domesticated?:", -15} {_isDomesticated, 10}\n";
+        }
     }
 }

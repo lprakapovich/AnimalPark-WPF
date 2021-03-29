@@ -10,9 +10,9 @@ namespace AnimalPark.ViewModel.SpeciesViewModels
     /// </summary>
     public class JellyFishViewModel : BindableBase, IFish
     {
-        private JellyFishTYpe _type;
+        private JellyFishType _type;
 
-        public JellyFishTYpe Type
+        public JellyFishType Type
         {
             get => _type;
             set

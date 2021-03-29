@@ -1,4 +1,5 @@
-﻿using AnimalPark.Model.Bases;
+﻿using System.Collections.Generic;
+using AnimalPark.Model.Bases;
 using AnimalPark.Model.Enums;
 
 namespace AnimalPark.Model.Concretes
@@ -18,6 +19,15 @@ namespace AnimalPark.Model.Concretes
             return base.ToString() + "\nCan be eaten? " + _canBeEaten;
         }
 
-        public override FoodSchedule FoodSchedule { get; set; }
+        public override FoodSchedule FoodSchedule
+        {
+            get => new FoodSchedule()
+            {
+                EaterType = EaterType.Omnivorous,
+                EatingHabitsDescription = new List<string>() { "Aquatic insects, fish, molluscs, algae, leaves" }
+            };
+        }
+
+        public override string ExtraInfo { get => base.ExtraInfo + "Species: Prawn" + $"{"Can be eaten? ",-15} {_canBeEaten,10}\n"; }
     }
 }

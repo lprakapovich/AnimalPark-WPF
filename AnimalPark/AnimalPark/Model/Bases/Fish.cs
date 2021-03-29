@@ -15,5 +15,7 @@ namespace AnimalPark.Model.Bases
         {
             return base.ToString() + "\nLives in a salt water? " + _isSaltwater;
         }
+
+        public override string ExtraInfo { get => base.ExtraInfo + $"{"Category:", -15} {"Fish", 10}\n" +  $"{"Lives in salt water? ", -15} {_isSaltwater, 10}\n"; }
     }
 }
