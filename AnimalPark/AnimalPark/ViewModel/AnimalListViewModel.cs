@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 using AnimalPark.Common;
 using AnimalPark.Model.Bases;
+using AnimalPark.Utils.Comparators;
 
 namespace AnimalPark.ViewModel
 {
@@ -73,6 +76,12 @@ namespace AnimalPark.ViewModel
             _deleteAnimalCommand ??
             (_deleteAnimalCommand = new RelayCommand(e => DeleteAnimal(), canEx => SelectedAnimal != null));
 
+        private RelayCommand _sortByAgeCommand;
+
+        public RelayCommand SortByAgeCommand =>
+            _sortByAgeCommand ??
+            (_sortByAgeCommand = new RelayCommand(ex => { SortByAge(); }));
+
         #endregion
 
         #region Private methods
@@ -98,5 +107,11 @@ namespace AnimalPark.ViewModel
         }
 
         #endregion
+
+        public void SortByAge()
+        {
+            Array.Sort(Animals.ToArray(), Comparer.CompareByAgeAscending);
+            OnPropertyChanged(nameof(Animals));
+        }
     }
 }

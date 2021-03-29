@@ -5,12 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:c="clr-namespace:AnimalPark.Utils.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="800">
+             d:DesignHeight="350" d:DesignWidth="800">
 
     <UserControl.Resources>
         <Style TargetType="ListView">
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="MinHeight" Value="50"/>
+            <Setter Property="MinHeight" Value="200"/>
         </Style>
         <Style TargetType="StackPanel">
             <Setter Property="Margin" Value="15 5"/>
@@ -30,7 +30,16 @@
                     <ColumnDefinition Width="10"/>
                 </Grid.ColumnDefinitions>
 
-                <ListView Grid.Column="1" 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+
+                <ListView Grid.Column="1"  Grid.Row="1"
                           ItemsSource="{Binding Animals, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedAnimal}"
                           HorizontalAlignment="Center">
@@ -43,10 +52,13 @@
                     </ListView.View>
                 </ListView>
 
-                <StackPanel Grid.Column="2" Visibility="{Binding IsAnimalSelected, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}">
+                <StackPanel Grid.Column="2" Grid.Row="1" Visibility="{Binding IsAnimalSelected, UpdateSourceTrigger=PropertyChanged, 
+                    Converter={StaticResource VisibilityConverter}}">
                     <Label FontSize="14" Content="Information about the animal"/>
                     <TextBlock FontSize="12" Text="{Binding SelectedAnimalDescription, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
+
+                <Button Grid.Row="2" Grid.Column="1" Content="sort by age" Command="{Binding SortByAgeCommand}"/>
             </Grid>
        </GroupBox>
     </Grid>

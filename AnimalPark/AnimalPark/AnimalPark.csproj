@@ -63,6 +63,7 @@
     <Compile Include="Model\Enums\EaterType.cs" />
     <Compile Include="Model\FoodSchedule.cs" />
     <Compile Include="Model\Interfaces\IAnimal.cs" />
+    <Compile Include="Utils\Comparators\Comparer.cs" />
     <Compile Include="Utils\Converters\VisibilityConverter.cs" />
     <Compile Include="Utils\EnumHelper.cs" />
     <Compile Include="Model\Enums\Species.cs" />
