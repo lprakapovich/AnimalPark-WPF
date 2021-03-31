@@ -1,9 +1,10 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
 using AnimalPark.Common;
 using AnimalPark.Model.Bases;
+using AnimalPark.Model.Concretes;
+using AnimalPark.Model.Enums;
 using AnimalPark.Utils.Comparators;
 
 namespace AnimalPark.ViewModel
@@ -19,12 +20,21 @@ namespace AnimalPark.ViewModel
         private ObservableCollection<Animal> _animals;
         private Animal _selectedAnimal;
 
+        private SortingStrategy _sortingStrategy;
+
         #endregion
 
         public AnimalListViewModel()
         {
-            Animals = new ObservableCollection<Animal>();
-            Animals.CollectionChanged += AnimalsOnCollectionChanged;
+            Animals = new ObservableCollection<Animal>()
+            {
+                new JellyFish("vl", 10, Gender.Female, true, JellyFishType.BlackSeaNettle),
+                new JellyFish("axl", 1, Gender.Female, true, JellyFishType.BlackSeaNettle),
+                new JellyFish("abl", 1, Gender.Female, true, JellyFishType.BlackSeaNettle),
+                new JellyFish("bl", 15, Gender.Female, true, JellyFishType.BlackSeaNettle),
+                new JellyFish("al", 15, Gender.Female, true, JellyFishType.BlackSeaNettle)
+            };
+
             SelectedAnimal = null;
         }
 
@@ -54,6 +64,17 @@ namespace AnimalPark.ViewModel
             }
         }
 
+        public SortingStrategy SortingStrategy
+        {
+            get => _sortingStrategy;
+            set
+            {
+                _sortingStrategy = value;
+                SortAnimalList();
+                OnPropertyChanged(nameof(SortingStrategy));
+            }
+        }
+
         public string SelectedAnimalDescription => SelectedAnimal?.ToString();
 
         public bool IsAnimalSelected => SelectedAnimal != null;
@@ -76,12 +97,6 @@ namespace AnimalPark.ViewModel
             _deleteAnimalCommand ??
             (_deleteAnimalCommand = new RelayCommand(e => DeleteAnimal(), canEx => SelectedAnimal != null));
 
-        private RelayCommand _sortByAgeCommand;
-
-        public RelayCommand SortByAgeCommand =>
-            _sortByAgeCommand ??
-            (_sortByAgeCommand = new RelayCommand(ex => { SortByAge(); }));
-
         #endregion
 
         #region Private methods
@@ -90,28 +105,16 @@ namespace AnimalPark.ViewModel
         {
             Animals.Remove(SelectedAnimal);
         }
-
-        private void AnimalsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        
+        private void SortAnimalList()
         {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    break;
-
-                case NotifyCollectionChangedAction.Remove:
-                    break;
-
-                case NotifyCollectionChangedAction.Replace:
-                    break;
-            }
+            List<Animal> sortedAnimals = Animals.ToList();
+            sortedAnimals.Sort(Comparer.ResolveSortingStrategy(SortingStrategy));
+            Animals = new ObservableCollection<Animal>(sortedAnimals);
+            OnPropertyChanged(nameof(Animals));
         }
 
         #endregion
 
-        public void SortByAge()
-        {
-            Array.Sort(Animals.ToArray(), Comparer.CompareByAgeAscending);
-            OnPropertyChanged(nameof(Animals));
-        }
     }
 }

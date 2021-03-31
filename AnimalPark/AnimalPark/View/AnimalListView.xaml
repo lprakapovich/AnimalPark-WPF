@@ -19,12 +19,14 @@
             <Setter Property="Margin" Value="10 "/>
         </Style>
         <c:VisibilityConverter x:Key="VisibilityConverter"/>
+        <c:SortingStrategyConverter x:Key="SortingStrategyConverter"/> 
     </UserControl.Resources>
     <Grid>
        <GroupBox Header="List of registered animals">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="10"/>
@@ -34,12 +36,18 @@
                     <RowDefinition Height="10"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
 
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
 
-                <ListView Grid.Column="1"  Grid.Row="1"
+                <ComboBox Grid.Row="1" Grid.Column="1" 
+                          SelectedItem="{Binding SortingStrategy, Converter={StaticResource SortingStrategyConverter}, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding Source={StaticResource SortingStrategyConverter}, 
+                    Path=EnumDescriptions}"/>
+
+                <ListView Grid.Column="1"  Grid.Row="2" Grid.ColumnSpan="2"
                           ItemsSource="{Binding Animals, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedAnimal}"
                           HorizontalAlignment="Center">
@@ -52,13 +60,11 @@
                     </ListView.View>
                 </ListView>
 
-                <StackPanel Grid.Column="2" Grid.Row="1" Visibility="{Binding IsAnimalSelected, UpdateSourceTrigger=PropertyChanged, 
+                <StackPanel Grid.Column="2" Grid.Row="2" Visibility="{Binding IsAnimalSelected, UpdateSourceTrigger=PropertyChanged, 
                     Converter={StaticResource VisibilityConverter}}">
                     <Label FontSize="14" Content="Information about the animal"/>
                     <TextBlock FontSize="12" Text="{Binding SelectedAnimalDescription, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
-
-                <Button Grid.Row="2" Grid.Column="1" Content="sort by age" Command="{Binding SortByAgeCommand}"/>
             </Grid>
        </GroupBox>
     </Grid>

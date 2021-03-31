@@ -1,31 +1,58 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AnimalPark.Model.Bases;
+using AnimalPark.Model.Enums;
 
 namespace AnimalPark.Utils.Comparators
 {
     public class Comparer
-    {
+    { 
+        public static Comparison<Animal> ResolveSortingStrategy(SortingStrategy strategy)
+        {
+            switch (strategy)
+            {
+                case SortingStrategy.ByAgeAsc:
+                    return CompareByAgeAscending;
+
+                case SortingStrategy.ByAgeDesc:
+                    return CompareByAgeDescending; 
+
+                case SortingStrategy.ByNameAsc:
+                    return CompareByNameAscending;
+
+                case SortingStrategy.ByNameDesc:
+                    return CompareByNameDescending;
+
+                default:
+                    return CompareByAgeAscending;
+            }
+        }
+
         public static int CompareByAgeAscending(Animal animal, Animal compared)
         {
-            if (animal == null)
-            {
-                if (compared == null)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return -1;
-                }
-            }
-            else
-            {
-                return animal.Age.CompareTo(compared.Age);
-            }
+            return animal == null
+                ? (compared == null ? 0 : -1)
+                : (animal.Age == compared.Age ? 0 : animal.Age > compared.Age ? 1 : -1);
+        }
+
+        public static int CompareByAgeDescending(Animal animal, Animal compared)
+        {
+            return animal == null 
+                ? (compared == null ? 0 : -1)
+                : (animal.Age == compared.Age ? 0 : animal.Age < compared.Age ? 1 : -1);
+        }
+         
+        public static int CompareByNameAscending(Animal animal, Animal compared)
+        {
+            return animal == null
+                ? (compared == null ? 0 : -1)
+                : (animal.Name.Equals(compared.Name) ? 0 : string.Compare(animal.Name, compared.Name, StringComparison.CurrentCulture));
+        }
+        
+        public static int CompareByNameDescending(Animal animal, Animal compared)
+        {
+            return animal == null
+                ? (compared == null ? 0 : -1)
+                : (animal.Name.Equals(compared.Name) ? 0 : -string.Compare(animal.Name, compared.Name, StringComparison.CurrentCulture));
         }
     }
 }

@@ -61,8 +61,12 @@
     <Compile Include="Model\Concretes\JellyFishType.cs" />
     <Compile Include="Model\Concretes\RaccoonType.cs" />
     <Compile Include="Model\Enums\EaterType.cs" />
+    <Compile Include="Model\Enums\SortingStrategy.cs" />
     <Compile Include="Model\FoodSchedule.cs" />
     <Compile Include="Model\Interfaces\IAnimal.cs" />
+    <Compile Include="Utils\Converters\SortingStrategyConverter.cs" />
+    <Compile Include="Utils\ExtensionMethods.cs" />
+    <Compile Include="Utils\ObservableCollectionHelper.cs" />
     <Compile Include="Utils\Comparators\Comparer.cs" />
     <Compile Include="Utils\Converters\VisibilityConverter.cs" />
     <Compile Include="Utils\EnumHelper.cs" />
