@@ -7,7 +7,6 @@ using System.Linq;
 using AnimalPark.Model.Bases;
 using AnimalPark.Model.Enums;
 using AnimalPark.Model.Interfaces;
-using AnimalPark.Utils.Comparators;
 using AnimalPark.Utils.Validators;
 using AnimalPark.ViewModel.BaseSpeciesViewModels;
 using static AnimalPark.Model.Enums.Species;
@@ -153,11 +152,6 @@ namespace AnimalPark.ViewModel
                 Animal = FactoryBuilder.GetAnimalFactory(Category)?.CreateAnimal(this, CategoryControl);
                 AnimalListViewModel.AddAnimal(Animal);
             }
-        }
-
-        private void SortByAge()
-        {
-            AnimalListViewModel.SortByAge();
         }
 
         public string Name

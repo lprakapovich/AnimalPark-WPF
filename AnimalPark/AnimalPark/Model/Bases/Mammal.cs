@@ -11,14 +11,9 @@ namespace AnimalPark.Model.Bases
             _isDomesticated = isDomesticated;
         }
 
-        public override string ToString()
-        {
-            return base.ToString() + "\nIs domesticated? " + _isDomesticated;
-        }
-
         public override string ExtraInfo
         {
-            get => base.ExtraInfo + $"{"Category:", -15} {"Mammal", 10}\n" + $"{"Is domesticated?:", -15} {_isDomesticated, 10}\n";
+            get => base.ExtraInfo + $"{"\nCategory:", -40} {"Mammal", -40}" + $"{"\nIs domesticated?:", -40} {_isDomesticated, -40}";
         }
     }
 }

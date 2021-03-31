@@ -1,4 +1,5 @@
 ﻿
+using System;
 using AnimalPark.Model.Enums;
 using AnimalPark.Model.Interfaces;
 
@@ -42,16 +43,9 @@ namespace AnimalPark.Model.Bases
             set => _gender = value;
         }
 
-        public override string ToString()
-        {
-            return $"{"Name:", -15} {Name, 10}\n" + $"{"Age:", -15} {Age, 10}\n" + $"{"Gender:", -15} {Gender, 10}\n";
-        }
-
         public virtual string ExtraInfo
         {
-            get => $"{"Name:", -15} {Name, 10}\n"
-                   + $"{"Age:", -15} {Age, 10}\n"
-                   + $"{"Gender:", -15} {Gender, 10}\n";
+            get => $"{"Name:",-4} {Name,-40}" + $"{"\nAge:",-40} {Age,-40}" + $"{"\nGender:",-40} {Gender,-40}";
         }
 
         public abstract FoodSchedule FoodSchedule { get; }

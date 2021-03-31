@@ -11,11 +11,10 @@ namespace AnimalPark.Model.Bases
             _isSaltwater = isSaltWater;
         }
 
-        public override string ToString()
+        public override string ExtraInfo
         {
-            return base.ToString() + "\nLives in a salt water? " + _isSaltwater;
-        }
 
-        public override string ExtraInfo { get => base.ExtraInfo + $"{"Category:", -15} {"Fish", 10}\n" +  $"{"Lives in salt water? ", -15} {_isSaltwater, 10}\n"; }
+            get => base.ExtraInfo + $"{"\nCategory:", -40} {"Fish", -40}" +  $"{"\nLives in salt water?", -40} {_isSaltwater, -40}";
+        }
     }
 }

@@ -14,11 +14,6 @@ namespace AnimalPark.Model.Concretes
             _canBeEaten = canBeEaten;
         }
 
-        public override string ToString()
-        {
-            return base.ToString() + "\nCan be eaten? " + _canBeEaten;
-        }
-
         public override FoodSchedule FoodSchedule
         {
             get => new FoodSchedule()
@@ -28,6 +23,6 @@ namespace AnimalPark.Model.Concretes
             };
         }
 
-        public override string ExtraInfo { get => base.ExtraInfo + "Species: Prawn" + $"{"Can be eaten? ",-15} {_canBeEaten,10}\n"; }
+        public override string ExtraInfo { get => base.ExtraInfo + $"{"\nSpecies:", -40} ${"Prawn", -40}" + $"{"\nCan be eaten? ", -40} {_canBeEaten, -40}"; }
     }
 }

@@ -18,11 +18,6 @@ namespace AnimalPark.Model.Concretes
             set => _stubbornness = value;
         }
 
-        public override string ToString()
-        {
-            return base.ToString() + "\nStubbornness level: " + _stubbornness;
-        }
-
         public override FoodSchedule FoodSchedule
         { 
             get => new FoodSchedule()
@@ -32,6 +27,6 @@ namespace AnimalPark.Model.Concretes
             };
         }
 
-        public override string ExtraInfo { get => base.ExtraInfo + "Species: Donkey" + $"{"Stubbornness:",-15} {Stubbornness,10}\n"; }
+        public override string ExtraInfo { get => base.ExtraInfo + $"{"\nSpecies: ", -40} {"Donkey", -40}" + $"{"\nStubbornness:", -40} {Stubbornness, -40}"; }
     }
 }

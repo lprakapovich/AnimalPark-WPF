@@ -75,7 +75,7 @@ namespace AnimalPark.ViewModel
             }
         }
 
-        public string SelectedAnimalDescription => SelectedAnimal?.ToString();
+        public string SelectedAnimalDescription => SelectedAnimal?.ExtraInfo;
 
         public bool IsAnimalSelected => SelectedAnimal != null;
 

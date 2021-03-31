@@ -19,11 +19,6 @@ namespace AnimalPark.Model.Concretes
             set => _type = value;
         }
 
-        public override string ToString()
-        {
-            return base.ToString() + "\n Type: " + _type;
-        }
-
         public override FoodSchedule FoodSchedule { 
 
             get => new FoodSchedule()
@@ -33,7 +28,6 @@ namespace AnimalPark.Model.Concretes
             };
         }
 
-        public override string ExtraInfo { get => base.ExtraInfo + "Species: Jelly Fish" + $"{"Type:",-15} {Type,10}\n"; }
-
+        public override string ExtraInfo { get => base.ExtraInfo + $"{"\nSpecies: ", -40} {"Jelly Fish", -40}" + $"{"\nType:", -40} {Type, -40}"; }
     }
 }

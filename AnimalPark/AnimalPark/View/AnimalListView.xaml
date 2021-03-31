@@ -60,7 +60,7 @@
                     </ListView.View>
                 </ListView>
 
-                <StackPanel Grid.Column="2" Grid.Row="2" Visibility="{Binding IsAnimalSelected, UpdateSourceTrigger=PropertyChanged, 
+                <StackPanel Grid.Column="3" Grid.Row="2" Visibility="{Binding IsAnimalSelected, UpdateSourceTrigger=PropertyChanged, 
                     Converter={StaticResource VisibilityConverter}}">
                     <Label FontSize="14" Content="Information about the animal"/>
                     <TextBlock FontSize="12" Text="{Binding SelectedAnimalDescription, UpdateSourceTrigger=PropertyChanged}"/>
