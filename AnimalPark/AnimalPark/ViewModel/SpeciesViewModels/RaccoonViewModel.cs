@@ -21,16 +21,11 @@ namespace AnimalPark.ViewModel.SpeciesViewModels
             }
         }
 
-        public RaccoonViewModel()
-        {
-            //ChildDataErrorDelegate?.Invoke(true);
-        }
-
         public event Action<bool> ChildDataErrorDelegate;
 
-        public void Emit()
+        public void NotifyParentAboutValidity()
         {
-            ChildDataErrorDelegate.Invoke(HasErrors);
+            ChildDataErrorDelegate?.Invoke(!HasErrors);
         }
     }
 }

@@ -4,6 +4,7 @@ using AnimalPark.Utils;
 using AnimalPark.Utils.Factories;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using AnimalPark.Model.Bases;
 using AnimalPark.Model.Enums;
 using AnimalPark.Model.Interfaces;
@@ -211,6 +212,7 @@ namespace AnimalPark.ViewModel
             {
                 CategoryControl.SelectedSpeciesControl.ChildDataErrorDelegate += (isChildValid) =>
                 {
+                    MessageBox.Show("Received emit from child!" + isChildValid);
                     ChildViewModelValid = isChildValid;
                     OnPropertyChanged(nameof(IsViewModelValid));
                 };
@@ -222,6 +224,7 @@ namespace AnimalPark.ViewModel
         /// </summary>
         private void CreateAnimal()
         {
+            CategoryControl?.SelectedSpeciesControl?.NotifyParentAboutValidity();
 
             if (SelectedSpecies == Unknown)
             {
@@ -297,6 +300,7 @@ namespace AnimalPark.ViewModel
         }
 
         private bool ChildViewModelValid { get; set; }
+
         #endregion
 
         #region Private Fields

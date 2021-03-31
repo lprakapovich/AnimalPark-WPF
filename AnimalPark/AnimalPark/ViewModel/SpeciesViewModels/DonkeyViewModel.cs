@@ -43,9 +43,10 @@ namespace AnimalPark.ViewModel.SpeciesViewModels
         }
 
         public event Action<bool> ChildDataErrorDelegate;
-        public void Emit()
+
+        public void NotifyParentAboutValidity()
         {
-            ChildDataErrorDelegate.Invoke(HasErrors);
+            ChildDataErrorDelegate?.Invoke(!HasErrors && !string.IsNullOrEmpty(Stubbornness));
         }
     }
 }

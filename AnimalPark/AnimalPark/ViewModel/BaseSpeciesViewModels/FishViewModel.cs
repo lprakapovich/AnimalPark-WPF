@@ -39,7 +39,7 @@ namespace AnimalPark.ViewModel.BaseSpeciesViewModels
                     break;
             }
 
-            //SelectedSpeciesControl?.Emit(); 
+            //SelectedSpeciesControl?.NotifyParentAboutValidity(); 
         }
 
         public ISpecies SelectedSpeciesControl

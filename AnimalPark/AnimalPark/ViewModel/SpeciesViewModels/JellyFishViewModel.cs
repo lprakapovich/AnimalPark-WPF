@@ -21,16 +21,10 @@ namespace AnimalPark.ViewModel.SpeciesViewModels
             }
         }
 
-        public JellyFishViewModel()
-        {
-            // no parent
-        //    ChildDataErrorDelegate.Invoke(true);
-        }
-
         public event Action<bool> ChildDataErrorDelegate;
-        public void Emit()
+        public void NotifyParentAboutValidity()
         {
-            ChildDataErrorDelegate.Invoke(HasErrors);
+            ChildDataErrorDelegate?.Invoke(!HasErrors);
         }
     }
 }

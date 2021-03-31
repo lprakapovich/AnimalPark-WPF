@@ -8,14 +8,8 @@ namespace AnimalPark.Model.Interfaces
     /// e.g. PrawnViewModel or RaccoonViewModel
     /// </summary>
 
-    public interface ISpecies
+    public interface ISpecies : IChildValidator
     {
-        /// <summary>
-        /// Delegate used to inform MainViewModel about validation results in the child view models
-        /// </summary>
-        event Action<bool> ChildDataErrorDelegate;
-
-        void Emit(); 
     }
 }
  

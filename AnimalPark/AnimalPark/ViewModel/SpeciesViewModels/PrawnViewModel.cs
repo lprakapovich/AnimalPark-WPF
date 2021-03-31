@@ -20,16 +20,11 @@ namespace AnimalPark.ViewModel.SpeciesViewModels
            }
         }
 
-        public PrawnViewModel()
-        {
-           // ChildDataErrorDelegate?.Invoke(true);
-        }
-
         public event Action<bool> ChildDataErrorDelegate;
 
-        public void Emit()
+        public void NotifyParentAboutValidity()
         {
-            ChildDataErrorDelegate.Invoke(HasErrors);
+            ChildDataErrorDelegate?.Invoke(!HasErrors);
         }
     }
 }
