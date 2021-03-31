@@ -12,6 +12,15 @@ namespace AnimalPark.Utils.Validators
             StringValidation,  
             NumberValidation  
         }
+
+        /// <summary>
+        /// Used to verify whether any errors where registered after view model validation
+        /// </summary>
+        /// <param name="validationType"> validation strategy specific for a property </param>
+        /// <param name="property"> name of the property being validated </param>
+        /// <param name="value"> validated property's value</param>
+        /// <param name="errors"> collection from INotifyErrorChanged interface, to register possible errors for a given property </param>
+        /// <returns> validation result for a given view model </returns>
         public static bool IsValid(ValidationType validationType, string property, object value, out ICollection<string> errors)
         {
             errors = new List<string>();

@@ -31,6 +31,55 @@ namespace AnimalPark.ViewModel
 
         #endregion
 
+        /// <summary>
+        /// Public properties used mostly as bindings in GUI layer
+        /// </summary>
+        #region API
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                ValidateProperty(nameof(Name), value, StringValidation);
+                OnPropertyChanged(nameof(Name));
+                OnPropertyChanged(nameof(IsViewModelValid));
+            }
+        }
+
+        public string Age
+        {
+            get => _age;
+            set
+            {
+                _age = value;
+                ValidateProperty(nameof(Age), value, NumberValidation);
+                OnPropertyChanged(nameof(Age));
+                OnPropertyChanged(nameof(IsViewModelValid));
+            }
+        }
+
+        public Gender Gender
+        {
+            get => _gender;
+            set
+            {
+                _gender = value;
+                OnPropertyChanged(nameof(Gender));
+            }
+        }
+
+        public Animal Animal
+        {
+            get => _animal;
+            set
+            {
+                _animal = value;
+                OnPropertyChanged(nameof(Animal));
+            }
+        }
+
         public Category Category
         {
             get => _category;
@@ -65,7 +114,9 @@ namespace AnimalPark.ViewModel
             set
             {
                 _selectedSpecies = value;
-                OnSpeciesSelected();
+                
+                    OnSpeciesSelected();
+                
                 OnPropertyChanged(nameof(SelectedSpecies));
             }
         }
@@ -88,6 +139,27 @@ namespace AnimalPark.ViewModel
             get => !IsCheckedListAllAnimals;
         }
 
+
+        public bool IsCheckedListAllAnimals
+        {
+            get => _isCheckedListAllAnimals;
+            set
+            {
+                _isCheckedListAllAnimals = value;
+                OnPropertyChanged(nameof(IsCheckedListAllAnimals));
+                OnPropertyChanged(nameof(CategoryListEnabled));
+                OnPropertyChanged(nameof(SpeciesList));
+            }
+        }
+
+        #endregion
+
+        #region Private methods
+
+
+        /// <summary>
+        /// Triggered each time a new category is selected
+        /// </summary>
         private void UpdateCategoryControl()
         {
             switch (Category)
@@ -114,6 +186,10 @@ namespace AnimalPark.ViewModel
             }
         }
 
+        /// <summary>
+        /// Triggered in "List all species" mode, therefore firstly determines
+        /// to which category a species belongs, and then updates the control
+        /// </summary>
         private void OnSpeciesSelected()
         {
             if (IsCheckedListAllAnimals)
@@ -125,6 +201,10 @@ namespace AnimalPark.ViewModel
             RegisterEventHandler();
         }
 
+        /// <summary>
+        /// ChildViewModels send an event to the parent to inform it about the validation result
+        /// on the user input, as a boolean value
+        /// </summary>
         private void RegisterEventHandler()
         {
             if (CategoryControl.SelectedSpeciesControl != null)
@@ -136,9 +216,13 @@ namespace AnimalPark.ViewModel
                 };
             }
         }
-
+        
+        /// <summary>
+        /// Animal creation with the use of AnimalFactory 
+        /// </summary>
         private void CreateAnimal()
         {
+
             if (SelectedSpecies == Unknown)
             {
                 ErrorMessageDelegate?.Invoke("Select a species type first.");
@@ -154,63 +238,7 @@ namespace AnimalPark.ViewModel
             }
         }
 
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                _name = value;
-                ValidateProperty(nameof(Name), value, StringValidation);
-                OnPropertyChanged(nameof(Name));
-                OnPropertyChanged(nameof(IsViewModelValid));
-            }
-        }
-
-        public string Age 
-        {
-            get => _age;
-            set
-            {
-                _age = value;
-                ValidateProperty(nameof(Age), value, NumberValidation);
-                OnPropertyChanged(nameof(Age));
-                OnPropertyChanged(nameof(IsViewModelValid));
-            }
-        }
-
-        public Gender Gender
-        {
-            get => _gender;
-            set
-            {
-                _gender = value;
-                OnPropertyChanged(nameof(Gender));
-            }
-        }
-
-        public Animal Animal
-        {
-            get => _animal;
-            set
-            {
-                _animal = value;
-                OnPropertyChanged(nameof(Animal));
-            }
-        }
-
-        private bool _isCheckedListAllAnimals;
-
-        public bool IsCheckedListAllAnimals
-        {
-            get => _isCheckedListAllAnimals;
-            set
-            {
-                _isCheckedListAllAnimals = value;
-                OnPropertyChanged(nameof(IsCheckedListAllAnimals));
-                OnPropertyChanged(nameof(CategoryListEnabled));
-                OnPropertyChanged(nameof(SpeciesList));
-            }
-        }
+        #endregion
 
         #region Events
 
@@ -232,6 +260,12 @@ namespace AnimalPark.ViewModel
 
         #region Validation
 
+        /// <summary>
+        /// Invoked each time a certain property is set, to register possible errors
+        /// </summary>
+        /// <param name="property"> property name, e.g. Category </param>
+        /// <param name="value"> property value, e.g. Mammal </param>
+        /// <param name="validationType"> validation strategy </param>
         private void ValidateProperty(string property, object value, ValidationType validationType)
         {
             bool isValid = ValidationService.IsValid(validationType, property, value, out ICollection<string> errors);
@@ -277,6 +311,8 @@ namespace AnimalPark.ViewModel
 
         private Animal _animal;
         private AnimalListViewModel _animalListViewModel;
+
+        private bool _isCheckedListAllAnimals;
 
         #endregion
     }

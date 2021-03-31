@@ -61,6 +61,7 @@ namespace AnimalPark.ViewModel
                 OnPropertyChanged(nameof(SelectedAnimal));
                 OnPropertyChanged(nameof(IsAnimalSelected));
                 OnPropertyChanged(nameof(SelectedAnimalDescription));
+                OnPropertyChanged(nameof(SelectedAnimalEatingHabits));
             }
         }
 
@@ -76,6 +77,8 @@ namespace AnimalPark.ViewModel
         }
 
         public string SelectedAnimalDescription => SelectedAnimal?.ExtraInfo;
+
+        public List<string> SelectedAnimalEatingHabits => SelectedAnimal?.FoodSchedule.EatingHabitsDescription;
 
         public bool IsAnimalSelected => SelectedAnimal != null;
 
@@ -106,6 +109,10 @@ namespace AnimalPark.ViewModel
             Animals.Remove(SelectedAnimal);
         }
         
+        /// <summary>
+        /// Invoked each time the sorting option is changed, passes a resolved Comparer
+        /// to the Sort() method and updates the observable collection with a sorted list
+        /// </summary>
         private void SortAnimalList()
         {
             List<Animal> sortedAnimals = Animals.ToList();

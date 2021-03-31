@@ -38,6 +38,8 @@ namespace AnimalPark.ViewModel.BaseSpeciesViewModels
                     SelectedSpeciesControl = null;
                     break;
             }
+
+            //SelectedSpeciesControl?.Emit(true);
         }
 
         public ISpecies SelectedSpeciesControl

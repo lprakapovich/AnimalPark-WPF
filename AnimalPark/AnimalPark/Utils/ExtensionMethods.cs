@@ -7,6 +7,11 @@ namespace AnimalPark.Utils
 {
     public static class ExtensionMethods
     {
+        /// <summary>
+        /// Reflectively get the description of th enum
+        /// </summary>
+        /// <param name="enumValue"> enum </param>
+        /// <returns> string value of the description if exists, otherwise an empty string </returns>
         public static string GetDescription(this Enum enumValue)
         {
             return enumValue.GetType()
@@ -15,6 +20,12 @@ namespace AnimalPark.Utils
                 .GetCustomAttribute<DescriptionAttribute>()?.Description ?? string.Empty;
         }
 
+        /// <summary>
+        /// Reflectively get the enum value of a known enum type
+        /// </summary>
+        /// <typeparam name="T"> enum type </typeparam>
+        /// <param name="description"> description based on which enum value is retrieved</param>
+        /// <returns> enum if exists, or default </returns>
         public static T GetValueFromDescription<T>(this string description) where T : Enum
         {
             foreach (var field in typeof(T).GetFields())

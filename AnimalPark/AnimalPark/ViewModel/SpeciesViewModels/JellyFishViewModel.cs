@@ -23,9 +23,14 @@ namespace AnimalPark.ViewModel.SpeciesViewModels
 
         public JellyFishViewModel()
         {
-            ChildDataErrorDelegate?.Invoke(true);
+            // no parent
+        //    ChildDataErrorDelegate.Invoke(true);
         }
 
-        public event Action<bool> ChildDataErrorDelegate; 
+        public event Action<bool> ChildDataErrorDelegate;
+        public void Emit()
+        {
+            ChildDataErrorDelegate.Invoke(HasErrors);
+        }
     }
 }

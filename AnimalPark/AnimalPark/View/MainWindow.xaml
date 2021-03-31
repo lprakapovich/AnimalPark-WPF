@@ -6,7 +6,7 @@
         xmlns:c="clr-namespace:AnimalPark.Utils.Converters"
         xmlns:viewModel="clr-namespace:AnimalPark.ViewModel"
         mc:Ignorable="d"
-        Title="Apu Animal Park" Height="650" Width="1000">
+        Title="Apu Animal Park" Height="650" Width="1100">
 
     <Window.DataContext>
         <viewModel:MainViewModel/>

@@ -14,6 +14,7 @@ namespace AnimalPark.Model.Bases
 
         protected Animal(string name, int age, Gender gender)
         {
+            Id = Guid.NewGuid().ToString();
             Name = name;
             Age = age;
             Gender = gender;

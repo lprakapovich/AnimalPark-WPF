@@ -14,6 +14,8 @@ namespace AnimalPark.Model.Interfaces
         /// Delegate used to inform MainViewModel about validation results in the child view models
         /// </summary>
         event Action<bool> ChildDataErrorDelegate;
+
+        void Emit(); 
     }
 }
  
