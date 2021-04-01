@@ -65,6 +65,8 @@
     <Compile Include="Model\FoodSchedule.cs" />
     <Compile Include="Model\Interfaces\IAnimal.cs" />
     <Compile Include="Model\Interfaces\IChildValidator.cs" />
+    <Compile Include="Model\Interfaces\IListHandler.cs" />
+    <Compile Include="Model\ListHandler.cs" />
     <Compile Include="Utils\Converters\SortingStrategyConverter.cs" />
     <Compile Include="Utils\ExtensionMethods.cs" />
     <Compile Include="Utils\Comparators\Comparer.cs" />

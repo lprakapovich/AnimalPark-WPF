@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using AnimalPark.Common;
 using AnimalPark.Model.Bases;
-using AnimalPark.Model.Concretes;
 using AnimalPark.Model.Enums;
 using AnimalPark.Utils.Comparators;
 
@@ -26,15 +25,7 @@ namespace AnimalPark.ViewModel
 
         public AnimalListViewModel()
         {
-            Animals = new ObservableCollection<Animal>()
-            {
-                new JellyFish("vl", 10, Gender.Female, true, JellyFishType.BlackSeaNettle),
-                new JellyFish("axl", 1, Gender.Female, true, JellyFishType.BlackSeaNettle),
-                new JellyFish("abl", 1, Gender.Female, true, JellyFishType.BlackSeaNettle),
-                new JellyFish("bl", 15, Gender.Female, true, JellyFishType.BlackSeaNettle),
-                new JellyFish("al", 15, Gender.Female, true, JellyFishType.BlackSeaNettle)
-            };
-
+            Animals = new ObservableCollection<Animal>();
             SelectedAnimal = null;
         }
 
