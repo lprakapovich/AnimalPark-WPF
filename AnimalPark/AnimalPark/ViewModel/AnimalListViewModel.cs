@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using AnimalPark.Common;
 using AnimalPark.Model.Bases;
 using AnimalPark.Model.Enums;
 using AnimalPark.Utils.Comparators;
+using AnimalPark.Utils.Services;
 
 namespace AnimalPark.ViewModel
 {
@@ -16,6 +18,8 @@ namespace AnimalPark.ViewModel
     {
         #region Private Fields
 
+        private AnimalService _animalService; 
+
         private ObservableCollection<Animal> _animals;
         private Animal _selectedAnimal;
 
@@ -26,7 +30,10 @@ namespace AnimalPark.ViewModel
         public AnimalListViewModel()
         {
             Animals = new ObservableCollection<Animal>();
+            AnimalService = new AnimalService();
             SelectedAnimal = null;
+
+            Animals.CollectionChanged += AnimalsOnCollectionChanged;
         }
 
         #region API
@@ -64,6 +71,18 @@ namespace AnimalPark.ViewModel
                 _sortingStrategy = value;
                 SortAnimalList();
                 OnPropertyChanged(nameof(SortingStrategy));
+            }
+        }
+
+        public AnimalService AnimalService
+        {
+            get => _animalService;
+            set
+            {
+                if (value != null)
+                {
+                    _animalService = value;
+                }
             }
         }
 
@@ -110,6 +129,28 @@ namespace AnimalPark.ViewModel
             sortedAnimals.Sort(Comparer.ResolveSortingStrategy(SortingStrategy));
             Animals = new ObservableCollection<Animal>(sortedAnimals);
             OnPropertyChanged(nameof(Animals));
+        }
+
+        #endregion
+
+        #region Events
+
+        private void AnimalsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    AnimalService.Add(Animals[e.NewStartingIndex]);
+                    break;
+
+                case NotifyCollectionChangedAction.Remove:
+                    AnimalService.RemoveAt(e.OldStartingIndex);
+                    break;
+
+                case NotifyCollectionChangedAction.Replace:
+                    break;
+
+            }
         }
 
         #endregion

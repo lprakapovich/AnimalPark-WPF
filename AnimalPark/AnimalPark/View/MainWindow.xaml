@@ -54,6 +54,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="10"/>
                 </Grid.ColumnDefinitions>
@@ -95,10 +96,32 @@
                     </ListBox>
                 </GroupBox>
 
-                <ContentControl Grid.Row="1" Grid.Column="6" Grid.RowSpan="3" Content="{Binding CategoryControl, UpdateSourceTrigger=PropertyChanged}"/>
+                <ContentControl Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="3" Grid.RowSpan="3" Content="{Binding CategoryControl, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <CheckBox Grid.Row="6" Grid.Column="5" Content="List all animals" IsChecked="{Binding IsCheckedListAllAnimals}"></CheckBox>
                 <Button Grid.Row="7" Grid.Column="5" Width="100" Content="Add animal" Command="{Binding CreateAnimalCommand}"/>
+
+                
+                <GroupBox Grid.Row="4" Grid.Column="6" Grid.RowSpan="5" Grid.ColumnSpan="4" Header="Food items">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <ListBox Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" MinHeight="100"
+                                     ItemsSource="{Binding FoodManagerViewModel.FoodItems, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Button  Width="100" Grid.Column="1" Grid.Row="1" Content="Add food item"/>
+                            <Button  Width="100" Grid.Column="2" Grid.Row="1" Content="Delete food item"/>
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
             </Grid>
         </GroupBox>
         <ContentControl Grid.Row="2" Content="{Binding AnimalListViewModel}"/>

@@ -4,7 +4,7 @@ using AnimalPark.Utils;
 using AnimalPark.Utils.Factories;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
+using AnimalPark.Model;
 using AnimalPark.Model.Bases;
 using AnimalPark.Model.Enums;
 using AnimalPark.Model.Interfaces;
@@ -28,6 +28,7 @@ namespace AnimalPark.ViewModel
         {
             ResetSettings(); 
             AnimalListViewModel = new AnimalListViewModel();
+            FoodManagerViewModel = new FoodManagerViewModel();
         }
 
         #endregion
@@ -153,6 +154,18 @@ namespace AnimalPark.ViewModel
             }
         }
 
+        public FoodManagerViewModel FoodManagerViewModel
+        {
+            get => _foodManagerViewModel;
+            set
+            {
+                if (value != null)
+                {
+                    _foodManagerViewModel = value;
+                }
+            }
+        }
+
         #endregion
 
         #region Private methods
@@ -212,7 +225,6 @@ namespace AnimalPark.ViewModel
             {
                 CategoryControl.SelectedSpeciesControl.ChildDataErrorDelegate += (isChildValid) =>
                 {
-                    MessageBox.Show("Received emit from child!" + isChildValid);
                     ChildViewModelValid = isChildValid;
                     OnPropertyChanged(nameof(IsViewModelValid));
                 };
@@ -314,9 +326,12 @@ namespace AnimalPark.ViewModel
         private Species _selectedSpecies;
 
         private Animal _animal;
+
         private AnimalListViewModel _animalListViewModel;
 
         private bool _isCheckedListAllAnimals;
+
+        private FoodManagerViewModel _foodManagerViewModel;
 
         #endregion
     }

@@ -7,6 +7,14 @@ namespace AnimalPark.Model
     {
         public List<T> List { get; set; }
 
+        public void Add(T t)
+        {
+            if (t != null)
+            {
+                List.Add(t);
+            }
+        }
+
         public void RemoveAt(int position)
         {
             if (List.Count > position && position >= 0)
@@ -26,6 +34,11 @@ namespace AnimalPark.Model
         public T Get(int position)
         {
             return List.Count > position && position >= 0 ? List[position] : default;
+        }
+
+        public string[] GetElementsDescription()
+        {
+            return null;
         }
     }
 }

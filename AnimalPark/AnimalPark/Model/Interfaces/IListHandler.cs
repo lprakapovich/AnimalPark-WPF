@@ -10,6 +10,12 @@ namespace AnimalPark.Model.Interfaces
         List<T> List { get; set; }
 
         /// <summary>
+        /// Add new element to the collection
+        /// </summary>
+        /// <param name="t"> New element, not null </param>
+        void Add(T t);
+
+        /// <summary>
         /// Remove element at a given position, if exists
         /// </summary>
         /// <param name="position"> Index in the list </param>
