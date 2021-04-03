@@ -62,7 +62,7 @@
                          SelectedItem="{Binding SelectedIngredient, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </GroupBox>
-        <Button Grid.Column="2" Grid.Row="3" Content="Cancel" Command="{Binding CancelCommand}"/> 
+        <Button Grid.Column="2" Grid.Row="3" Content="Cancel" Command="{Binding CloseWindowCommand}"/> 
         <Button Grid.Column="3" Grid.Row="3" Content="Save" Command="{Binding CreateFoodItemCommand}"/> 
     </Grid>
 </Window>

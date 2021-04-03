@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
@@ -47,6 +48,11 @@ namespace AnimalPark.Utils
             }
 
             return default(T);
+        }
+
+        public static bool IsEmpty<T>(this ObservableCollection<T> collection)
+        {
+            return collection.ToList().Count == 0;
         }
     }
 }

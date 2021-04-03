@@ -28,6 +28,9 @@ namespace AnimalPark.ViewModel
             ResetSettings(); 
             AnimalListViewModel = new AnimalListViewModel();
             FoodManagerViewModel = new FoodManagerViewModel();
+
+            AnimalListViewModel.AnimalFoodScheduleDelegate +=
+                animal => animal != null ? FoodManagerViewModel.GetAnimalSchedule(animal) : null;
         }
 
         #endregion

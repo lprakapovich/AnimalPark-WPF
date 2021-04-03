@@ -65,7 +65,6 @@
     <Compile Include="Model\Enums\EaterType.cs" />
     <Compile Include="Model\Enums\SortingStrategy.cs" />
     <Compile Include="Model\FoodItem.cs" />
-    <Compile Include="Model\FoodSchedule.cs" />
     <Compile Include="Model\Interfaces\IAnimal.cs" />
     <Compile Include="Model\Interfaces\IChildValidator.cs" />
     <Compile Include="Model\Interfaces\ICollectionHandler.cs" />

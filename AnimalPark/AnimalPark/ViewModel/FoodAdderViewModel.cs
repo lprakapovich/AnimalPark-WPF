@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using AnimalPark.Common;
 using AnimalPark.Model;
+using AnimalPark.Utils;
 
 namespace AnimalPark.ViewModel
 {
@@ -59,6 +60,8 @@ namespace AnimalPark.ViewModel
 
         public Action<FoodItem> CreateFoodItem;
 
+        public Action<string> MessageDelegate;
+
         #endregion
 
         #region Commands
@@ -81,9 +84,18 @@ namespace AnimalPark.ViewModel
         public RelayCommand CreateFoodItemCommand => _createFoodItemCommand ??
                                                      (_createFoodItemCommand = new RelayCommand(ex =>
                                                      {
-                                                         CreateFoodItem?.Invoke(new FoodItem(FoodItemName, Collection.ToList()));
-                                                         CloseWindow?.Invoke(this, new EventArgs());
+                                                         if (InvalidInput)
+                                                         {
+                                                             MessageDelegate?.Invoke("Specify the name and add at least one ingredient!");
+                                                         }
+                                                         else
+                                                         {
+                                                             CreateFoodItem?.Invoke(new FoodItem(FoodItemName, Collection.ToList()));
+                                                             CloseWindow?.Invoke(this, new EventArgs());
+                                                         }
                                                      }));
+
+        public bool InvalidInput => string.IsNullOrEmpty(FoodItemName) || string.IsNullOrWhiteSpace(FoodItemName) || Collection.IsEmpty();
 
         #endregion
     }

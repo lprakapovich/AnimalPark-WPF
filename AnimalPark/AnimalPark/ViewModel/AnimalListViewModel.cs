@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -69,8 +70,8 @@ namespace AnimalPark.ViewModel
         }
 
         public string SelectedAnimalDescription => SelectedAnimal?.ExtraInfo;
-
-        public List<string> SelectedAnimalEatingHabits => SelectedAnimal?.FoodSchedule.EatingHabitsDescription;
+        
+        public List<string> SelectedAnimalEatingHabits => AnimalFoodScheduleDelegate?.Invoke(SelectedAnimal?.Name) ?? new List<string>() { "No data yet." };
 
         public bool IsAnimalSelected => SelectedAnimal != null;
 
@@ -108,7 +109,11 @@ namespace AnimalPark.ViewModel
 
         #endregion
 
+
         #region Events
+
+        public Func<string, List<string>> AnimalFoodScheduleDelegate;
+
         private void AnimalsCollectionOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
@@ -118,10 +123,7 @@ namespace AnimalPark.ViewModel
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    MessageBox.Show("Animal found a new home. ");
-                    break;
-
-                case NotifyCollectionChangedAction.Replace:
+                    MessageBox.Show("Meh. Animal is kicked from the Apu park. ");
                     break;
             }
         }

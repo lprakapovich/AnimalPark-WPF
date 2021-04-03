@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
+using System.Net;
 using System.Windows;
 using AnimalPark.Common;
 using AnimalPark.Model;
@@ -67,21 +69,38 @@ namespace AnimalPark.ViewModel
 
         public void LinkAnimalToFoodItem(Animal animal)
         {
-            if (AnimalFoodItemsResolver.ContainsKey(SelectedFoodItem.Name))
+            if (AnimalFoodItemsResolver.ContainsKey(animal.Name))
             {
-                if (AnimalFoodItemsResolver[SelectedFoodItem.Name].Contains(animal.Name))
+                if (AnimalFoodItemsResolver[animal.Name].Contains(SelectedFoodItem.Name))
                 {
                     MessageDelegate?.Invoke($"{animal.Name} already has {SelectedFoodItem.Name} in its food schedule!");
                 }
                 else
                 {
-                    AnimalFoodItemsResolver[SelectedFoodItem.Name].Add(animal.Name);
+                    AnimalFoodItemsResolver[animal.Name].Add(SelectedFoodItem.Name);
                 }
             }
             else
             {
-                AnimalFoodItemsResolver.Add(SelectedFoodItem.Name, new List<string>() { animal.Name });
+                AnimalFoodItemsResolver.Add(animal.Name, new List<string>() { SelectedFoodItem.Name });
             }
+        }
+
+        public List<string> GetAnimalSchedule(string animalId)
+        {
+            return AnimalFoodItemsResolver.ContainsKey(animalId) ? PrepareFoodItemsForDisplay(AnimalFoodItemsResolver[animalId]) : null;
+        }
+
+        private List<string> PrepareFoodItemsForDisplay(List<string> foodItemIds)
+        {
+            List<string> foodItemDescriptions = new List<string>();
+
+            foreach (var id in foodItemIds)
+            {
+                foodItemDescriptions.Add(Collection.FirstOrDefault(i => i.Name.Equals(id))?.ToString());
+            }
+            
+            return foodItemDescriptions;
         }
 
         #endregion
@@ -128,14 +147,11 @@ namespace AnimalPark.ViewModel
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    MessageBox.Show("add new food");
+                    MessageBox.Show("New food item added!");
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    MessageBox.Show("remove a food");
-                    break;
-
-                case NotifyCollectionChangedAction.Replace:
+                    MessageBox.Show("Food item deleted!");
                     break;
             }
         }

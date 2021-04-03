@@ -69,11 +69,12 @@
                     <TextBlock FontSize="12" Text="{Binding SelectedAnimalDescription, UpdateSourceTrigger=PropertyChanged}"/>
 
                 </StackPanel>
-                <!--<StackPanel Grid.Row="2" Grid.Column="5" Visibility="{Binding IsAnimalSelected, UpdateSourceTrigger=PropertyChanged, 
+
+                <StackPanel Grid.Row="2" Grid.Column="5" Visibility="{Binding IsAnimalSelected, UpdateSourceTrigger=PropertyChanged, 
                     Converter={StaticResource VisibilityConverter}}">
                     <Label FontSize="14" Content="Eating habits"/>
                     <ListBox FontSize="12" ItemsSource="{Binding SelectedAnimalEatingHabits, UpdateSourceTrigger=PropertyChanged}"/>
-                </StackPanel>-->
+                </StackPanel>
 
             </Grid>
        </GroupBox>

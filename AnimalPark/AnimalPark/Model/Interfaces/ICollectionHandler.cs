@@ -34,7 +34,7 @@ namespace AnimalPark.Model.Interfaces
         /// </summary>
         /// <param name="position"> Index in the list </param>
         /// <returns> Instance of type T, or default </returns>
-        T Get(int position);
+        T Get(int id); 
 
         /// <summary>
         /// Calls a chained ToString() on each element in the collection

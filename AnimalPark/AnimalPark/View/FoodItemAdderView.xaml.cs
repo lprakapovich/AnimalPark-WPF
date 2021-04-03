@@ -18,8 +18,8 @@ namespace AnimalPark.View
         public FoodItemAdderView(FoodAdderViewModel dataContext) : this()
         {
             this.DataContext = dataContext;
-
             ((FoodAdderViewModel) (this.DataContext)).CloseWindow += (sender, args) => this.Close();
+            ((FoodAdderViewModel) (this.DataContext)).MessageDelegate += s => MessageBox.Show(s);
         }
     }
 }

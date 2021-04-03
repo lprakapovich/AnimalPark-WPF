@@ -48,7 +48,5 @@ namespace AnimalPark.Model.Bases
         {
             get => $"{"Name:",-4} {Name,-40}" + $"{"\nAge:",-40} {Age,-40}" + $"{"\nGender:",-40} {Gender,-40}";
         }
-
-        public abstract FoodSchedule FoodSchedule { get; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using AnimalPark.Model.Bases;
+﻿using AnimalPark.Model.Bases;
 using AnimalPark.Model.Enums;
 
 namespace AnimalPark.Model.Concretes
@@ -17,16 +16,7 @@ namespace AnimalPark.Model.Concretes
             get => _stubbornness;
             set => _stubbornness = value;
         }
-
-        public override FoodSchedule FoodSchedule
-        { 
-            get => new FoodSchedule()
-            { 
-                EaterType = EaterType.Herbivore,
-                EatingHabitsDescription = new List<string>() { "Straw, hay, and grass!"}
-            };
-        }
-
+        
         public override string ExtraInfo { get => base.ExtraInfo + $"{"\nSpecies: ", -40} {"Donkey", -40}" + $"{"\nStubbornness:", -40} {Stubbornness, -40}"; }
     }
 }
