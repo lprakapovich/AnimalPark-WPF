@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Net;
 using System.Windows;
 using AnimalPark.Common;
 using AnimalPark.Model;
 using AnimalPark.Model.Bases;
+using AnimalPark.Utils;
 
 namespace AnimalPark.ViewModel
 {
@@ -24,19 +24,11 @@ namespace AnimalPark.ViewModel
 
         public FoodManagerViewModel()
         {
-
-            Collection = new ObservableCollection<FoodItem>()
-            {
-                new FoodItem("Food iten", new List<string>()),
-                new FoodItem("Food 2", new List<string>())
-            };
-
-            Collection.CollectionChanged += FoodItemsOnCollectionChanged;
-
+            Collection = new ObservableCollection<FoodItem>(); 
+            FoodAdderViewModel = new FoodAdderViewModel();
             AnimalFoodItemsResolver = new Dictionary<string, List<string>>();
 
-            FoodAdderViewModel = new FoodAdderViewModel();
-
+            Collection.CollectionChanged += FoodItemsOnCollectionChanged;
             FoodAdderViewModel.CreateFoodItem += item => Collection.Add(item);
         }
 
@@ -69,20 +61,20 @@ namespace AnimalPark.ViewModel
 
         public void LinkAnimalToFoodItem(Animal animal)
         {
-            if (AnimalFoodItemsResolver.ContainsKey(animal.Name))
+            if (AnimalFoodItemsResolver.ContainsKey(animal.Id))
             {
-                if (AnimalFoodItemsResolver[animal.Name].Contains(SelectedFoodItem.Name))
+                if (AnimalFoodItemsResolver[animal.Id].Contains(SelectedFoodItem.Name))
                 {
                     MessageDelegate?.Invoke($"{animal.Name} already has {SelectedFoodItem.Name} in its food schedule!");
                 }
                 else
                 {
-                    AnimalFoodItemsResolver[animal.Name].Add(SelectedFoodItem.Name);
+                    AnimalFoodItemsResolver[animal.Id].Add(SelectedFoodItem.Name);
                 }
             }
             else
             {
-                AnimalFoodItemsResolver.Add(animal.Name, new List<string>() { SelectedFoodItem.Name });
+                AnimalFoodItemsResolver.Add(animal.Id, new List<string>() { SelectedFoodItem.Name });
             }
         }
 
@@ -91,13 +83,13 @@ namespace AnimalPark.ViewModel
             return AnimalFoodItemsResolver.ContainsKey(animalId) ? PrepareFoodItemsForDisplay(AnimalFoodItemsResolver[animalId]) : null;
         }
 
-        private List<string> PrepareFoodItemsForDisplay(List<string> foodItemIds)
+        private List<string> PrepareFoodItemsForDisplay(List<string> foodItemNames)
         {
             List<string> foodItemDescriptions = new List<string>();
 
-            foreach (var id in foodItemIds)
+            foreach (var name in foodItemNames)
             {
-                foodItemDescriptions.Add(Collection.FirstOrDefault(i => i.Name.Equals(id))?.ToString());
+                foodItemDescriptions.Add(Collection.FirstOrDefault(i => i.Name.Equals(name))?.ToString());
             }
             
             return foodItemDescriptions;
@@ -116,7 +108,7 @@ namespace AnimalPark.ViewModel
         public RelayCommand DeleteFoodItem => _deleteFoodItem ??
                                               (_deleteFoodItem = new RelayCommand(ex =>
                                               {
-                                                  if (!AnimalFoodItemsResolver.ContainsKey(SelectedFoodItem.Name))
+                                                  if (!AnimalFoodItemsResolver.ContainsValueInList(SelectedFoodItem.Name))
                                                   {
                                                       Collection.Remove(SelectedFoodItem);
                                                   }

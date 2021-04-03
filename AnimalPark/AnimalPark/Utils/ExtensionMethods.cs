@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -53,6 +54,31 @@ namespace AnimalPark.Utils
         public static bool IsEmpty<T>(this ObservableCollection<T> collection)
         {
             return collection.ToList().Count == 0;
+        }
+
+        public static string GetListed<T>(this List<T> list)
+        {
+            string listedElements = null;
+
+            foreach (var element in list)
+            {
+                listedElements += element.ToString();
+            }
+
+            return listedElements;
+        }
+
+        public static bool ContainsValueInList<T>(this Dictionary<T, List<T>> dictionary, T value)
+        {
+            foreach (var key in dictionary.Keys)
+            {
+                if (dictionary[key].Contains(value))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

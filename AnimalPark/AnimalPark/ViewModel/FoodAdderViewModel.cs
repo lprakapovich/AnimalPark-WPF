@@ -13,6 +13,8 @@ namespace AnimalPark.ViewModel
 
         private string _foodItemName;
 
+        private string _ingredientName;
+
         private string _selectedIngredient;
 
         #endregion
@@ -21,11 +23,7 @@ namespace AnimalPark.ViewModel
 
         public FoodAdderViewModel()
         {
-            Collection = new ObservableCollection<string>()
-            {
-                "ing 1",
-                "ing 2"
-            };
+            Collection = new ObservableCollection<string>();
         }
 
         #endregion
@@ -39,6 +37,16 @@ namespace AnimalPark.ViewModel
             {
                 _foodItemName = value;
                 OnPropertyChanged(nameof(FoodItemName));
+            }
+        }
+
+        public string IngredientName 
+        {
+            get => _ingredientName;
+            set
+            {
+                _ingredientName = value;
+                OnPropertyChanged(nameof(IngredientName));
             }
         }
 
@@ -69,7 +77,12 @@ namespace AnimalPark.ViewModel
         private RelayCommand _addIngredientCommand;
         public RelayCommand AddIngredientCommand => _addIngredientCommand ??
                                                     (_addIngredientCommand =
-                                                        new RelayCommand(ex => Collection.Add(FoodItemName)));
+                                                        new RelayCommand(ex =>
+                                                            {
+                                                                Collection.Add(IngredientName);
+                                                                IngredientName = null;
+                                                            },
+                                                            canExecute => !(string.IsNullOrEmpty(IngredientName) && string.IsNullOrWhiteSpace(IngredientName))));
 
         private RelayCommand _deleteIngredientCommand;
         public RelayCommand DeleteIngredientCommand => _deleteIngredientCommand ??
@@ -91,11 +104,23 @@ namespace AnimalPark.ViewModel
                                                          else
                                                          {
                                                              CreateFoodItem?.Invoke(new FoodItem(FoodItemName, Collection.ToList()));
+                                                             Reset();
                                                              CloseWindow?.Invoke(this, new EventArgs());
                                                          }
                                                      }));
 
         public bool InvalidInput => string.IsNullOrEmpty(FoodItemName) || string.IsNullOrWhiteSpace(FoodItemName) || Collection.IsEmpty();
+
+        #endregion
+
+        #region Private methods
+
+        private void Reset()
+        {
+            FoodItemName = null;
+            IngredientName = null;
+            SelectedIngredient = null;
+        }
 
         #endregion
     }

@@ -56,9 +56,9 @@
                           HorizontalAlignment="Center">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="150" Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                            <GridViewColumn Width="150" Header="Age" DisplayMemberBinding="{Binding Age}"/>
-                            <GridViewColumn Width="150" Header="Gender" DisplayMemberBinding="{Binding Gender}"/>
+                            <GridViewColumn Width="100" Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Width="100" Header="Age" DisplayMemberBinding="{Binding Age}"/>
+                            <GridViewColumn Width="100" Header="Gender" DisplayMemberBinding="{Binding Gender}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AnimalPark.Utils;
 
 namespace AnimalPark.Model
 {
@@ -40,7 +41,7 @@ namespace AnimalPark.Model
 
         public override string ToString()
         {
-            return Name + ", Ingredients - " + Ingredients.Count;
+            return Name + ", Ingredients - " + Ingredients.GetListed();
         }
     }
 }

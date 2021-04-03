@@ -7,7 +7,6 @@ using System.Linq;
 using AnimalPark.Model.Bases;
 using AnimalPark.Model.Enums;
 using AnimalPark.Model.Interfaces;
-using AnimalPark.Utils.Validators;
 using AnimalPark.ViewModel.BaseSpeciesViewModels;
 using static AnimalPark.Model.Enums.Species;
 using static AnimalPark.Utils.Validators.ValidationService;
@@ -302,7 +301,7 @@ namespace AnimalPark.ViewModel
         /// <param name="validationType"> validation strategy </param>
         private void ValidateProperty(string property, object value, ValidationType validationType)
         {
-            bool isValid = ValidationService.IsValid(validationType, property, value, out ICollection<string> errors);
+            bool isValid = IsValid(validationType, property, value, out ICollection<string> errors);
              
             if (!isValid)
             {

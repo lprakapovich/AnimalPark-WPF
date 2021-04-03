@@ -6,7 +6,6 @@ using System.Linq;
 using System.Windows;
 using AnimalPark.Common;
 using AnimalPark.Model.Bases;
-using AnimalPark.Model.Concretes;
 using AnimalPark.Model.Enums;
 using AnimalPark.Utils.Comparators;
 
@@ -31,14 +30,10 @@ namespace AnimalPark.ViewModel
 
         public AnimalListViewModel()
         {
-            Collection = new ObservableCollection<Animal>()
-            {
-                new Raccoon("Li", 12, Gender.Female, true, RaccoonType.Cancrivorus),
-                new Raccoon("Liza", 12, Gender.Female, true, RaccoonType.Cancrivorus),
-            };
+            Collection = new ObservableCollection<Animal>();
+            Collection.CollectionChanged += AnimalsCollectionOnCollectionChanged;
 
             SelectedAnimal = null;
-            Collection.CollectionChanged += AnimalsCollectionOnCollectionChanged;
         }
 
         #endregion
@@ -71,7 +66,7 @@ namespace AnimalPark.ViewModel
 
         public string SelectedAnimalDescription => SelectedAnimal?.ExtraInfo;
         
-        public List<string> SelectedAnimalEatingHabits => AnimalFoodScheduleDelegate?.Invoke(SelectedAnimal?.Name) ?? new List<string>() { "No data yet." };
+        public List<string> SelectedAnimalEatingHabits => AnimalFoodScheduleDelegate?.Invoke(SelectedAnimal?.Id) ?? new List<string>() { "No foods yet." };
 
         public bool IsAnimalSelected => SelectedAnimal != null;
 
@@ -119,11 +114,11 @@ namespace AnimalPark.ViewModel
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    MessageBox.Show("Success! New animal is registered in Apu park.");
+                    MessageBox.Show("Yeah! New animal is registered in Apu park.");
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    MessageBox.Show("Meh. Animal is kicked from the Apu park. ");
+                    MessageBox.Show("Animal is removed from the Apu park. ");
                     break;
             }
         }
