@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.Windows;
 using AnimalPark.Common;
 using AnimalPark.Model;
+using AnimalPark.Model.Bases;
 
 namespace AnimalPark.ViewModel
 {
@@ -14,6 +15,7 @@ namespace AnimalPark.ViewModel
 
         private Dictionary<string, List<string>> _animalFoodItemsResolver;
 
+        private FoodItem _selectedFoodItem;
         #endregion
 
         #region Setup
@@ -52,34 +54,62 @@ namespace AnimalPark.ViewModel
             }
         }
 
-        #endregion
-
-        public void test()
+        public FoodItem SelectedFoodItem
         {
-            MessageBox.Show("HI");
+            get => _selectedFoodItem;
+            set
+            {
+                _selectedFoodItem = value;
+                OnPropertyChanged(nameof(SelectedFoodItem));
+            }
         }
+
+
+        public void LinkAnimalToFoodItem(Animal animal)
+        {
+            if (AnimalFoodItemsResolver.ContainsKey(SelectedFoodItem.Name))
+            {
+                if (AnimalFoodItemsResolver[SelectedFoodItem.Name].Contains(animal.Name))
+                {
+                    MessageDelegate?.Invoke($"{animal.Name} already has {SelectedFoodItem.Name} in its food schedule!");
+                }
+                else
+                {
+                    AnimalFoodItemsResolver[SelectedFoodItem.Name].Add(animal.Name);
+                }
+            }
+            else
+            {
+                AnimalFoodItemsResolver.Add(SelectedFoodItem.Name, new List<string>() { animal.Name });
+            }
+        }
+
+        #endregion
 
         #region Commands 
 
 
         private RelayCommand _addFoodItemCommand;
         public RelayCommand AddFoodItemCommand => _addFoodItemCommand ??
-                                                  (_addFoodItemCommand = new RelayCommand(ex =>
-                                                  {
-                                                     // FoodAdderViewModel = new FoodAdderViewModel();
-
-                                                      AddFoodItemDialog?.Invoke(this, new EventArgs()); 
-                                                  }));
+                                                  (_addFoodItemCommand = new RelayCommand(ex => AddFoodItemDialog?.Invoke(this, new EventArgs())));
 
         private RelayCommand _deleteFoodItem;
         public RelayCommand DeleteFoodItem => _deleteFoodItem ??
-                                              (_deleteFoodItem = new RelayCommand(ex => Collection.Remove(SelectedFoodItem), canEx => SelectedFoodItem != null));
+                                              (_deleteFoodItem = new RelayCommand(ex =>
+                                              {
+                                                  if (!AnimalFoodItemsResolver.ContainsKey(SelectedFoodItem.Name))
+                                                  {
+                                                      Collection.Remove(SelectedFoodItem);
+                                                  }
+                                                  else
+                                                  {
+                                                      MessageDelegate?.Invoke("Can't remove food item since some animals have it in their food schedule!");
+                                                  }
+                                              }, canEx => SelectedFoodItem != null));
 
         private RelayCommand _cancelCommand;
         private RelayCommand CancelCommand => _cancelCommand ??
                                               (_cancelCommand = new RelayCommand(ex => CloseDialog?.Invoke(this, new EventArgs())));
-        
-        public FoodItem SelectedFoodItem { get; set; }
 
         public FoodAdderViewModel FoodAdderViewModel { get; set; }
 
@@ -87,6 +117,7 @@ namespace AnimalPark.ViewModel
 
         #region Events
 
+        public Action<string> MessageDelegate;
 
         public event EventHandler AddFoodItemDialog;
 
@@ -106,10 +137,14 @@ namespace AnimalPark.ViewModel
 
                 case NotifyCollectionChangedAction.Replace:
                     break;
-
             }
         }
 
         #endregion
+
+        public void Reset()
+        {
+            SelectedFoodItem = null;
+        }
     }
 }

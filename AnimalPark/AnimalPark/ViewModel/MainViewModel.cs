@@ -238,11 +238,11 @@ namespace AnimalPark.ViewModel
 
             if (SelectedSpecies == Unknown)
             {
-                ErrorMessageDelegate?.Invoke("Select a species type first.");
+                MessageDelegate?.Invoke("Select a species type first.");
             }
             else if (!IsViewModelValid)
             {
-                ErrorMessageDelegate?.Invoke("Some fields are empty or invalid!");
+                MessageDelegate?.Invoke("Some fields are empty or invalid!");
             }
             else
             {
@@ -255,7 +255,7 @@ namespace AnimalPark.ViewModel
 
         #region Events
 
-        public Action<string> ErrorMessageDelegate;
+        public Action<string> MessageDelegate;
 
         #endregion
 
@@ -263,10 +263,28 @@ namespace AnimalPark.ViewModel
 
         private RelayCommand _createAnimalCommand;
 
-        public RelayCommand CreateAnimalCommand
-        {
-            get => _createAnimalCommand ??
+        public RelayCommand CreateAnimalCommand =>_createAnimalCommand ??
                    (_createAnimalCommand = new RelayCommand(ex => { CreateAnimal(); }));
+        
+
+        private RelayCommand _linkAnimalToFoodItemCommand;
+
+        public RelayCommand LinkAnimalToFoodItemCommand => _linkAnimalToFoodItemCommand ??
+                                                           (_linkAnimalToFoodItemCommand = new RelayCommand(ex => LinkAnimalToFoodItem()));
+
+        private void LinkAnimalToFoodItem()
+        {
+            if (AnimalListViewModel.SelectedAnimal == null || FoodManagerViewModel.SelectedFoodItem == null)
+            {
+                MessageDelegate?.Invoke("You must select an animal and a food item first!");
+            }
+            else
+            {
+                FoodManagerViewModel.LinkAnimalToFoodItem(AnimalListViewModel.SelectedAnimal);
+                MessageDelegate?.Invoke($"Successfully added a {FoodManagerViewModel.SelectedFoodItem.Name} to {AnimalListViewModel.SelectedAnimal.Name}'s food schedule!");
+                FoodManagerViewModel.Reset();
+                AnimalListViewModel.Reset();
+            }
         }
 
         #endregion

@@ -15,10 +15,11 @@ namespace AnimalPark
         {
             InitializeComponent();
             _dataContext = (MainViewModel) this.DataContext;
-            _dataContext.ErrorMessageDelegate += s => MessageBox.Show(s);
+            _dataContext.MessageDelegate += s => MessageBox.Show(s);
 
             _dataContext.FoodManagerViewModel.AddFoodItemDialog += OnOpenFoodItemDialog;
             _dataContext.FoodManagerViewModel.CloseDialog += (sender, args) => this.Close();
+            _dataContext.FoodManagerViewModel.MessageDelegate += s => MessageBox.Show(s);
         }
 
         private void OnOpenFoodItemDialog(object sender, EventArgs e)

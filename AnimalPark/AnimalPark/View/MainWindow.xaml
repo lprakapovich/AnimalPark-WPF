@@ -15,6 +15,7 @@
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="5"/> 
+            <Setter Property="Width" Value="200"/>
         </Style>
         <Style TargetType="CheckBox">
             <Setter Property="Margin" Value="5 "/>
@@ -38,6 +39,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
@@ -104,6 +106,7 @@
                 <ContentControl Grid.Row="4" Grid.Column="6" Grid.RowSpan="5" Grid.ColumnSpan="4" Content="{Binding FoodManagerViewModel}"/>
             </Grid>
         </GroupBox>
-        <ContentControl Grid.Row="2" Content="{Binding AnimalListViewModel}"/>
+        <Button Grid.Row="2" Content="Link animal to selected food item" Command="{Binding LinkAnimalToFoodItemCommand}"/>
+        <ContentControl Grid.Row="3" Content="{Binding AnimalListViewModel}"/>
     </Grid>
 </Window>
