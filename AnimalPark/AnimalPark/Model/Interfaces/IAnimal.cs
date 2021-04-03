@@ -6,8 +6,5 @@ using System.Threading.Tasks;
 
 namespace AnimalPark.Model.Interfaces
 {
-    public interface IAnimal
-    {
-        
-    }
+    public interface IAnimal { }
 }

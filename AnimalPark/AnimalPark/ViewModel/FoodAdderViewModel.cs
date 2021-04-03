@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using AnimalPark.Common;
@@ -82,7 +81,7 @@ namespace AnimalPark.ViewModel
         public RelayCommand CreateFoodItemCommand => _createFoodItemCommand ??
                                                      (_createFoodItemCommand = new RelayCommand(ex =>
                                                      {
-                                                         CreateFoodItem?.Invoke(new FoodItem() { Name = FoodItemName, Ingredients = Collection.ToList()});
+                                                         CreateFoodItem?.Invoke(new FoodItem(FoodItemName, Collection.ToList()));
                                                          CloseWindow?.Invoke(this, new EventArgs());
                                                      }));
 

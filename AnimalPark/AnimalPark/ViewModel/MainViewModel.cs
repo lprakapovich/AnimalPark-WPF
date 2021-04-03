@@ -335,6 +335,7 @@ namespace AnimalPark.ViewModel
 
         private string _name;
         private string _age;
+
         private Gender _gender;
         private Category _category;
 
@@ -344,10 +345,9 @@ namespace AnimalPark.ViewModel
         private Animal _animal;
 
         private AnimalListViewModel _animalListViewModel;
+        private FoodManagerViewModel _foodManagerViewModel;
 
         private bool _isCheckedListAllAnimals;
-
-        private FoodManagerViewModel _foodManagerViewModel;
 
         #endregion
     }

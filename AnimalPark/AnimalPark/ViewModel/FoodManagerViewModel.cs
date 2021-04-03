@@ -25,8 +25,8 @@ namespace AnimalPark.ViewModel
 
             Collection = new ObservableCollection<FoodItem>()
             {
-                new FoodItem() { Name = "FoodItem 1"},
-                new FoodItem() { Name = "FoodItem 2"}
+                new FoodItem("Food iten", new List<string>()),
+                new FoodItem("Food 2", new List<string>())
             };
 
             Collection.CollectionChanged += FoodItemsOnCollectionChanged;

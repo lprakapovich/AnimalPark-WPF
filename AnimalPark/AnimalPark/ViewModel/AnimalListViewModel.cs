@@ -74,6 +74,11 @@ namespace AnimalPark.ViewModel
 
         public bool IsAnimalSelected => SelectedAnimal != null;
 
+        public void Reset()
+        {
+            SelectedAnimal = null;
+        }
+
         #endregion
 
         #region Commands
@@ -109,24 +114,18 @@ namespace AnimalPark.ViewModel
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    MessageBox.Show("add new animal");
+                    MessageBox.Show("Success! New animal is registered in Apu park.");
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    MessageBox.Show("remove an animal");
+                    MessageBox.Show("Animal found a new home. ");
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
                     break;
-
             }
         }
 
         #endregion
-
-        public void Reset()
-        {
-            SelectedAnimal = null;
-        }
     }
 }

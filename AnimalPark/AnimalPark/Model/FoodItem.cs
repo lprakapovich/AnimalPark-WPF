@@ -1,15 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace AnimalPark.Model
 {
     public class FoodItem
     {
-        public string Name { get; set; }
-        public List<string> Ingredients { get; set; } = new List<string>();
+        private string _name;
+
+        private List<string> _ingredients;
+
+        public FoodItem(string name, List<string> ingredients)
+        {
+            Name = name;
+            Ingredients = ingredients;
+        }
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (value != null)
+                {
+                    _name = value;
+                }
+            }
+        }
+
+        public List<string> Ingredients
+        {
+            get => _ingredients;
+            set
+            {
+                if (value != null)
+                {
+                    _ingredients = value;
+                }
+            }
+        }
 
         public override string ToString()
         {
