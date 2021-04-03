@@ -4,7 +4,6 @@ using AnimalPark.Utils;
 using AnimalPark.Utils.Factories;
 using System.Collections.Generic;
 using System.Linq;
-using AnimalPark.Model;
 using AnimalPark.Model.Bases;
 using AnimalPark.Model.Enums;
 using AnimalPark.Model.Interfaces;
@@ -170,7 +169,6 @@ namespace AnimalPark.ViewModel
 
         #region Private methods
 
-
         /// <summary>
         /// Triggered each time a new category is selected
         /// </summary>
@@ -201,7 +199,7 @@ namespace AnimalPark.ViewModel
         }
 
         /// <summary>
-        /// Triggered in "List all species" mode, therefore firstly determines
+        /// Triggered in "Collection all species" mode, therefore firstly determines
         /// to which category a species belongs, and then updates the control
         /// </summary>
         private void OnSpeciesSelected()
@@ -249,7 +247,7 @@ namespace AnimalPark.ViewModel
             else
             {
                 Animal = FactoryBuilder.GetAnimalFactory(Category)?.CreateAnimal(this, CategoryControl);
-                AnimalListViewModel.AddAnimal(Animal);
+                AnimalListViewModel.Collection.Add(Animal);
             }
         }
 

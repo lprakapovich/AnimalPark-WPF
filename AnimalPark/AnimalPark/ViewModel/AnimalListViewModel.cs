@@ -2,11 +2,11 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Windows;
 using AnimalPark.Common;
 using AnimalPark.Model.Bases;
 using AnimalPark.Model.Enums;
 using AnimalPark.Utils.Comparators;
-using AnimalPark.Utils.Services;
 
 namespace AnimalPark.ViewModel
 {
@@ -14,41 +14,29 @@ namespace AnimalPark.ViewModel
     /// Class managing the list of animals, used instead of AnimalManager mentioned in the
     /// instructions to follow WPF naming conventions
     /// </summary>
-    public class AnimalListViewModel : BindableBase
+    
+    public class AnimalListViewModel : BindableCollection<Animal>
     {
         #region Private Fields
 
-        private AnimalService _animalService; 
-
-        private ObservableCollection<Animal> _animals;
         private Animal _selectedAnimal;
 
         private SortingStrategy _sortingStrategy;
 
         #endregion
 
+        #region Setup
+
         public AnimalListViewModel()
         {
-            Animals = new ObservableCollection<Animal>();
-            AnimalService = new AnimalService();
+            Collection = new ObservableCollection<Animal>();
             SelectedAnimal = null;
-
-            Animals.CollectionChanged += AnimalsOnCollectionChanged;
+            Collection.CollectionChanged += AnimalsCollectionOnCollectionChanged;
         }
+
+        #endregion
 
         #region API
-        public ObservableCollection<Animal> Animals
-        {
-            get => _animals;
-            set
-            {
-                if (value != null)
-                {
-                    _animals = value;
-                    OnPropertyChanged(nameof(Animals));
-                }
-            }
-        }
 
         public Animal SelectedAnimal
         {
@@ -69,20 +57,8 @@ namespace AnimalPark.ViewModel
             set
             {
                 _sortingStrategy = value;
-                SortAnimalList();
+                SortCollection();
                 OnPropertyChanged(nameof(SortingStrategy));
-            }
-        }
-
-        public AnimalService AnimalService
-        {
-            get => _animalService;
-            set
-            {
-                if (value != null)
-                {
-                    _animalService = value;
-                }
             }
         }
 
@@ -92,14 +68,6 @@ namespace AnimalPark.ViewModel
 
         public bool IsAnimalSelected => SelectedAnimal != null;
 
-        public void AddAnimal(Animal animal)
-        {
-            if (animal != null)
-            {
-                Animals.Add(animal);
-            }
-        }
-
         #endregion
 
         #region Commands
@@ -108,43 +76,38 @@ namespace AnimalPark.ViewModel
 
         public RelayCommand DeleteAnimalCommand =>
             _deleteAnimalCommand ??
-            (_deleteAnimalCommand = new RelayCommand(e => DeleteAnimal(), canEx => SelectedAnimal != null));
+            (_deleteAnimalCommand = new RelayCommand(e => Collection.Remove(SelectedAnimal), canEx => SelectedAnimal != null));
 
         #endregion
 
         #region Private methods
 
-        private void DeleteAnimal()
-        {
-            Animals.Remove(SelectedAnimal);
-        }
-        
         /// <summary>
         /// Invoked each time the sorting option is changed, passes a resolved Comparer
         /// to the Sort() method and updates the observable collection with a sorted list
         /// </summary>
-        private void SortAnimalList()
+        /// 
+        private void SortCollection()
         {
-            List<Animal> sortedAnimals = Animals.ToList();
+            List<Animal> sortedAnimals = Collection.ToList();
             sortedAnimals.Sort(Comparer.ResolveSortingStrategy(SortingStrategy));
-            Animals = new ObservableCollection<Animal>(sortedAnimals);
-            OnPropertyChanged(nameof(Animals));
+            Collection = new ObservableCollection<Animal>(sortedAnimals);
+            OnPropertyChanged(nameof(Collection));
         }
 
         #endregion
 
         #region Events
-
-        private void AnimalsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void AnimalsCollectionOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    AnimalService.Add(Animals[e.NewStartingIndex]);
+                    MessageBox.Show("add new animal");
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    AnimalService.RemoveAt(e.OldStartingIndex);
+                    MessageBox.Show("remove an animal");
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
@@ -154,6 +117,5 @@ namespace AnimalPark.ViewModel
         }
 
         #endregion
-
     }
 }

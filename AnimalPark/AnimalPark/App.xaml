@@ -31,6 +31,12 @@
         <DataTemplate DataType="{x:Type vm:AnimalListViewModel}">
             <view:AnimalListView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:FoodManagerViewModel}">
+            <view:FoodManagerView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:FoodAdderViewModel}">
+            <view:FoodItemAdderView/>
+        </DataTemplate>
         <Style TargetType="GroupBox">
             <Setter Property="Margin" Value="30"></Setter>
         </Style>

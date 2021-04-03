@@ -56,6 +56,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\BindableBase.cs" />
+    <Compile Include="Common\BindableCollection.cs" />
+    <Compile Include="Common\AbstractNotifier.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Model\Enums\Category.cs" />
     <Compile Include="Model\Concretes\JellyFishType.cs" />
@@ -67,8 +69,7 @@
     <Compile Include="Model\FoodManager.cs" />
     <Compile Include="Model\Interfaces\IAnimal.cs" />
     <Compile Include="Model\Interfaces\IChildValidator.cs" />
-    <Compile Include="Model\Interfaces\IListHandler.cs" />
-    <Compile Include="Model\ListHandler.cs" />
+    <Compile Include="Model\Interfaces\ICollectionHandler.cs" />
     <Compile Include="Utils\Converters\SortingStrategyConverter.cs" />
     <Compile Include="Utils\ExtensionMethods.cs" />
     <Compile Include="Utils\Comparators\Comparer.cs" />
@@ -86,9 +87,9 @@
     <Compile Include="Utils\Factories\MammalFactory.cs" />
     <Compile Include="Model\Interfaces\IFish.cs" />
     <Compile Include="Model\Interfaces\IMammal.cs" />
-    <Compile Include="Utils\Services\AnimalService.cs" />
     <Compile Include="Utils\Validators\ValidationService.cs" />
     <Compile Include="ViewModel\AnimalListViewModel.cs" />
+    <Compile Include="ViewModel\FoodAdderViewModel.cs" />
     <Compile Include="ViewModel\FoodManagerViewModel.cs" />
     <Compile Include="ViewModel\SpeciesViewModels\DonkeyViewModel.cs" />
     <Compile Include="ViewModel\SpeciesViewModels\RaccoonViewModel.cs" />
@@ -97,6 +98,12 @@
     </Compile>
     <Compile Include="View\AnimalListView.xaml.cs">
       <DependentUpon>AnimalListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FoodItemAdderView.xaml.cs">
+      <DependentUpon>FoodItemAdderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FoodManagerView.xaml.cs">
+      <DependentUpon>FoodManagerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SpeciesControls\DonkeyControl.xaml.cs">
       <DependentUpon>DonkeyControl.xaml</DependentUpon>
@@ -123,6 +130,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CategoriesControls\MammalControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FoodItemAdderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FoodManagerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

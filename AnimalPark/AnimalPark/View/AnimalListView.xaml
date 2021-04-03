@@ -23,7 +23,7 @@
         <c:SortingStrategyConverter x:Key="SortingStrategyConverter"/> 
     </UserControl.Resources>
     <Grid>
-       <GroupBox Header="List of registered animals" Background="AliceBlue">
+       <GroupBox Header="Collection of registered animals" Background="AliceBlue">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10"/>
@@ -51,7 +51,7 @@
                     Path=EnumDescriptions}"/>
 
                 <ListView Grid.Column="1"  Grid.Row="2" Grid.ColumnSpan="3"
-                          ItemsSource="{Binding Animals, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding Collection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedAnimal}"
                           HorizontalAlignment="Center">
                     <ListView.View>

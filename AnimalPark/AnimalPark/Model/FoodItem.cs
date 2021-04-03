@@ -9,11 +9,11 @@ namespace AnimalPark.Model
     public class FoodItem
     {
         public string Name { get; set; }
-        public List<string> Ingredients { get; set; }
+        public List<string> Ingredients { get; set; } = new List<string>();
 
         public override string ToString()
         {
-            return Name;
+            return Name + ", Ingredients - " + Ingredients.Count;
         }
     }
 }

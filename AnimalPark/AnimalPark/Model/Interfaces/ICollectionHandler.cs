@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace AnimalPark.Model.Interfaces
 {
-    public interface IListHandler<T>
+    public interface ICollectionHandler<T> 
     {
         /// <summary>
         /// A list of objects handler by the implementing ListHandler
         /// </summary>
-        List<T> List { get; set; }
+        ObservableCollection<T> Collection { get; set; } 
 
         /// <summary>
         /// Add new element to the collection
