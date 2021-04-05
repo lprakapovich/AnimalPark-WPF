@@ -3,7 +3,12 @@ using AnimalPark.Model.Interfaces;
 
 namespace AnimalPark.Common
 {
-    public abstract class BindableCollection<T> : AbstractNotifier, ICollectionHandler<T> 
+    /// <summary>
+    /// Generic abstract class encapsulating the logic required
+    /// to manipulate on collections
+    /// </summary>
+    /// <typeparam name="T"> type parameter </typeparam>
+    public abstract class BindableCollection<T> : AbstractNotifier, ICollectionHandler<T>
     {
         public ObservableCollection<T> Collection { get; set; }
 
@@ -34,11 +39,6 @@ namespace AnimalPark.Common
         public T Get(int position)
         {
             return Collection.Count > position && position >= 0 ? Collection[position] : default;
-        }
-
-        public string[] GetElementsDescription()
-        {
-            return null;
         }
     }
 }

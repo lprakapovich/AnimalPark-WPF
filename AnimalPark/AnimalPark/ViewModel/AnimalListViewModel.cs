@@ -102,6 +102,11 @@ namespace AnimalPark.ViewModel
             OnPropertyChanged(nameof(Collection));
         }
 
+        public double DelIMl(double i)
+        {
+            return i;
+        }
+
         #endregion
 
 
@@ -122,6 +127,8 @@ namespace AnimalPark.ViewModel
                     break;
             }
         }
+
+        private delegate double MAtch(double d);
 
         #endregion
     }

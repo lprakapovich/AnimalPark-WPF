@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using AnimalPark.Common;
 
 namespace AnimalPark.Model.Interfaces
 {
@@ -34,12 +35,7 @@ namespace AnimalPark.Model.Interfaces
         /// </summary>
         /// <param name="position"> Index in the list </param>
         /// <returns> Instance of type T, or default </returns>
-        T Get(int id); 
+        T Get(int id);
 
-        /// <summary>
-        /// Calls a chained ToString() on each element in the collection
-        /// </summary>
-        /// <returns> Array of object descriptions </returns>
-        string[] GetElementsDescription();
     }
 }

@@ -7,6 +7,9 @@ using AnimalPark.Utils;
 
 namespace AnimalPark.ViewModel
 {
+    /// <summary>
+    /// Data context for a view where creating a new food item and adding new ingredients occurs
+    /// </summary>
     public class FoodAdderViewModel : BindableCollection<string>
     {
         #region Private fields
@@ -63,11 +66,19 @@ namespace AnimalPark.ViewModel
         #endregion
 
         #region Events
-
+        /// <summary>
+        /// Delegate to close a window in case no changes must be made
+        /// </summary>
         public event EventHandler CloseWindow;
 
+        /// <summary>
+        /// Delegate with a newly created food item passed as a parameter
+        /// </summary>
         public Action<FoodItem> CreateFoodItem;
 
+        /// <summary>
+        /// Delegate to display a message to the user
+        /// </summary>
         public Action<string> MessageDelegate;
 
         #endregion
@@ -88,6 +99,14 @@ namespace AnimalPark.ViewModel
         public RelayCommand DeleteIngredientCommand => _deleteIngredientCommand ??
                                                        (_deleteIngredientCommand = new RelayCommand(ex =>
                                                            Collection.Remove(SelectedIngredient), canEx => SelectedIngredient != null));
+
+        private RelayCommand _editIngredientCommand;
+        public RelayCommand EditIngredientCommand => _editIngredientCommand ??
+                                                     (_editIngredientCommand = new RelayCommand(ex =>
+                                                     {
+                                                         IngredientName = SelectedIngredient;
+                                                         Collection.Remove(SelectedIngredient);
+                                                     }, canEx => SelectedIngredient != null));
 
         private RelayCommand _closeWindowCommand;
         public RelayCommand CloseWindowCommand => _closeWindowCommand ?? (_closeWindowCommand = new RelayCommand(ex => CloseWindow?.Invoke(this, new EventArgs())));
@@ -120,6 +139,7 @@ namespace AnimalPark.ViewModel
             FoodItemName = null;
             IngredientName = null;
             SelectedIngredient = null;
+            Collection.Clear();
         }
 
         #endregion

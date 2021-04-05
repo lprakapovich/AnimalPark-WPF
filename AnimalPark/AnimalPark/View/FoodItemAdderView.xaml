@@ -51,13 +51,16 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Content="Ingredient" />
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding IngredientName, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button Grid.Row="1" Grid.Column="0" Content="Add"  Command="{Binding AddIngredientCommand}"/>
                 <Button Grid.Row="2" Grid.Column="0" Content="Delete" Command="{Binding DeleteIngredientCommand}"/>
-                <ListBox Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" MinHeight="100"
+                <Button Grid.Row="3" Grid.Column="0" Content="Edit" Command="{Binding EditIngredientCommand}"/> 
+
+                <ListBox Grid.Row="1" Grid.Column="1" Grid.RowSpan="4" MinHeight="100"
                          ItemsSource="{Binding Collection, UpdateSourceTrigger=PropertyChanged}" 
                          SelectedItem="{Binding SelectedIngredient, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>

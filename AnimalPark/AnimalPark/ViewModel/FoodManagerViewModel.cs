@@ -11,6 +11,10 @@ using AnimalPark.Utils;
 
 namespace AnimalPark.ViewModel
 {
+    /// <summary>
+    /// Food manager manipulating on a collection of FoodItems,
+    /// and encapsulating the logic linking an animal with a food item 
+    /// </summary>
     public class FoodManagerViewModel : BindableCollection<FoodItem> 
     {
         #region Private fields
@@ -59,6 +63,11 @@ namespace AnimalPark.ViewModel
         }
 
 
+        /// <summary>
+        /// animal's id is a key, since later on we need to retrieve a list of all food items
+        /// associated with a given animal
+        /// </summary>
+        /// <param name="animal"> animal whose id id used as a key in the dictionary </param>
         public void LinkAnimalToFoodItem(Animal animal)
         {
             if (AnimalFoodItemsResolver.ContainsKey(animal.Id))
@@ -78,6 +87,11 @@ namespace AnimalPark.ViewModel
             }
         }
 
+        /// <summary>
+        /// Get food schedule of a given animal
+        /// </summary>
+        /// <param name="animalId"> id of animal whose food schedule must be read </param>
+        /// <returns></returns>
         public List<string> GetAnimalSchedule(string animalId)
         {
             return AnimalFoodItemsResolver.ContainsKey(animalId) ? PrepareFoodItemsForDisplay(AnimalFoodItemsResolver[animalId]) : null;
@@ -104,6 +118,9 @@ namespace AnimalPark.ViewModel
         public RelayCommand AddFoodItemCommand => _addFoodItemCommand ??
                                                   (_addFoodItemCommand = new RelayCommand(ex => AddFoodItemDialog?.Invoke(this, new EventArgs())));
 
+        /// <summary>
+        /// Since animal is linked to some food items, it is only allowed to delete those foods that are not connected to any animal
+        /// </summary>
         private RelayCommand _deleteFoodItem;
         public RelayCommand DeleteFoodItem => _deleteFoodItem ??
                                               (_deleteFoodItem = new RelayCommand(ex =>

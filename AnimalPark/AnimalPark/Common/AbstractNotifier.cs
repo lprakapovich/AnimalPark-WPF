@@ -8,6 +8,9 @@ using System.Runtime.CompilerServices;
 
 namespace AnimalPark.Common
 {
+    /// <summary>
+    /// Abstract class encapsulating the functionality of INotifyPropertyChanged and INotifyDataError
+    /// </summary>
     public abstract class AbstractNotifier : INotifyPropertyChanged, INotifyDataErrorInfo
     {
         #region GUI updates 

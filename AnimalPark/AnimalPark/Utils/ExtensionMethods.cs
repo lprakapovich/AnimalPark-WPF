@@ -51,11 +51,23 @@ namespace AnimalPark.Utils
             return default(T);
         }
 
+        /// <summary>
+        ///  Check if a collection has any elements
+        /// </summary>
+        /// <typeparam name="T">parameter </typeparam>
+        /// <param name="collection"> checked collection </param>
+        /// <returns> boolean value </returns>
         public static bool IsEmpty<T>(this ObservableCollection<T> collection)
         {
             return collection.ToList().Count == 0;
         }
 
+        /// <summary>
+        /// string representation of the list
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <returns> list elements concatenated in a string </returns>
         public static string GetListed<T>(this List<T> list)
         {
             string listedElements = null;
@@ -68,6 +80,13 @@ namespace AnimalPark.Utils
             return listedElements;
         }
 
+        /// <summary>
+        /// For each key in the collection, check if the corresponding value exists
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dictionary"></param>
+        /// <param name="value"></param>
+        /// <returns> whether a value is present in the dictionary </returns>
         public static bool ContainsValueInList<T>(this Dictionary<T, List<T>> dictionary, T value)
         {
             foreach (var key in dictionary.Keys)
@@ -77,7 +96,6 @@ namespace AnimalPark.Utils
                     return true;
                 }
             }
-
             return false;
         }
     }
