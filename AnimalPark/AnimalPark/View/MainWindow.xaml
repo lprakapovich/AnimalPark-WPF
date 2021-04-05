@@ -36,77 +36,100 @@
         <c:BaseSpeciesConverter x:Key="BaseSpeciesConverter"/>
         <c:GenderConverter x:Key="GenderConverter"/>
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="10"/>
-        </Grid.RowDefinitions>
 
-        <GroupBox Grid.Row="1" Header="Animal Specification">
+    <Grid>
+
+        <DockPanel >
+            <Menu DockPanel.Dock="Top" Background="AliceBlue">
+                <MenuItem Header="File">
+                    <Separator />
+                    <MenuItem Header="New"/>
+                    <MenuItem Header="Open data file"/>
+                    <MenuItem Header="Save data to File" >
+                        <MenuItem Header="Text file"/>
+                        <MenuItem Header="Binary file"/>
+                    </MenuItem>
+                    <MenuItem Header="XML">
+                        <MenuItem Header="Import from XML"/>
+                        <MenuItem Header="Export to XML"/>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="Exit"/>
+                </MenuItem>
+            </Menu>
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10"/>
-                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="10"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="2" Grid.Column="1" Content="Name"/>
-                <TextBox Grid.Row="2" Grid.Column="2" Width="170" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                <GroupBox Grid.Row="1" Header="Animal Specification">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="2" Grid.Column="1" Content="Name"/>
+                        <TextBox Grid.Row="2" Grid.Column="2" Width="170" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
                          Validation.ErrorTemplate="{StaticResource ErrorTemplate}"/>
-                <Label Grid.Row="3" Grid.Column="1" Content="Age"/>
-                <TextBox Grid.Row="3" Grid.Column="2" Width="170" Text="{Binding Age, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                        <Label Grid.Row="3" Grid.Column="1" Content="Age"/>
+                        <TextBox Grid.Row="3" Grid.Column="2" Width="170" Text="{Binding Age, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
                          Validation.ErrorTemplate="{StaticResource ErrorTemplate}"/>
 
-                <GroupBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Header="Gender">
-                    <ListBox ItemsSource="{Binding Source={StaticResource GenderConverter}, Path=GenderStrings}"
+                        <GroupBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Header="Gender">
+                            <ListBox ItemsSource="{Binding Source={StaticResource GenderConverter}, Path=GenderStrings}"
                              SelectedItem="{Binding Gender, Converter={StaticResource GenderConverter}}">
-                    </ListBox>
-                </GroupBox>
+                            </ListBox>
+                        </GroupBox>
 
-                <GroupBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="4" Grid.ColumnSpan="2" Header="Category">
-                    <ListBox IsEnabled="{Binding CategoryListEnabled}"
+                        <GroupBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="4" Grid.ColumnSpan="2" Header="Category">
+                            <ListBox IsEnabled="{Binding CategoryListEnabled}"
                              ItemsSource="{Binding Source={StaticResource BaseSpeciesConverter}, Path=BaseSpeciesStrings}"
                              SelectedItem="{Binding Category, Converter={StaticResource BaseSpeciesConverter}, Mode=TwoWay}">
-                    </ListBox>
-                </GroupBox>
+                            </ListBox>
+                        </GroupBox>
 
-                <GroupBox Grid.Row="1" Grid.Column="5" Grid.RowSpan="4" Header="Species Type">
-                    <ListBox ItemsSource="{Binding SpeciesList, UpdateSourceTrigger=PropertyChanged}"
+                        <GroupBox Grid.Row="1" Grid.Column="5" Grid.RowSpan="4" Header="Species Type">
+                            <ListBox ItemsSource="{Binding SpeciesList, UpdateSourceTrigger=PropertyChanged}"
                              SelectedItem="{Binding SelectedSpecies, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                    </ListBox>
+                            </ListBox>
+                        </GroupBox>
+
+                        <ContentControl Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="3" Grid.RowSpan="3" Content="{Binding CategoryControl, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <CheckBox Grid.Row="6" Grid.Column="5" Content="Collection all animals" IsChecked="{Binding IsCheckedListAllAnimals}"></CheckBox>
+                        <Button Grid.Row="7" Grid.Column="5" Width="100" Content="Add animal" Command="{Binding CreateAnimalCommand}"/>
+
+                        <ContentControl Grid.Row="4" Grid.Column="6" Grid.RowSpan="5" Grid.ColumnSpan="4" Content="{Binding FoodManagerViewModel}"/>
+                    </Grid>
                 </GroupBox>
-
-                <ContentControl Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="3" Grid.RowSpan="3" Content="{Binding CategoryControl, UpdateSourceTrigger=PropertyChanged}"/>
-
-                <CheckBox Grid.Row="6" Grid.Column="5" Content="Collection all animals" IsChecked="{Binding IsCheckedListAllAnimals}"></CheckBox>
-                <Button Grid.Row="7" Grid.Column="5" Width="100" Content="Add animal" Command="{Binding CreateAnimalCommand}"/>
-
-                <ContentControl Grid.Row="4" Grid.Column="6" Grid.RowSpan="5" Grid.ColumnSpan="4" Content="{Binding FoodManagerViewModel}"/>
+                <Button Grid.Row="2" Content="Link animal to selected food item" Command="{Binding LinkAnimalToFoodItemCommand}"/>
+                <ContentControl Grid.Row="3" Content="{Binding AnimalListViewModel}"/>
             </Grid>
-        </GroupBox>
-        <Button Grid.Row="2" Content="Link animal to selected food item" Command="{Binding LinkAnimalToFoodItemCommand}"/>
-        <ContentControl Grid.Row="3" Content="{Binding AnimalListViewModel}"/>
+        </DockPanel>
     </Grid>
 </Window>
