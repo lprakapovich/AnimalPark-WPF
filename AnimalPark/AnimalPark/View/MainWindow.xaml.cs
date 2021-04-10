@@ -19,13 +19,13 @@ namespace AnimalPark
             _dataContext = (MainViewModel) this.DataContext;
             _dataContext.MessageDelegate += s => MessageBox.Show(s);
 
-            _dataContext.DirectorySelector += OnDirectorySelected;
-            _dataContext.FileSelector += OnFileSelected;
-            _dataContext.AppReset += OnAppReset;
-            _dataContext.AppExit += OnAppExit;
+            _dataContext.SelectDirectoryDelegate += OnDirectorySelected;
+            _dataContext.SelectFileDelegate += OnFileSelected;
+            _dataContext.ResetAppStateDelegate += OnAppReset;
+            _dataContext.ExitDelegate += OnAppExit;
 
-            _dataContext.FoodManagerViewModel.AddFoodItemDialog += OnOpenFoodItemDialog;
-            _dataContext.FoodManagerViewModel.CloseDialog += (sender, args) => this.Close();
+            _dataContext.FoodManagerViewModel.AddFoodItemHandler += OnOpenAddFoodItemHandler;
+            _dataContext.FoodManagerViewModel.CloseWindowHandler += (sender, args) => this.Close();
             _dataContext.FoodManagerViewModel.MessageDelegate += s => MessageBox.Show(s);
         }
 
@@ -57,27 +57,27 @@ namespace AnimalPark
         private void OnDirectorySelected(FileExtensionMetaData metaData) 
         {
             VistaSaveFileDialog dialog = new VistaSaveFileDialog();
-            dialog.DefaultExt = metaData.Extension;
-            dialog.Filter = metaData.Filter;
+            dialog.DefaultExt = metaData?.Extension;
+            dialog.Filter = metaData?.Filter;
 
             if (dialog.ShowDialog(this).GetValueOrDefault())
             {
-                _dataContext.PathReceiver?.Invoke(dialog.FileName);
+                _dataContext.ReceivePathDelegate?.Invoke(dialog.FileName);
             }
         } 
 
         private void OnFileSelected(FileExtensionMetaData metaData)
         {
             VistaOpenFileDialog dialog = new VistaOpenFileDialog();
-            dialog.Filter = metaData.Filter;
+            dialog.Filter = metaData?.Filter;
 
             if (dialog.ShowDialog(this).GetValueOrDefault())
             {
-                _dataContext.PathReceiver?.Invoke(dialog.FileName);
+                _dataContext.ReceivePathDelegate?.Invoke(dialog.FileName);
             }
         }
 
-        private void OnOpenFoodItemDialog(object sender, EventArgs e)
+        private void OnOpenAddFoodItemHandler(object sender, EventArgs e)
         {
             FoodItemAdderView foodAdderView = new FoodItemAdderView(_dataContext.FoodManagerViewModel.FoodAdderViewModel);
             foodAdderView.Show();

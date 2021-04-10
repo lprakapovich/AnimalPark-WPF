@@ -65,16 +65,17 @@ namespace AnimalPark.ViewModel
 
         #endregion
 
-        #region Events
+        #region Events & Delegates 
+
         /// <summary>
         /// Delegate to close a window in case no changes must be made
         /// </summary>
-        public event EventHandler CloseWindow;
+        public event EventHandler CloseWindowHandler; 
 
         /// <summary>
         /// Delegate with a newly created food item passed as a parameter
         /// </summary>
-        public Action<FoodItem> CreateFoodItem;
+        public Action<FoodItem> CreateFoodItemDelegate; 
 
         /// <summary>
         /// Delegate to display a message to the user
@@ -109,7 +110,7 @@ namespace AnimalPark.ViewModel
                                                      }, canEx => SelectedIngredient != null));
 
         private RelayCommand _closeWindowCommand;
-        public RelayCommand CloseWindowCommand => _closeWindowCommand ?? (_closeWindowCommand = new RelayCommand(ex => CloseWindow?.Invoke(this, new EventArgs())));
+        public RelayCommand CloseWindowCommand => _closeWindowCommand ?? (_closeWindowCommand = new RelayCommand(ex => CloseWindowHandler?.Invoke(this, new EventArgs())));
 
         private RelayCommand _createFoodItemCommand;
 
@@ -122,9 +123,9 @@ namespace AnimalPark.ViewModel
                                                          }
                                                          else
                                                          {
-                                                             CreateFoodItem?.Invoke(new FoodItem(FoodItemName, Collection.ToList()));
+                                                             CreateFoodItemDelegate?.Invoke(new FoodItem(FoodItemName, Collection.ToList()));
                                                              Reset();
-                                                             CloseWindow?.Invoke(this, new EventArgs());
+                                                             CloseWindowHandler?.Invoke(this, new EventArgs());
                                                          }
                                                      }));
 

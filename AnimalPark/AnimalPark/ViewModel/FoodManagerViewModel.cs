@@ -23,24 +23,19 @@ namespace AnimalPark.ViewModel
         private Dictionary<string, List<string>> _animalFoodItemsResolver;
 
         private FoodItem _selectedFoodItem;
+
         #endregion
 
         #region Setup
 
         public FoodManagerViewModel()
         {
-            Collection = new ObservableCollection<FoodItem>()
-            {
-                new FoodItem("food item 1", new List<string>() {"ingredient 1", "ingredient 2"}),
-                new FoodItem("food item 2", new List<string>() {"ingredient 3", "ingredient 4"}),
-                new FoodItem("food item 3", new List<string>() {"ingredient 5", "ingredient 6"})
-
-            };
+            Collection = new ObservableCollection<FoodItem>();
             FoodAdderViewModel = new FoodAdderViewModel();
             AnimalFoodItemsResolver = new Dictionary<string, List<string>>();
 
             Collection.CollectionChanged += FoodItemsOnCollectionChanged;
-            FoodAdderViewModel.CreateFoodItem += item => Collection.Add(item);
+            FoodAdderViewModel.CreateFoodItemDelegate += item => Collection.Add(item);
         }
 
         #endregion
@@ -104,26 +99,18 @@ namespace AnimalPark.ViewModel
             return AnimalFoodItemsResolver.ContainsKey(animalId) ? PrepareFoodItemsForDisplay(AnimalFoodItemsResolver[animalId]) : null;
         }
 
-        private List<string> PrepareFoodItemsForDisplay(List<string> foodItemNames)
+        public void Reset()
         {
-            List<string> foodItemDescriptions = new List<string>();
-
-            foreach (var name in foodItemNames)
-            {
-                foodItemDescriptions.Add(Collection.FirstOrDefault(i => i.Name.Equals(name))?.ToString());
-            }
-            
-            return foodItemDescriptions;
+            SelectedFoodItem = null;
         }
 
         #endregion
 
-        #region Commands 
-
+        #region Commands
 
         private RelayCommand _addFoodItemCommand;
         public RelayCommand AddFoodItemCommand => _addFoodItemCommand ??
-                                                  (_addFoodItemCommand = new RelayCommand(ex => AddFoodItemDialog?.Invoke(this, new EventArgs())));
+                                                  (_addFoodItemCommand = new RelayCommand(ex => AddFoodItemHandler?.Invoke(this, new EventArgs())));
 
         /// <summary>
         /// Since animal is linked to some food items, it is only allowed to delete those foods that are not connected to any animal
@@ -144,19 +131,19 @@ namespace AnimalPark.ViewModel
 
         private RelayCommand _cancelCommand;
         private RelayCommand CancelCommand => _cancelCommand ??
-                                              (_cancelCommand = new RelayCommand(ex => CloseDialog?.Invoke(this, new EventArgs())));
+                                              (_cancelCommand = new RelayCommand(ex => CloseWindowHandler?.Invoke(this, new EventArgs())));
 
         public FoodAdderViewModel FoodAdderViewModel { get; set; }
 
         #endregion
 
-        #region Events
+        #region Events & Delegates 
 
         public Action<string> MessageDelegate;
 
-        public event EventHandler AddFoodItemDialog;
+        public event EventHandler AddFoodItemHandler;
 
-        public event EventHandler CloseDialog;
+        public event EventHandler CloseWindowHandler;   
 
         private void FoodItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -174,9 +161,19 @@ namespace AnimalPark.ViewModel
 
         #endregion
 
-        public void Reset()
+        #region Private methods
+        private List<string> PrepareFoodItemsForDisplay(List<string> foodItemNames)
         {
-            SelectedFoodItem = null;
+            List<string> foodItemDescriptions = new List<string>();
+
+            foreach (var name in foodItemNames)
+            {
+                foodItemDescriptions.Add(Collection.FirstOrDefault(i => i.Name.Equals(name))?.ToString());
+            }
+
+            return foodItemDescriptions;
         }
+
+        #endregion
     }
 }

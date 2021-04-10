@@ -9,7 +9,6 @@ namespace AnimalPark.Utils
         {
             public string Extension { get; set; }
             public string Filter { get; set; }
-            public bool IsInvalid => string.IsNullOrEmpty(Extension) || string.IsNullOrEmpty(Filter);
         }
 
         public static FileExtensionMetaData ResolveFileExtension(FileExtension extension)

@@ -94,7 +94,7 @@
     <Compile Include="Model\Interfaces\IFish.cs" />
     <Compile Include="Model\Interfaces\IMammal.cs" />
     <Compile Include="Utils\FileExtensionHelper.cs" />
-    <Compile Include="Utils\SerializationHandler.cs" />
+    <Compile Include="Utils\SerializationErrorHandler.cs" />
     <Compile Include="Utils\Validators\ValidationService.cs" />
     <Compile Include="ViewModel\AnimalListViewModel.cs" />
     <Compile Include="ViewModel\FoodAdderViewModel.cs" />

@@ -3,7 +3,6 @@ using AnimalPark.Common;
 using AnimalPark.Utils;
 using AnimalPark.Utils.Factories;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using AnimalPark.Model.Bases;
 using AnimalPark.Model.Enums;
@@ -28,6 +27,7 @@ namespace AnimalPark.ViewModel
         public MainViewModel()
         {
             ResetSettings();
+
             AnimalListViewModel = new AnimalListViewModel();
 
             FoodManagerViewModel = new FoodManagerViewModel();
@@ -38,9 +38,6 @@ namespace AnimalPark.ViewModel
 
         #endregion
 
-        /// <summary>
-        /// Public properties used mostly as bindings in GUI layer
-        /// </summary>
         #region API
 
         public string Name
@@ -168,12 +165,11 @@ namespace AnimalPark.ViewModel
             }
         }
 
-
         public void ResetApplication() 
         {
             AnimalListViewModel.ClearCollection();
             FoodManagerViewModel.ClearCollection(); 
-            ResetControls();
+            ResetAppState();
         }
 
         #endregion
@@ -221,14 +217,14 @@ namespace AnimalPark.ViewModel
             }
 
             CategoryControl?.OnSpeciesSelected(SelectedSpecies);
-            RegisterEventHandler();
+            RegisterChildErrorHandler();
         }
 
         /// <summary>
         /// ChildViewModels send an event to the parent to inform it about the validation result
         /// on the user input, as a boolean value
         /// </summary>
-        private void RegisterEventHandler()
+        private void RegisterChildErrorHandler()
         {
             if (CategoryControl?.SelectedSpeciesControl != null)
             {
@@ -265,7 +261,7 @@ namespace AnimalPark.ViewModel
         /// <summary>
         /// Reset application to the initial state
         /// </summary>
-        private void ResetControls()
+        private void ResetAppState()
         {
             Name = null;
             Age = null;
@@ -281,7 +277,7 @@ namespace AnimalPark.ViewModel
 
         #endregion
 
-        #region Events
+        #region Delegates 
 
         /// <summary>
         /// Display a message to the user
@@ -291,29 +287,29 @@ namespace AnimalPark.ViewModel
         /// <summary>
         /// Invoke when either a file or directory has been chosen by the user
         /// </summary>
-        public Action<string> PathReceiver;  
+        public Action<string> ReceivePathDelegate;   
          
         /// <summary>
         /// Select a directory where a file should be saved, with file extension specified
         /// </summary>
-        public Action<FileExtensionMetaData> DirectorySelector;  
+        public Action<FileExtensionMetaData> SelectDirectoryDelegate;   
           
         /// <summary>
         /// Select a file that should be read
         /// </summary>
-        public Action<FileExtensionMetaData> FileSelector;  
+        public Action<FileExtensionMetaData> SelectFileDelegate;   
 
         /// <summary>
         /// Display dialog with option to save the app state 
         /// </summary>
-        public Action AppReset;  
+        public Action ResetAppStateDelegate;  
 
         /// <summary>
         /// Display dialog with option to exit the app 
         /// </summary>
-        public Action AppExit;   
+        public Action ExitDelegate;   
 
-        #endregion
+        #endregion 
 
         #region Commands
 
@@ -338,9 +334,9 @@ namespace AnimalPark.ViewModel
                                                        }
                                                        else
                                                        {
-                                                           PathReceiver = path => 
+                                                           ReceivePathDelegate = path => 
                                                                HandleSerializationAction(AnimalListViewModel.SerializeBinary, path);
-                                                           DirectorySelector?.Invoke(ResolveFileExtension(Dat));
+                                                           SelectDirectoryDelegate?.Invoke(ResolveFileExtension(Dat));
                                                        }
                                                    }));
 
@@ -354,9 +350,9 @@ namespace AnimalPark.ViewModel
                                                     }
                                                     else
                                                     {
-                                                        PathReceiver = path => 
+                                                        ReceivePathDelegate = path => 
                                                             HandleSerializationAction(FoodManagerViewModel.SerializeXml, path);
-                                                        DirectorySelector?.Invoke(ResolveFileExtension(Xml));
+                                                        SelectDirectoryDelegate?.Invoke(ResolveFileExtension(Xml));
                                                     }
                                                 }));
 
@@ -364,9 +360,9 @@ namespace AnimalPark.ViewModel
         public RelayCommand ReadBinaryCommand => _readBinaryCommand ??
                                                  (_readBinaryCommand = new RelayCommand(ex =>
                                                  {
-                                                     PathReceiver = s =>
+                                                     ReceivePathDelegate = s =>
                                                          HandleSerializationAction(AnimalListViewModel.DeserializeBinary, s);
-                                                     FileSelector.Invoke(ResolveFileExtension(Dat));
+                                                     SelectFileDelegate.Invoke(ResolveFileExtension(Dat));
                                                  }));
 
 
@@ -374,18 +370,18 @@ namespace AnimalPark.ViewModel
         public RelayCommand ReadXmlCommand => _readXmlCommand ??
                                               (_readXmlCommand = new RelayCommand(ex =>
                                               {
-                                                  PathReceiver = s => 
+                                                  ReceivePathDelegate = s => 
                                                       HandleSerializationAction(FoodManagerViewModel.DeserializeXml, s);
-                                                  FileSelector.Invoke(ResolveFileExtension(Xml));
+                                                  SelectFileDelegate.Invoke(ResolveFileExtension(Xml));
                                               }));
 
         private RelayCommand _resetCommand;
         public RelayCommand ResetCommand => _resetCommand ??
-                                            (_resetCommand = new RelayCommand(ex => AppReset?.Invoke()));
+                                            (_resetCommand = new RelayCommand(ex => ResetAppStateDelegate?.Invoke()));
 
         private RelayCommand _exitCommand;
         public RelayCommand ExitCommand => _exitCommand ??
-                                           (_exitCommand = new RelayCommand(ex => AppExit?.Invoke()));
+                                           (_exitCommand = new RelayCommand(ex => ExitDelegate?.Invoke()));
 
         /// <summary>
         /// Handle possible exceptions coming from the SerializationUtils lib
@@ -394,7 +390,7 @@ namespace AnimalPark.ViewModel
         /// <param name="path"> file or directory name </param>
         private void HandleSerializationAction(Action<string> action, string path)
         {
-            SerializationHandler.HandleSerializationAction(action, path, MessageDelegate);
+            SerializationErrorHandler.HandleSerializationAction(action, path, MessageDelegate);
         }
 
         private void LinkAnimalToFoodItem()

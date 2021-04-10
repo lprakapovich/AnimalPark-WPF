@@ -5,30 +5,30 @@ namespace AnimalPark.Utils
 {
     /// <summary>
     /// Static class encapsulating error handling during the serialization process
-    /// </summary>
-    public static class SerializationHandler
+    /// </summary> 
+    public static class SerializationErrorHandler
     { 
-        public static void HandleSerializationAction(Action<string> action, string path, Action<string> errorMessageDelegate) 
+        public static void HandleSerializationAction(Action<string> action, string path, Action<string> messageDelegate) 
         {
             try
             {
                 action.Invoke(path);
-            }
+            } 
             catch (InvalidOperationException)
             {
-                errorMessageDelegate?.Invoke("Seems like a chosen file is read only.");
+                messageDelegate?.Invoke("Seems like a chosen file is read only.");
             }
             catch (PathTooLongException)
             {
-                errorMessageDelegate?.Invoke("Path name is too long!");
+                messageDelegate?.Invoke("Path name is too long!");
             }
             catch (FileNotFoundException)
             {
-                errorMessageDelegate?.Invoke("File or directory couldn't be found!");
+                messageDelegate?.Invoke("File or directory couldn't be found!");
             }
             catch (Exception e)
             {
-                errorMessageDelegate?.Invoke(e.Message);
+                messageDelegate?.Invoke(e.Message);
             }
         }
     }
