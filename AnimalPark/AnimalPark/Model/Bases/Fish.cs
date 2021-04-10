@@ -1,7 +1,9 @@
-﻿using AnimalPark.Model.Enums;
+﻿using System;
+using AnimalPark.Model.Enums;
 
 namespace AnimalPark.Model.Bases 
 {
+    [Serializable]
     public abstract class Fish : Animal
     {
         private bool _isSaltwater;

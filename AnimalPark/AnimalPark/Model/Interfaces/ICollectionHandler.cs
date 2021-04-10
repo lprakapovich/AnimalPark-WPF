@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using AnimalPark.Common;
+﻿using System.Collections.ObjectModel;
 
 namespace AnimalPark.Model.Interfaces
 {
@@ -37,5 +35,6 @@ namespace AnimalPark.Model.Interfaces
         /// <returns> Instance of type T, or default </returns>
         T Get(int id);
 
+        void ClearCollection();
     }
 }

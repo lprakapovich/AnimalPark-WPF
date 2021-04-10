@@ -3,12 +3,15 @@ using AnimalPark.Common;
 using AnimalPark.Utils;
 using AnimalPark.Utils.Factories;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using AnimalPark.Model.Bases;
 using AnimalPark.Model.Enums;
 using AnimalPark.Model.Interfaces;
 using AnimalPark.ViewModel.BaseSpeciesViewModels;
+using static AnimalPark.Model.Enums.FileExtension;
 using static AnimalPark.Model.Enums.Species;
+using static AnimalPark.Utils.FileExtensionHelper;
 using static AnimalPark.Utils.Validators.ValidationService;
 using static AnimalPark.Utils.Validators.ValidationService.ValidationType;
 
@@ -24,8 +27,9 @@ namespace AnimalPark.ViewModel
 
         public MainViewModel()
         {
-            ResetSettings(); 
+            ResetSettings();
             AnimalListViewModel = new AnimalListViewModel();
+
             FoodManagerViewModel = new FoodManagerViewModel();
 
             AnimalListViewModel.AnimalFoodScheduleDelegate +=
@@ -117,9 +121,7 @@ namespace AnimalPark.ViewModel
             set
             {
                 _selectedSpecies = value;
-                
-                    OnSpeciesSelected();
-                
+                OnSpeciesSelected();
                 OnPropertyChanged(nameof(SelectedSpecies));
             }
         }
@@ -141,7 +143,6 @@ namespace AnimalPark.ViewModel
         {
             get => !IsCheckedListAllAnimals;
         }
-
 
         public bool IsCheckedListAllAnimals
         {
@@ -165,6 +166,14 @@ namespace AnimalPark.ViewModel
                     _foodManagerViewModel = value;
                 }
             }
+        }
+
+
+        public void ResetApplication() 
+        {
+            AnimalListViewModel.ClearCollection();
+            FoodManagerViewModel.ClearCollection(); 
+            ResetControls();
         }
 
         #endregion
@@ -211,7 +220,7 @@ namespace AnimalPark.ViewModel
                 Category = EnumHelper.FindCorrespondingCategory(SelectedSpecies);
             }
 
-            CategoryControl.OnSpeciesSelected(SelectedSpecies);
+            CategoryControl?.OnSpeciesSelected(SelectedSpecies);
             RegisterEventHandler();
         }
 
@@ -221,7 +230,7 @@ namespace AnimalPark.ViewModel
         /// </summary>
         private void RegisterEventHandler()
         {
-            if (CategoryControl.SelectedSpeciesControl != null)
+            if (CategoryControl?.SelectedSpeciesControl != null)
             {
                 CategoryControl.SelectedSpeciesControl.ChildDataErrorDelegate += (isChildValid) =>
                 {
@@ -253,11 +262,56 @@ namespace AnimalPark.ViewModel
             }
         }
 
+        /// <summary>
+        /// Reset application to the initial state
+        /// </summary>
+        private void ResetControls()
+        {
+            Name = null;
+            Age = null;
+            ResetSettings();
+        }
+
+        private void ResetSettings()
+        {
+            Category = Category.Mammal;
+            SelectedSpecies = Unknown;
+            ChildViewModelValid = false;
+        }
+
         #endregion
 
         #region Events
 
+        /// <summary>
+        /// Display a message to the user
+        /// </summary>
         public Action<string> MessageDelegate;
+
+        /// <summary>
+        /// Invoke when either a file or directory has been chosen by the user
+        /// </summary>
+        public Action<string> PathReceiver;  
+         
+        /// <summary>
+        /// Select a directory where a file should be saved, with file extension specified
+        /// </summary>
+        public Action<FileExtensionMetaData> DirectorySelector;  
+          
+        /// <summary>
+        /// Select a file that should be read
+        /// </summary>
+        public Action<FileExtensionMetaData> FileSelector;  
+
+        /// <summary>
+        /// Display dialog with option to save the app state 
+        /// </summary>
+        public Action AppReset;  
+
+        /// <summary>
+        /// Display dialog with option to exit the app 
+        /// </summary>
+        public Action AppExit;   
 
         #endregion
 
@@ -270,9 +324,78 @@ namespace AnimalPark.ViewModel
         
 
         private RelayCommand _linkAnimalToFoodItemCommand;
-
         public RelayCommand LinkAnimalToFoodItemCommand => _linkAnimalToFoodItemCommand ??
                                                            (_linkAnimalToFoodItemCommand = new RelayCommand(ex => LinkAnimalToFoodItem()));
+
+       
+        private RelayCommand _saveAsBinaryCommand;
+        public RelayCommand SaveAsBinaryCommand => _saveAsBinaryCommand ??
+                                                   (_saveAsBinaryCommand = new RelayCommand(ex =>
+                                                   {
+                                                       if (AnimalListViewModel.Collection.IsEmpty())
+                                                       {
+                                                           MessageDelegate?.Invoke("Animal list is empty!");
+                                                       }
+                                                       else
+                                                       {
+                                                           PathReceiver = path => 
+                                                               HandleSerializationAction(AnimalListViewModel.SerializeBinary, path);
+                                                           DirectorySelector?.Invoke(ResolveFileExtension(Dat));
+                                                       }
+                                                   }));
+
+        private RelayCommand _saveAsXmlCommand;
+        public RelayCommand SaveAsXmlCommand => _saveAsXmlCommand ??
+                                                (_saveAsXmlCommand = new RelayCommand(ex =>
+                                                {
+                                                    if (FoodManagerViewModel.Collection.IsEmpty())
+                                                    {
+                                                        MessageDelegate?.Invoke("Food item list is empty!");
+                                                    }
+                                                    else
+                                                    {
+                                                        PathReceiver = path => 
+                                                            HandleSerializationAction(FoodManagerViewModel.SerializeXml, path);
+                                                        DirectorySelector?.Invoke(ResolveFileExtension(Xml));
+                                                    }
+                                                }));
+
+        private RelayCommand _readBinaryCommand;
+        public RelayCommand ReadBinaryCommand => _readBinaryCommand ??
+                                                 (_readBinaryCommand = new RelayCommand(ex =>
+                                                 {
+                                                     PathReceiver = s =>
+                                                         HandleSerializationAction(AnimalListViewModel.DeserializeBinary, s);
+                                                     FileSelector.Invoke(ResolveFileExtension(Dat));
+                                                 }));
+
+
+        private RelayCommand _readXmlCommand;
+        public RelayCommand ReadXmlCommand => _readXmlCommand ??
+                                              (_readXmlCommand = new RelayCommand(ex =>
+                                              {
+                                                  PathReceiver = s => 
+                                                      HandleSerializationAction(FoodManagerViewModel.DeserializeXml, s);
+                                                  FileSelector.Invoke(ResolveFileExtension(Xml));
+                                              }));
+
+        private RelayCommand _resetCommand;
+        public RelayCommand ResetCommand => _resetCommand ??
+                                            (_resetCommand = new RelayCommand(ex => AppReset?.Invoke()));
+
+        private RelayCommand _exitCommand;
+        public RelayCommand ExitCommand => _exitCommand ??
+                                           (_exitCommand = new RelayCommand(ex => AppExit?.Invoke()));
+
+        /// <summary>
+        /// Handle possible exceptions coming from the SerializationUtils lib
+        /// </summary>
+        /// <param name="action"> serialization (deserialization) of (to) xml or binary  </param>
+        /// <param name="path"> file or directory name </param>
+        private void HandleSerializationAction(Action<string> action, string path)
+        {
+            SerializationHandler.HandleSerializationAction(action, path, MessageDelegate);
+        }
 
         private void LinkAnimalToFoodItem()
         {
@@ -322,13 +445,9 @@ namespace AnimalPark.ViewModel
             get => !HasErrors && SelectedSpecies != Unknown && !string.IsNullOrWhiteSpace(Name) && int.Parse(Age) > 0 && ChildViewModelValid;
         }
 
-        private void ResetSettings()
-        {
-            Category = Category.Mammal;
-            SelectedSpecies = Unknown;
-            ChildViewModelValid = false;
-        }
-
+        /// <summary>
+        /// Validation result for any child controls, set each time a data in a corresponding view model changes
+        /// </summary>
         private bool ChildViewModelValid { get; set; }
 
         #endregion
@@ -345,7 +464,6 @@ namespace AnimalPark.ViewModel
         private Species _selectedSpecies;
 
         private Animal _animal;
-
         private AnimalListViewModel _animalListViewModel;
         private FoodManagerViewModel _foodManagerViewModel;
 

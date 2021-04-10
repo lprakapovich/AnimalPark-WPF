@@ -5,6 +5,7 @@ using AnimalPark.Model.Interfaces;
 
 namespace AnimalPark.Model.Bases 
 {
+    [Serializable]
     public abstract class Animal : IAnimal
     {
         private string _id;

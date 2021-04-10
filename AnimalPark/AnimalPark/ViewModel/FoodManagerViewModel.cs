@@ -8,6 +8,7 @@ using AnimalPark.Common;
 using AnimalPark.Model;
 using AnimalPark.Model.Bases;
 using AnimalPark.Utils;
+using SerializerUtility;
 
 namespace AnimalPark.ViewModel
 {
@@ -28,7 +29,13 @@ namespace AnimalPark.ViewModel
 
         public FoodManagerViewModel()
         {
-            Collection = new ObservableCollection<FoodItem>(); 
+            Collection = new ObservableCollection<FoodItem>()
+            {
+                new FoodItem("food item 1", new List<string>() {"ingredient 1", "ingredient 2"}),
+                new FoodItem("food item 2", new List<string>() {"ingredient 3", "ingredient 4"}),
+                new FoodItem("food item 3", new List<string>() {"ingredient 5", "ingredient 6"})
+
+            };
             FoodAdderViewModel = new FoodAdderViewModel();
             AnimalFoodItemsResolver = new Dictionary<string, List<string>>();
 

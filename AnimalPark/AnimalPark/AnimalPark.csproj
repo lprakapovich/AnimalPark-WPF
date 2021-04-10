@@ -35,8 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ookii.Dialogs.Wpf, Version=3.0.0.0, Culture=neutral, PublicKeyToken=66aa232afad40158, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ookii.Dialogs.Wpf.3.1.0\lib\net45\Ookii.Dialogs.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -63,11 +69,13 @@
     <Compile Include="Model\Concretes\JellyFishType.cs" />
     <Compile Include="Model\Concretes\RaccoonType.cs" />
     <Compile Include="Model\Enums\EaterType.cs" />
+    <Compile Include="Model\Enums\FileExtension.cs" />
     <Compile Include="Model\Enums\SortingStrategy.cs" />
     <Compile Include="Model\FoodItem.cs" />
     <Compile Include="Model\Interfaces\IAnimal.cs" />
     <Compile Include="Model\Interfaces\IChildValidator.cs" />
     <Compile Include="Model\Interfaces\ICollectionHandler.cs" />
+    <Compile Include="Model\Interfaces\ISerializable.cs" />
     <Compile Include="Utils\Converters\SortingStrategyConverter.cs" />
     <Compile Include="Utils\ExtensionMethods.cs" />
     <Compile Include="Utils\Comparators\Comparer.cs" />
@@ -85,6 +93,8 @@
     <Compile Include="Utils\Factories\MammalFactory.cs" />
     <Compile Include="Model\Interfaces\IFish.cs" />
     <Compile Include="Model\Interfaces\IMammal.cs" />
+    <Compile Include="Utils\FileExtensionHelper.cs" />
+    <Compile Include="Utils\SerializationHandler.cs" />
     <Compile Include="Utils\Validators\ValidationService.cs" />
     <Compile Include="ViewModel\AnimalListViewModel.cs" />
     <Compile Include="ViewModel\FoodAdderViewModel.cs" />
@@ -207,6 +217,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -215,6 +226,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SerializerUtility\SerializerUtility.csproj">
+      <Project>{7b66c8f8-e8a4-4f36-9e4a-6d9f90e6bf12}</Project>
+      <Name>SerializerUtility</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

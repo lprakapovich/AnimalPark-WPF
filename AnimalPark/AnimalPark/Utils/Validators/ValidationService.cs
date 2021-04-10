@@ -62,7 +62,7 @@ namespace AnimalPark.Utils.Validators
                 errors.Add($"{property} cannot be blank!");
             }
 
-            if (!ContainsCharsOnly((string) value))
+            else if (!ContainsCharsOnly((string) value))
             {
                 errors.Add($"{property} can only contain chars!");
             }

@@ -38,23 +38,19 @@
     </Window.Resources>
 
     <Grid>
-
         <DockPanel >
             <Menu DockPanel.Dock="Top" Background="AliceBlue">
                 <MenuItem Header="File">
                     <Separator />
-                    <MenuItem Header="New"/>
-                    <MenuItem Header="Open data file"/>
-                    <MenuItem Header="Save data to File" >
-                        <MenuItem Header="Text file"/>
-                        <MenuItem Header="Binary file"/>
-                    </MenuItem>
+                    <MenuItem Header="New" Command="{Binding ResetCommand}"/>
+                    <MenuItem Header="Open binary" Command="{Binding ReadBinaryCommand}"/>
+                    <MenuItem Header="Save to binary" Command="{Binding SaveAsBinaryCommand}"/>
                     <MenuItem Header="XML">
-                        <MenuItem Header="Import from XML"/>
-                        <MenuItem Header="Export to XML"/>
+                        <MenuItem Header="Import from XML" Command="{Binding ReadXmlCommand}"/>
+                        <MenuItem Header="Export to XML" Command="{Binding SaveAsXmlCommand}"/>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="Exit"/>
+                    <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
                 </MenuItem>
             </Menu>
             <Grid>

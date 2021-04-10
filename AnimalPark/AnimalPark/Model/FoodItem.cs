@@ -1,13 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AnimalPark.Utils;
 
 namespace AnimalPark.Model
 {
+    [Serializable]
     public class FoodItem
     {
         private string _name;
 
         private List<string> _ingredients;
+
+        public FoodItem()
+        {
+        }
 
         public FoodItem(string name, List<string> ingredients)
         {

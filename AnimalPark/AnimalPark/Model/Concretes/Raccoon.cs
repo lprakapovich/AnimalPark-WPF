@@ -1,8 +1,10 @@
-﻿using AnimalPark.Model.Bases;
+﻿using System;
+using AnimalPark.Model.Bases;
 using AnimalPark.Model.Enums;
 
 namespace AnimalPark.Model.Concretes
 {
+    [Serializable]
     public class Raccoon : Mammal
     { 
         public Raccoon(string name, int age, Gender gender, bool isDomesticated, RaccoonType type)

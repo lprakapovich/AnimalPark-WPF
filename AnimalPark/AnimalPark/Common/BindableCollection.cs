@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using AnimalPark.Model.Interfaces;
+using SerializerUtility;
 
 namespace AnimalPark.Common
 {
@@ -8,7 +10,7 @@ namespace AnimalPark.Common
     /// to manipulate on collections
     /// </summary>
     /// <typeparam name="T"> type parameter </typeparam>
-    public abstract class BindableCollection<T> : AbstractNotifier, ICollectionHandler<T>
+    public abstract class BindableCollection<T> : AbstractNotifier, ICollectionHandler<T>, ISerializable<ICollection<T>> 
     {
         public ObservableCollection<T> Collection { get; set; }
 
@@ -39,6 +41,33 @@ namespace AnimalPark.Common
         public T Get(int position)
         {
             return Collection.Count > position && position >= 0 ? Collection[position] : default;
+        }
+
+        public void SerializeBinary(string filename)
+        {
+           SerializationUtils.SerializeDataToBinary(filename, Collection);
+        }
+
+        public void SerializeXml(string filename)
+        {
+            SerializationUtils.SerializeToXml(filename, Collection);
+        }
+
+        public void DeserializeBinary(string filename) 
+        {
+            Collection = SerializationUtils.DeserializeFromBinary<ObservableCollection<T>>(filename);
+            OnPropertyChanged(nameof(Collection));
+        }
+
+        public void DeserializeXml(string filename)
+        {
+            Collection = SerializationUtils.DeserializeFromXml<ObservableCollection<T>>(filename);
+            OnPropertyChanged(nameof(Collection));
+        }
+
+        public void ClearCollection()
+        {
+            Collection.Clear();
         }
     }
 }

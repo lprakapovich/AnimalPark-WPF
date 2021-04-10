@@ -6,8 +6,11 @@ using System.Linq;
 using System.Windows;
 using AnimalPark.Common;
 using AnimalPark.Model.Bases;
+using AnimalPark.Model.Concretes;
 using AnimalPark.Model.Enums;
+using AnimalPark.Model.Interfaces;
 using AnimalPark.Utils.Comparators;
+using SerializerUtility;
 
 namespace AnimalPark.ViewModel
 {
@@ -30,7 +33,13 @@ namespace AnimalPark.ViewModel
 
         public AnimalListViewModel()
         {
-            Collection = new ObservableCollection<Animal>();
+            Collection = new ObservableCollection<Animal>()
+            {
+                new JellyFish("Liza 1", 45, Gender.Female, true, JellyFishType.BlackSeaNettle),
+                new JellyFish("Liza 2", 456, Gender.Female, true, JellyFishType.BlackSeaNettle),
+                new JellyFish("Liza 3", 05, Gender.Female, true, JellyFishType.BlackSeaNettle)
+            };
+
             Collection.CollectionChanged += AnimalsCollectionOnCollectionChanged;
 
             SelectedAnimal = null;
@@ -102,11 +111,6 @@ namespace AnimalPark.ViewModel
             OnPropertyChanged(nameof(Collection));
         }
 
-        public double DelIMl(double i)
-        {
-            return i;
-        }
-
         #endregion
 
 
@@ -127,9 +131,6 @@ namespace AnimalPark.ViewModel
                     break;
             }
         }
-
-        private delegate double MAtch(double d);
-
         #endregion
     }
 }
